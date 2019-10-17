@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import Container from 'library/Container';
-import CanvasSketch from 'screens/CanvasSketch';
 import { getLogin } from 'configs/apis/requestAuthen';
 class HomeScreen extends Component {
     constructor(props) {
@@ -25,7 +24,9 @@ class HomeScreen extends Component {
 
     render() {
         return (
-            <CanvasSketch />
+           <Container>
+
+           </Container>
         );
     }
 }
