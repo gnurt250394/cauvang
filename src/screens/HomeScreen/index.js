@@ -11,32 +11,31 @@ import {
     View,
     TouchableOpacity,
 } from 'react-native';
-import utils from 'configs/utils';
 import Container from 'library/Container';
-import { RNCamera } from 'react-native-camera'
-import DetectWithCamera from 'screens/DetectWithCamera';
 import CanvasSketch from 'screens/CanvasSketch';
+import { getLogin } from 'configs/apis/requestAuthen';
 class HomeScreen extends Component {
     constructor(props) {
         super(props)
-
-        this.state = {
-        }
     }
-    onFacesDetected = (faces) => {
-        console.log(faces);
-    }
-
+    componentDidMount = async () => {
+        let res = await getLogin()
+        console.log('res: ', res);
+    };
 
     render() {
         return (
-            // <DetectWithCamera />
             <CanvasSketch />
         );
     }
 }
 
 const styles = StyleSheet.create({
+    example: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        paddingTop: 20
+    },
 
 });
 

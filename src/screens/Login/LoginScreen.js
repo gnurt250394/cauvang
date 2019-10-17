@@ -23,9 +23,9 @@ class LoginScreen extends Component {
     let email = this.inputEmail.getValue()
     let password = this.inputPass.getValue()
 
-    this.setState({ isLoading: true })
+    // this.setState({ isLoading: true })
     let res = await requestLogin(email, password)
-    this.setState({ isLoading: false })
+    // this.setState({ isLoading: false })
     if (res && res.code == status.SUCCESS) {
       utils.setItem(utils.KEY.TOKEN, res.token)
       utils.database.token = res.token

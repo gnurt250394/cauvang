@@ -17,3 +17,6 @@ export const requestRegister = (fullname, password, email, phone, gender) => {
   }
   return apis.post(apis.PATH.REGISTER, params)
 }
+export const getLogin =()=>{
+  return apis.fetch(apis.PATH.LOGIN)
+}

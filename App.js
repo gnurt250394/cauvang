@@ -16,6 +16,8 @@ import RootView from './src/RootView'
 import NavigationServices from 'routes/NavigationServices'
 import AppContainer from 'routes/AppContainer'
 import FlashMessage from "react-native-flash-message";
+import LoadingComponent from 'library/Loading/LoadingComponent'
+import LoadingManager from 'library/Loading/LoadingManager'
 // Sentry.init({
 //   dsn: 'https://a12ca466e88843da82d0c48da3116a77@sentry.io/1763978'
 // })
@@ -24,13 +26,14 @@ const App = (props) => {
   return (
     <Provider store={store}>
       <RootView>
-       
+
         <AppContainer
           uriPrefix="/app"
           ref={ref => NavigationServices.setTopNavigator(ref)} />
-          <FlashMessage
-          position="top" 
-          /> 
+        <FlashMessage
+          position="top"
+        />
+        <LoadingComponent ref={ref => LoadingManager.registerLoading(ref)} />
       </RootView>
     </Provider>
   )

@@ -21,7 +21,8 @@ import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
 import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
 import { uploadImage } from 'configs/apis/UploadImage';
 import utils from 'configs/utils';
-
+import * as Progress from 'react-native-progress';
+import { showLoading } from 'library/Loading/LoadingComponent';
 export default class CanvasSketch extends Component {
     constructor(props) {
         super(props)
@@ -32,7 +33,8 @@ export default class CanvasSketch extends Component {
             thickness: 5,
             message: '',
             photoPath: null,
-            scrollEnabled: true
+            scrollEnabled: true,
+            progress: 0
         }
     }
 
@@ -49,6 +51,7 @@ export default class CanvasSketch extends Component {
     render() {
         return (
             <View style={styles.container}>
+
                 {
                     this.state.example === 0 &&
                     <View style={{ justifyContent: 'center', alignItems: 'center', width: 340 }}>
@@ -151,8 +154,10 @@ export default class CanvasSketch extends Component {
                             }}
                             minStrokeWidth={100}
                             onSketchSaved={async (success, path) => {
+                                
                                 let res = await uploadImage(path)
                                 console.log('res: ', res);
+
                                 if (res.code == 200) {
                                     utils.alertSuccess('Cập nhật ảnh thành công')
                                 } else {
