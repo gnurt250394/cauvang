@@ -1,11 +1,13 @@
 import Axios from 'axios'
 import utils from './utils'
-const BASE_URL = 'http://10.0.40.15:8000/api/'
-const BASE_URI = 'http://10.0.40.15:8000/'
+import { showLoading } from 'library/Loading/LoadingComponent'
+const BASE_URL = 'http://10.0.40.13:8000/api/'
+const BASE_URI = 'http://10.0.40.13:8000/'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
-  timeout: SERVER_TIMEOUT
+  timeout: SERVER_TIMEOUT,
+
 })
 function logError(error) {
   console.log('error: ', error);
@@ -48,7 +50,12 @@ function fetch(url, params) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
   return constants
-    .get(url, { params }, { headers })
+    .get(url, {
+      params, headers, onDownloadProgress: (progressEvent) => {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
+        showLoading(percentCompleted)
+      }
+    })
     .then(res => {
       logResponse(res)
       return res.data
@@ -65,7 +72,12 @@ function put(url, params) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
   return constants
-    .put(url, params, { headers })
+    .put(url, params, {
+      headers, onUploadProgress: (progressEvent) => {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
+        showLoading(percentCompleted)
+      }
+    })
     .then(res => {
       logResponse(res)
       return res.data
@@ -82,7 +94,12 @@ function post(url, params) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
   return constants
-    .post(url, params, { headers })
+    .post(url, params, {
+      headers, onUploadProgress: (progressEvent) => {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
+        showLoading(percentCompleted)
+      }
+    })
     .then(res => {
       logResponse(res)
       return res.data
@@ -101,7 +118,13 @@ function postForm(url, params) {
   }
 
   return constants
-    .post(url, params, { headers })
+    .post(url, params, {
+      headers,
+      onUploadProgress: (progressEvent) => {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
+        showLoading(percentCompleted)
+      }
+    })
     .then(res => {
       logResponse(res)
       return res.data
@@ -119,7 +142,13 @@ function removeRequest(url) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
   return constants
-    .delete(url, { headers })
+    .delete(url, {
+      headers,
+      onUploadProgress: (progressEvent) => {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
+        showLoading(percentCompleted)
+      }
+    })
     .then(res => {
       logResponse(res)
       return res.data

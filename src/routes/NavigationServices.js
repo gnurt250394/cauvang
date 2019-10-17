@@ -1,4 +1,4 @@
-import { StackActions, NavigationActions } from 'react-navigation'
+import { StackActions, NavigationActions, DrawerActions } from 'react-navigation'
 let _navigator;
 function setTopNavigator(refNavigator) {
     _navigator = refNavigator
@@ -16,9 +16,8 @@ function pop() {
 }
 function reset(routeName, params, actions) {
     _navigator.dispatch(StackActions.reset({
-        routeName,
-        params,
-        actions
+        index: 0,
+        actions: [NavigationActions.navigate(routeName, params, actions)],
     }))
 }
 function replace(routeName, params, action) {
@@ -28,10 +27,14 @@ function replace(routeName, params, action) {
         action
     }))
 }
+function toggleDrawer() {
+    _navigator.dispatch(DrawerActions.toggleDrawer())
+}
 export default {
     setTopNavigator,
     navigate,
     pop,
     reset,
-    replace
+    replace,
+    toggleDrawer
 }
