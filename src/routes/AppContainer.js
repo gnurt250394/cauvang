@@ -7,11 +7,14 @@ import AuthenStack from './AuthenStack'
 import HomeStack from './HomeStack'
 import SplashScreen from 'screens/SplashScreen';
 import DrawerStack from './DrawerStack';
+import BottomTabStack from './BottomTabStack';
+import MaterialTab from './MaterialTab';
+import IntroScreen from 'screens/Intro/IntroScreen';
 
 const appNavigator = createAnimatedSwitchNavigator({
-  [screenName.AuthenStack]: { screen: AuthenStack },
-  [screenName.HomeStack]: { screen: DrawerStack },
+  [screenName.HomeStack]: { screen: HomeStack },
   [screenName.SplashScreen]: { screen: SplashScreen },
+  [screenName.AuthenStack]: { screen: AuthenStack },
 }, {
   transition: (
     <Transition.Together>

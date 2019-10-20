@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput } from 'react-native'
+import { Text, View, StyleSheet, TextInput, StatusBar } from 'react-native'
 import R from 'res/R'
 
 class RootView extends Component {
@@ -24,10 +24,10 @@ class RootView extends Component {
         ...initialDefaultProps,
         ...customProps,
       }
-      components[i].render = function render() {
+      components[i].render =function render () {
         let oldProps = this.props;
 
-        this.props = { ...this.props, style: [customProps.style, this.props && this.props.style && this.props.style] };
+        this.props = { ...this.props, style: [customProps.style, this.props && this.props.style ? this.props.style : null] };
         try {
           return TextRender.apply(this, arguments);
         } finally {
@@ -37,7 +37,10 @@ class RootView extends Component {
     }
   }
   render() {
-    return <View style={styles.container}>{this.props.children}</View>
+    return <View style={styles.container}>
+    <StatusBar backgroundColor={R.colors.defaultColor} />
+      {this.props.children}
+      </View>
   }
 }
 const styles = StyleSheet.create({

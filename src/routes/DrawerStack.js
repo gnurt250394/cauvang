@@ -24,4 +24,4 @@ const drawerStack = createDrawerNavigator({
     contentComponent: (props) => CustomDrawerContentComponent(props)
 })
 
-export default createAppContainer(drawerStack)
+export default drawerStack

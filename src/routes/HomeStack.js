@@ -4,6 +4,9 @@ import screenName from 'configs/screenName'
 import HomeScreen from 'screens/HomeScreen'
 import { fromLeft, zoomIn, zoomOut ,fadeIn,fadeOut,flipX,flipY,fromBottom,fromRight,fromTop,} from 'react-navigation-transitions';
 import RegisterScreen from 'screens/Register/RegisterScreen';
+import BottomTabStack from './BottomTabStack';
+import ScheduleScreen from 'screens/Schedule/ScheduleScreen';
+import FollowHealthScreen from 'screens/FollowHealth/FollowHealthScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -20,11 +23,13 @@ const handleCustomTransition = ({ scenes }) => {
     return fromBottom();
 }
 const homeStack = createStackNavigator({
-    [screenName.HomeScreen]: { screen: HomeScreen },
-    [screenName.RegisterScreen]: { screen: RegisterScreen },
+    [screenName.HomeScreen]: { screen: BottomTabStack },
+    [screenName.ScheduleScreen]: { screen: ScheduleScreen },
+    [screenName.FollowHealthScreen]: { screen: FollowHealthScreen },
+
 }, {
     headerMode: 'none',
     transitionConfig: (transitionProps) => handleCustomTransition(transitionProps),
 })
 
-export default createAppContainer(homeStack)
+export default homeStack

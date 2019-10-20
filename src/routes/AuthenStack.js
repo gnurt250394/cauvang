@@ -30,4 +30,4 @@ const authenStack = createStackNavigator({
     transitionConfig:(transitionProps)=>handleCustomTransition(transitionProps)
 })
 
-export default createAppContainer(authenStack)
+export default authenStack

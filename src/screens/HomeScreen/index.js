@@ -13,21 +13,27 @@ import {
 } from 'react-native';
 import Container from 'library/Container';
 import { getLogin } from 'configs/apis/requestAuthen';
+import utils from 'configs/utils';
+import HomeNotAuthScreen from './HomeNotAuthScreen';
+import HomeLoginScreen from './HomeLoginScreen';
 class HomeScreen extends Component {
     constructor(props) {
         super(props)
     }
     componentDidMount = async () => {
-        let res = await getLogin()
-        console.log('res: ', res);
     };
 
     render() {
-        return (
-           <Container>
+        if (!utils.database.token) {
+            return (
+                <HomeLoginScreen />
+            );
+        } else {
+            return (
+                <HomeNotAuthScreen />
+            )
+        }
 
-           </Container>
-        );
     }
 }
 

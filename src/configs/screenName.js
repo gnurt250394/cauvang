@@ -6,5 +6,10 @@ export default {
     HomeScreen:'Trang chủ',
     RegisterScreen:'Đăng ký',
     ForgotPasswordScreen:'Quên mật khẩu',
-    SplashScreen:'SplashScreen'
+    SplashScreen:'SplashScreen',
+    AccountScreen:'AccountScreen',
+    NotificationScreen:'NotificationScreen',
+    IntoScreen:'IntoScreen',
+    ScheduleScreen:'Lịch khám',
+    FollowHealthScreen:'Theo dõi sức khỏe'
 }
