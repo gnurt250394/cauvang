@@ -11,5 +11,6 @@ export default {
     NotificationScreen:'NotificationScreen',
     IntoScreen:'IntoScreen',
     ScheduleScreen:'Lịch khám',
-    FollowHealthScreen:'Theo dõi sức khỏe'
+    FollowHealthScreen:'Theo dõi sức khỏe',
+    DetailScheduleScreen:'Chi tiết lịch khám',
 }
