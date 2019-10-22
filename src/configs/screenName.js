@@ -14,4 +14,7 @@ export default {
     FollowHealthScreen:'Theo dõi sức khỏe',
     DetailScheduleScreen:'Chi tiết lịch khám',
     NoteDoctorScreen:'Lời dặn của bác sỹ',
+    DrugScreen:'Đơn thuốc của bạn',
+    BookingDrugScreen:'Đặt mua thuốc theo đơn',
+    ConfirmBookingScreen:'Xác nhận đơn thuốc',
 }

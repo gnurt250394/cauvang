@@ -31,7 +31,7 @@ class HomeLoginScreen extends Component {
                 {
                     id: 3,
                     onPress: () => {
-                        utils.alertInfo('Chức năng đang phát triển')
+                        NavigationServices.navigate(screenName.DrugScreen)
 
                     },
                     image: R.images.icons.home.ic_drug,

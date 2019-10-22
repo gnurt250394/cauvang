@@ -51,7 +51,7 @@ class Container extends Component {
         const { onPressLeft, onPressRight, valueRight, iconRight, valueLeft, iconLeft, scrollView, isLoading } = this.props
         const ContainerComponent = scrollView ? ScrollView : View
         return (
-            <LinearGradient colors={[R.colors.defaultColor,R.colors.pink1,R.colors.pink2,R.colors.pink1,R.colors.defaultColor]} style={styles.container}>
+            <LinearGradient colors={[R.colors.defaultColor, R.colors.pink1, R.colors.pink2, R.colors.pink1, R.colors.defaultColor]} style={styles.container}>
                 <HeaderDefault
                     onPressLeft={onPressLeft}
                     onPressRight={onPressRight}
@@ -60,9 +60,9 @@ class Container extends Component {
                     valueLeft={valueLeft}
                     iconLeft={iconLeft}
                 />
-                <StatusBar animated={true} backgroundColor={R.colors.defaultColor} barStyle="dark-content" />
+                <StatusBar animated={true} backgroundColor={R.colors.defaultColor} barStyle="light-content" />
                 <ContainerComponent
-                showsVerticalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
                     style={ContainerComponent == ScrollView ? styles.containerComponent : [{ flex: 1 }, styles.containerComponent]}
                     keyboardShouldPersistTaps="handled">
                     <AnimatedLoader
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         backgroundColor: '#FFF',
-        paddingTop: 10,
     },
     container: {
         flex: 1,

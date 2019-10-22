@@ -2,6 +2,11 @@ export default {
     icons: {
         ic_back: require('res/images/icons/ic_back.png'),
         ic_next: require('res/images/icons/ic_next.png'),
+        drug: {
+            ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
+            ic_cart: require('res/images/icons/drug/ic_cart.png'),
+            ic_search: require('res/images/icons/drug/ic_search.png'),
+        },
         home: {
             add: require('res/images/icons/home/add.png'),
             address: require('res/images/icons/home/address.png'),
@@ -26,9 +31,10 @@ export default {
             ic_warning: require('res/images/icons/followHealth/ic_warning.png'),
             ic_danger: require('res/images/icons/followHealth/ic_danger.png'),
         },
-        default: {
-            logo: require('res/images/defaults/logo.png'),
-            isofh: require('res/images/defaults/isofh.png'),
-        }
+    },
+    default: {
+        logo: require('res/images/defaults/logo.png'),
+        isofh: require('res/images/defaults/isofh.png'),
+        drug: require('res/images/defaults/drug.jpg'),
     }
 }

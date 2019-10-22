@@ -2,13 +2,16 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
 import screenName from 'configs/screenName'
 import HomeScreen from 'screens/HomeScreen'
-import { fromLeft, zoomIn, zoomOut ,fadeIn,fadeOut,flipX,flipY,fromBottom,fromRight,fromTop,} from 'react-navigation-transitions';
+import { fromLeft, zoomIn, zoomOut, fadeIn, fadeOut, flipX, flipY, fromBottom, fromRight, fromTop, } from 'react-navigation-transitions';
 import RegisterScreen from 'screens/Register/RegisterScreen';
 import BottomTabStack from './BottomTabStack';
 import ScheduleScreen from 'screens/Schedule/ScheduleScreen';
 import FollowHealthScreen from 'screens/FollowHealth/FollowHealthScreen';
 import DetailScheduleScreen from 'screens/Schedule/DetailScheduleScreen';
 import NoteDoctorScreen from 'screens/FollowHealth/NoteDoctorScreen';
+import DrugScreen from 'screens/drug/DrugScreen';
+import BookingDrugScreen from 'screens/drug/BookingDrugScreen';
+import ConfirmBookingScreen from 'screens/drug/ConfirmBookingScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -18,11 +21,16 @@ const handleCustomTransition = ({ scenes }) => {
         && nextScene.route.routeName === screenName.HomeScreen) {
         return zoomIn();
     } else if (prevScene
-        && prevScene.route.routeName === 'ScreenB'
-        && nextScene.route.routeName === 'ScreenC') {
-        return zoomOut();
+        && prevScene.route.routeName === screenName.HomeScreen
+        && nextScene.route.routeName === screenName.ScheduleScreen) {
+        return fromBottom();
     }
-    return fromBottom();
+    else if (prevScene
+        && prevScene.route.routeName === screenName.BookingDrugScreen
+        && nextScene.route.routeName === screenName.ConfirmBookingScreen) {
+        return fromBottom();
+    }
+    return fromRight();
 }
 const homeStack = createStackNavigator({
     [screenName.HomeScreen]: { screen: BottomTabStack },
@@ -30,7 +38,9 @@ const homeStack = createStackNavigator({
     [screenName.FollowHealthScreen]: { screen: FollowHealthScreen },
     [screenName.DetailScheduleScreen]: { screen: DetailScheduleScreen },
     [screenName.NoteDoctorScreen]: { screen: NoteDoctorScreen },
-
+    [screenName.DrugScreen]: { screen: DrugScreen },
+    [screenName.BookingDrugScreen]: { screen: BookingDrugScreen },
+    [screenName.ConfirmBookingScreen]: { screen: ConfirmBookingScreen },
 }, {
     headerMode: 'none',
     transitionConfig: (transitionProps) => handleCustomTransition(transitionProps),
