@@ -21,7 +21,10 @@ export default {
             ic_warning: require('res/images/icons/home/ic_warning.png'),
         },
         follow_health: {
-            ic_note: require('res/images/icons/followHealth/ic_note.png')
+            ic_note: require('res/images/icons/followHealth/ic_note.png'),
+            ic_success: require('res/images/icons/followHealth/ic_success.png'),
+            ic_warning: require('res/images/icons/followHealth/ic_warning.png'),
+            ic_danger: require('res/images/icons/followHealth/ic_danger.png'),
         },
         default: {
             logo: require('res/images/defaults/logo.png'),

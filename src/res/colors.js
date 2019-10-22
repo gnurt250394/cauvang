@@ -9,5 +9,9 @@ export default {
     white:'rgb(225,225,225)',
     green:'#00B96C',
     orange:'#FFB800',
-    red:'#ff0000'
+    red:'#ff0000',
+    pink1:'#f35884',
+    pink2:'#f57096',
+    pink3:'#f788a7',
+    pink4:'#fab7ca',
 }

@@ -13,4 +13,5 @@ export default {
     ScheduleScreen:'Lịch khám',
     FollowHealthScreen:'Theo dõi sức khỏe',
     DetailScheduleScreen:'Chi tiết lịch khám',
+    NoteDoctorScreen:'Lời dặn của bác sỹ',
 }

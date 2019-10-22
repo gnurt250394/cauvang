@@ -5,8 +5,8 @@ import Container from 'library/Container';
 import ScaleText from 'components/TextScale';
 import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
-import utils from 'configs/utils';
-
+import utils, { height } from 'configs/utils';
+import ActionSheet from 'react-native-actionsheet'
 class HomeLoginScreen extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class HomeLoginScreen extends Component {
             listButton: [
                 {
                     id: 1,
-                    onPress: ()=>{
+                    onPress: () => {
                         NavigationServices.navigate(screenName.FollowHealthScreen)
                     },
                     image: R.images.icons.home.ic_ehealth,
@@ -22,7 +22,7 @@ class HomeLoginScreen extends Component {
                 },
                 {
                     id: 2,
-                    onPress: ()=>{
+                    onPress: () => {
                         NavigationServices.navigate(screenName.ScheduleScreen)
                     },
                     image: R.images.icons.home.ic_calendar,
@@ -30,7 +30,7 @@ class HomeLoginScreen extends Component {
                 },
                 {
                     id: 3,
-                    onPress: ()=>{
+                    onPress: () => {
                         utils.alertInfo('Chức năng đang phát triển')
 
                     },
@@ -40,7 +40,7 @@ class HomeLoginScreen extends Component {
                 },
                 {
                     id: 4,
-                    onPress: ()=>{
+                    onPress: () => {
                         utils.alertInfo('Chức năng đang phát triển')
                     },
                     image: R.images.icons.home.ic_doctor,
@@ -53,9 +53,9 @@ class HomeLoginScreen extends Component {
         };
     }
     _renderItem = ({ item, index }) => (
-        <TouchableOpacity 
-        onPress={item.onPress}
-        style={styles.containerText}>
+        <TouchableOpacity
+            onPress={item.onPress}
+            style={styles.containerText}>
             <Image source={item.image} style={styles.imageButton} />
             <ScaleText fontFamily="bold" style={styles.txtNameButton}>{item.name}</ScaleText>
         </TouchableOpacity>
@@ -65,7 +65,9 @@ class HomeLoginScreen extends Component {
     render() {
         const { listButton } = this.state
         return (
-            <Container style={styles.flex}>
+            <Container style={styles.flex}
+                scrollView={true}
+            >
                 {/**view 1 */}
                 <View style={styles.containerView1}>
                     <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
@@ -104,6 +106,17 @@ class HomeLoginScreen extends Component {
 
 
                 </View>
+                {/* <ActionSheet
+                    ref={o => this.actionSheetChooseType = o}
+                    options={actions}
+                    cancelButtonIndex={actions.length - 1}
+                    destructiveButtonIndex={actions.length - 1}
+                    onPress={(index) => {
+                        if (index <= this.state.medicalTestResult.length - 1) {
+                            this.setState({ currentGroup: this.state.medicalTestResult[index] });
+                        }
+                    }}
+                /> */}
             </Container>
         );
     }
@@ -182,7 +195,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     containerView1: {
-        flex: 2,
+        height: height / 3,
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingBottom: 10

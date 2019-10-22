@@ -8,6 +8,7 @@ import BottomTabStack from './BottomTabStack';
 import ScheduleScreen from 'screens/Schedule/ScheduleScreen';
 import FollowHealthScreen from 'screens/FollowHealth/FollowHealthScreen';
 import DetailScheduleScreen from 'screens/Schedule/DetailScheduleScreen';
+import NoteDoctorScreen from 'screens/FollowHealth/NoteDoctorScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -28,6 +29,7 @@ const homeStack = createStackNavigator({
     [screenName.ScheduleScreen]: { screen: ScheduleScreen },
     [screenName.FollowHealthScreen]: { screen: FollowHealthScreen },
     [screenName.DetailScheduleScreen]: { screen: DetailScheduleScreen },
+    [screenName.NoteDoctorScreen]: { screen: NoteDoctorScreen },
 
 }, {
     headerMode: 'none',

@@ -5,6 +5,7 @@ import NavigationServices from 'routes/NavigationServices'
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation'
 import R from 'res/R';
+import ScaleText from 'components/TextScale';
 
 const prototype = {
     onPressLeft: PropTypes.func,
@@ -24,7 +25,7 @@ class HeaderDefault extends Component {
                     :
                     <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
                 }
-                <Text style={styles.txtNameHeader}>{navigation.state.routeName}</Text>
+                <ScaleText size={18} style={styles.txtNameHeader}>{navigation.state.routeName}</ScaleText>
                 {onPressRight ?
                     <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
                     :
@@ -55,8 +56,8 @@ const styles = StyleSheet.create({
     },
     txtNameHeader: {
         fontFamily: R.fonts.Bold,
-        fontSize: 16,
         flex: 1,
+        color:R.colors.white,
         paddingHorizontal: 15
     },
 })

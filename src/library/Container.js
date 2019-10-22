@@ -10,6 +10,7 @@ import {
 
 } from "rn-placeholder";
 import AnimatedLoader from "react-native-animated-loader";
+import LinearGradient from 'react-native-linear-gradient';
 import R from 'res/R';
 const prototype = {
     onPressLeft: PropTypes.func,
@@ -50,7 +51,7 @@ class Container extends Component {
         const { onPressLeft, onPressRight, valueRight, iconRight, valueLeft, iconLeft, scrollView, isLoading } = this.props
         const ContainerComponent = scrollView ? ScrollView : View
         return (
-            <ImageBackground source={{ uri: 'http://all4desktop.com/data_images/original/4236532-background-images.jpg' }} style={styles.container}>
+            <LinearGradient colors={[R.colors.defaultColor,R.colors.pink1,R.colors.pink2,R.colors.pink1,R.colors.defaultColor]} style={styles.container}>
                 <HeaderDefault
                     onPressLeft={onPressLeft}
                     onPressRight={onPressRight}
@@ -59,8 +60,9 @@ class Container extends Component {
                     valueLeft={valueLeft}
                     iconLeft={iconLeft}
                 />
-                <StatusBar animated={true} backgroundColor={'#1e82b2'} barStyle="dark-content" />
+                <StatusBar animated={true} backgroundColor={R.colors.defaultColor} barStyle="dark-content" />
                 <ContainerComponent
+                showsVerticalScrollIndicator={false}
                     style={ContainerComponent == ScrollView ? styles.containerComponent : [{ flex: 1 }, styles.containerComponent]}
                     keyboardShouldPersistTaps="handled">
                     <AnimatedLoader
@@ -75,7 +77,7 @@ class Container extends Component {
                 </ContainerComponent>
 
 
-            </ImageBackground>
+            </LinearGradient >
         );
     }
 }

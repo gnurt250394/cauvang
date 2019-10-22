@@ -1,13 +1,76 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Container from 'library/Container';
 import R from 'res/R';
-
+import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts'
+import { height } from 'configs/utils';
+import NavigationServices from 'routes/NavigationServices';
+import screenName from 'configs/screenName';
 class FollowHealthScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [
+                {
+                    id: 1,
+                    time: '10',
+                    overRating: 10
+                },
+                {
+                    id: 2,
+                    time: '10',
+                    overRating: 5
+                },
+                {
+                    id: 3,
+                    time: '10',
+                    overRating: 1
+                },
+                {
+                    id: 4,
+                    time: '10',
+                    overRating: 10
+                },
+                {
+                    id: 1,
+                    time: '10',
+                    overRating: 10
+                },
+                {
+                    id: 2,
+                    time: '10',
+                    overRating: 5
+                },
+                {
+                    id: 3,
+                    time: '10',
+                    overRating: 1
+                },
+                {
+                    id: 4,
+                    time: '10',
+                    overRating: 10
+                },
+                {
+                    id: 1,
+                    time: '10',
+                    overRating: 10
+                },
+                {
+                    id: 2,
+                    time: '10',
+                    overRating: 5
+                },
+                {
+                    id: 3,
+                    time: '10',
+                    overRating: 1
+                },
+                {
+                    id: 4,
+                    time: '10',
+                    overRating: 10
+                },
                 {
                     id: 1,
                     time: '10',
@@ -42,47 +105,86 @@ class FollowHealthScreen extends Component {
         }
     }
     _renderItem = ({ item, index }) => {
+        const data = [50, 40, 50, 20]
         return (
-            <View >
+            <View key={index}>
                 <Text style={{
                     paddingHorizontal: 10
                 }}>{item.time}</Text>
                 <View style={[styles.viewDots, { backgroundColor: this.getRating(item) }]} />
-                <View style={[styles.viewDots, { backgroundColor: this.getRating(item) }]} />
-                <View style={[styles.viewDots, { backgroundColor: this.getRating(item) }]} />
+
+            </View>
+        )
+    }
+    renderLineChart = (data) => {
+        const contentInset = { top: 20, bottom: 20 }
+        return (
+            <View style={{ height: height / 4, flexDirection: 'row',paddingLeft:5 }}>
+                <YAxis
+                    data={data}
+                    contentInset={{ top: 35, bottom: 20 }}
+                    svg={{
+                        fill: 'grey',
+                        fontSize: 10,
+                    }}
+                    numberOfTicks={10}
+                    formatLabel={(value) => `${value}`}
+                />
+                <View style={{ flex: 1 }}>
+                    <XAxis
+                        style={{ marginHorizontal: -10 }}
+                        data={data}
+                        formatLabel={(value, index) => index}
+                        contentInset={{ left: 20, right: 0 }}
+                        svg={{ fontSize: 10, fill: 'black' }}
+                    />
+                    <LineChart
+                        style={{ flex: 1, paddingHorizontal: 10 }}
+                        data={data}
+                        animate={true}
+                        svg={{ stroke: 'rgb(134, 65, 244)' }}
+                        contentInset={contentInset}
+                    >
+                        <Grid />
+                    </LineChart>
+                </View>
             </View>
         )
     }
     _keyExtractor = (item, index) => `${item.id || index}`
+    onNoteDoctor = () => {
+        NavigationServices.navigate(screenName.NoteDoctorScreen)
+    }
     render() {
         const { data } = this.state
+        const dataChart = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
         return (
-            <Container>
-                <View style={{
-                    flexDirection: 'row',
-                }}>
-                    <View style={{
-                        maxWidth: '20%',
-                        paddingTop: '6%'
-                    }}>
-                        <Text style={{
-                            paddingVertical: 10
-                        }}>Đánh giá chung</Text>
-                        <Text >Chỉ số đường huyết</Text>
-                        <Text >Chỉ số xyz</Text>
+            <Container scrollView={true}>
+                <View>
+                    <View >
+                        <Text style={styles.txtTitle}>Đánh giá chung</Text>
+
+                        <FlatList
+                            data={data}
+                            showsHorizontalScrollIndicator={false}
+                            horizontal={true}
+                            renderItem={this._renderItem}
+                            keyExtractor={this._keyExtractor}
+                        />
                     </View>
-                    <FlatList
-                        data={data}
-                        horizontal={true}
-                        renderItem={this._renderItem}
-                        keyExtractor={this._keyExtractor}
-                    />
+
+                    <Text style={styles.txtTitle} >Chỉ số đường huyết</Text>
+                    {this.renderLineChart(dataChart)}
+                    <Text style={styles.txtTitle}>Chỉ số xyz</Text>
+                    {this.renderLineChart(dataChart)}
+                    <TouchableOpacity
+                        onPress={this.onNoteDoctor}
+                        style={styles.buttonNoteDoctor}>
+                        <Image source={R.images.icons.follow_health.ic_note} style={styles.imgNote} />
+                        <Text style={styles.txtNote}>Lời dặn của bác sỹ</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.buttonNoteDoctor}>
-                    <Image source={R.images.icons.follow_health.ic_note} style={styles.imgNote} />
-                    <Text style={styles.txtNote}>Lời dặn của bác sỹ</Text>
-                </TouchableOpacity>
-            </Container>
+            </Container >
         );
     }
 }
@@ -91,6 +193,11 @@ export default FollowHealthScreen;
 
 
 const styles = StyleSheet.create({
+    txtTitle: {
+        alignSelf: 'center',
+        paddingVertical: 10,
+        fontFamily: R.fonts.Bold
+    },
     txtNote: {
         paddingHorizontal: 10,
         fontFamily: R.fonts.Regular
