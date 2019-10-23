@@ -17,4 +17,7 @@ export default {
     DrugScreen:'Đơn thuốc của bạn',
     BookingDrugScreen:'Đặt mua thuốc theo đơn',
     ConfirmBookingScreen:'Xác nhận đơn thuốc',
+    MessageScreen:'Chi tiết tin nhắn',
+    ListDoctorScreen:'Danh sách bác sĩ',
+    VideoCallScreen:'VideoCallScreen',
 }

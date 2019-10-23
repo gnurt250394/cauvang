@@ -2,6 +2,8 @@ export default {
     icons: {
         ic_back: require('res/images/icons/ic_back.png'),
         ic_next: require('res/images/icons/ic_next.png'),
+        ic_facetime: require('res/images/icons/ic_facetime.png'),
+        ic_close: require('res/images/icons/ic_close.png'),
         drug: {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
             ic_cart: require('res/images/icons/drug/ic_cart.png'),

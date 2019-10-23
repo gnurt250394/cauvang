@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hồng hạc</string>
+    <string name="default_notification_channel_id">honghac-chanel</string>
+
 </resources>

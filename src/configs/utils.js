@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { Dimensions } from 'react-native';
 import { showMessage } from 'react-native-flash-message'
 const database = {
-  token: ''
+  token: '',
+  tokenFCM:''
 }
 const KEY = {
   TOKEN: 'TOKEN'

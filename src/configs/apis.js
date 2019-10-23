@@ -2,7 +2,8 @@ import Axios from 'axios'
 import utils from './utils'
 import { showLoading } from 'library/Loading/LoadingComponent'
 const BASE_URL = 'http://10.0.40.13:8000/api/'
-const BASE_URI = 'http://10.0.40.13:8000/'
+export const BASE_URI = 'http://10.0.40.13:8000/'
+export const BASE_SOCKET = 'http://10.0.40.13:8000/'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -161,7 +162,8 @@ export default {
   PATH: {
     LOGIN: 'login',
     REGISTER: 'register',
-    UPLOAD_IMAGE: 'update_avatar'
+    UPLOAD_IMAGE: 'update_avatar',
+    CHATS:'chats'
   },
   fetch,
   put,

@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:129032473628:android:95784d19de1c3cbb16a3d9",
+        "mobilesdk_app_id": "1:129032473628:android:15293c54044ad6df16a3d9",
         "android_client_info": {
           "package_name": "com.baseappreactnative"
         }
@@ -16,41 +16,50 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBIy9WBMJUU5y8RT95O-Hqz2xrWGbH_qeQ"
+          "current_key": "AIzaSyAr1nuizsQydNYKR9LURBnL2oveqobu1Hc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "129032473628-frrg7rpgdb7onaoorjbi0f7prq0067f2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:129032473628:android:c15c42cfd61f4057",
+        "mobilesdk_app_id": "1:129032473628:android:671b3ce0a070714b16a3d9",
         "android_client_info": {
-          "package_name": "com.typescript"
+          "package_name": "com.isofh.chukysodev"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBIy9WBMJUU5y8RT95O-Hqz2xrWGbH_qeQ"
+          "current_key": "AIzaSyAr1nuizsQydNYKR9LURBnL2oveqobu1Hc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "129032473628-frrg7rpgdb7onaoorjbi0f7prq0067f2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129032473628:android:a085e13c1121413216a3d9",
+        "android_client_info": {
+          "package_name": "com.isofh.qmscdha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr1nuizsQydNYKR9LURBnL2oveqobu1Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

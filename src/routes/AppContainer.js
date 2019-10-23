@@ -12,8 +12,8 @@ import MaterialTab from './MaterialTab';
 import IntroScreen from 'screens/Intro/IntroScreen';
 
 const appNavigator = createAnimatedSwitchNavigator({
-  [screenName.HomeStack]: { screen: HomeStack },
   [screenName.SplashScreen]: { screen: SplashScreen },
+  [screenName.HomeStack]: { screen: HomeStack },
   [screenName.AuthenStack]: { screen: AuthenStack },
 }, {
   transition: (

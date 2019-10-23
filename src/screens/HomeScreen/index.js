@@ -24,7 +24,7 @@ class HomeScreen extends Component {
     };
 
     render() {
-        if (!utils.database.token) {
+        if (utils.database.token) {
             return (
                 <HomeLoginScreen />
             );

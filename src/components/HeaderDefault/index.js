@@ -13,11 +13,12 @@ const prototype = {
     valueLeft: PropTypes.string,
     onPressRight: PropTypes.func,
     valueRight: PropTypes.string,
-    iconRight: PropTypes.number
+    iconRight: PropTypes.number,
+    title:PropTypes.string
 }
 class HeaderDefault extends Component {
     render() {
-        const { onPressLeft, onPressRight, navigation, valueRight, iconRight, valueLeft, iconLeft } = this.props
+        const { onPressLeft, onPressRight, navigation, valueRight, iconRight, valueLeft, iconLeft, title } = this.props
         return (
             <View style={styles.containerHeader}>
                 {navigation.isFirstRouteInParent() ?
@@ -25,7 +26,7 @@ class HeaderDefault extends Component {
                     :
                     <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
                 }
-                <ScaleText size={18} style={styles.txtNameHeader}>{navigation.state.routeName}</ScaleText>
+                <ScaleText size={18} style={styles.txtNameHeader}>{title || navigation.state.routeName}</ScaleText>
                 {onPressRight ?
                     <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
                     :
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     txtNameHeader: {
         fontFamily: R.fonts.Bold,
         flex: 1,
-        color:R.colors.white,
+        color: R.colors.white,
         paddingHorizontal: 15
     },
 })

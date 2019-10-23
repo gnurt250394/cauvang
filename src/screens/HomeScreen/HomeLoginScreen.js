@@ -7,6 +7,7 @@ import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
 import utils, { height } from 'configs/utils';
 import ActionSheet from 'react-native-actionsheet'
+import PushNotification from 'components/PushNotification';
 class HomeLoginScreen extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +42,7 @@ class HomeLoginScreen extends Component {
                 {
                     id: 4,
                     onPress: () => {
-                        utils.alertInfo('Chức năng đang phát triển')
+                        NavigationServices.navigate(screenName.ListDoctorScreen)
                     },
                     image: R.images.icons.home.ic_doctor,
                     name: 'Tư vấn trực tuyến'
@@ -117,6 +118,7 @@ class HomeLoginScreen extends Component {
                         }
                     }}
                 /> */}
+                <PushNotification/>
             </Container>
         );
     }

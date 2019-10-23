@@ -20,7 +20,8 @@ const prototype = {
     valueRight: PropTypes.string,
     iconRight: PropTypes.number,
     scrollView: PropTypes.bool,
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
+    title:PropTypes.string
 }
 class Container extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class Container extends Component {
         clearTimeout(this.timeOut)
     }
     render() {
-        const { onPressLeft, onPressRight, valueRight, iconRight, valueLeft, iconLeft, scrollView, isLoading } = this.props
+        const { onPressLeft, onPressRight, valueRight, iconRight, valueLeft, iconLeft, scrollView, isLoading, title } = this.props
         const ContainerComponent = scrollView ? ScrollView : View
         return (
             <LinearGradient colors={[R.colors.defaultColor, R.colors.pink1, R.colors.pink2, R.colors.pink1, R.colors.defaultColor]} style={styles.container}>
@@ -59,6 +60,7 @@ class Container extends Component {
                     iconRight={iconRight}
                     valueLeft={valueLeft}
                     iconLeft={iconLeft}
+                    title={title}
                 />
                 <StatusBar animated={true} backgroundColor={R.colors.defaultColor} barStyle="light-content" />
                 <ContainerComponent

@@ -12,6 +12,9 @@ import NoteDoctorScreen from 'screens/FollowHealth/NoteDoctorScreen';
 import DrugScreen from 'screens/drug/DrugScreen';
 import BookingDrugScreen from 'screens/drug/BookingDrugScreen';
 import ConfirmBookingScreen from 'screens/drug/ConfirmBookingScreen';
+import MessageScreen from 'screens/community/MessageScreen';
+import ListDoctorScreen from 'screens/community/ListDoctorScreen';
+import CallVideoScreen from 'screens/community/CallVideoScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -41,6 +44,9 @@ const homeStack = createStackNavigator({
     [screenName.DrugScreen]: { screen: DrugScreen },
     [screenName.BookingDrugScreen]: { screen: BookingDrugScreen },
     [screenName.ConfirmBookingScreen]: { screen: ConfirmBookingScreen },
+    [screenName.MessageScreen]: { screen: MessageScreen },
+    [screenName.ListDoctorScreen]: { screen: ListDoctorScreen },
+    [screenName.VideoCallScreen]: { screen: CallVideoScreen },
 }, {
     headerMode: 'none',
     transitionConfig: (transitionProps) => handleCustomTransition(transitionProps),
