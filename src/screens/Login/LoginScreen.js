@@ -12,6 +12,7 @@ import Container from 'library/Container';
 import { requestLogin } from 'configs/apis/requestAuthen';
 import status from 'configs/constants';
 import utils from 'configs/utils';
+import { showLoading, hideLoading } from 'library/Loading/LoadingComponent';
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -22,10 +23,9 @@ class LoginScreen extends Component {
   onLogin = async () => {
     let email = this.inputEmail.getValue()
     let password = this.inputPass.getValue()
-
-    // this.setState({ isLoading: true })
+    showLoading()
     let res = await requestLogin(email, password)
-    // this.setState({ isLoading: false })
+    hideLoading()
     if (res && res.code == status.SUCCESS) {
       utils.setItem(utils.KEY.TOKEN, res.token)
       utils.database.token = res.token

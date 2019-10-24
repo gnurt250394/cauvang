@@ -3,10 +3,11 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import Container from 'library/Container'
 import NavigationServices from 'routes/NavigationServices'
 import screenName from 'configs/screenName'
+import utils from 'configs/utils'
 
 class AccountScreen extends Component {
     onLogout=()=>{
-        NavigationServices.navigate(screenName.AuthenStack)
+       utils.logout()
     }
     render() {
         return (

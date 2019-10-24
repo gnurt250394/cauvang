@@ -22,23 +22,30 @@ import LoadingManager from 'library/Loading/LoadingManager'
 //   dsn: 'https://a12ca466e88843da82d0c48da3116a77@sentry.io/1763978'
 // })
 
-const App = (props) => {
-  console.log('AppRegistry.getAppKeys(): ', AppRegistry.getAppKeys());
+class App extends React.Component {
+  componentDidMount() {
+    LoadingManager.register(this.loadingRef);
+  }
 
-  return (
-    <Provider store={store}>
-      <RootView>
+  componentWillUnmount() {
+    LoadingManager.unregister(this.loadingRef);
+  }
+  render() {
+    return (
+      <Provider store={store} >
+        <RootView>
 
-        <AppContainer
-          uriPrefix="/app"
-          ref={ref => NavigationServices.setTopNavigator(ref)} />
-        <FlashMessage
-          position="top"
-        />
-        <LoadingComponent ref={ref => LoadingManager.registerLoading(ref)} />
-      </RootView>
-    </Provider>
-  )
+          <AppContainer
+            uriPrefix="/app"
+            ref={ref => NavigationServices.setTopNavigator(ref)} />
+          <FlashMessage
+            position="top"
+          />
+          <LoadingComponent ref={ref => this.loadingRef = ref} />
+        </RootView>
+      </Provider>
+    )
+  }
 }
 
 

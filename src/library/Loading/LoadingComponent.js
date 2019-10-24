@@ -4,55 +4,74 @@ import LoadingManager from '../Loading/LoadingManager'
 import * as Progress from 'react-native-progress';
 import R from 'res/R';
 import { width } from 'configs/utils';
+import AnimatedLoader from "react-native-animated-loader";
 
-export function showLoading(progress) {
-    LoadingManager.getDefault().showLoading(progress)
+const TIME_OUT = 10 * 1000;
+
+export function showLoading() {
+    const ref = LoadingManager.getDefault();
+
+    if (!!ref) {
+        ref.showLoading();
+    }
+}
+
+export function hideLoading() {
+    const ref = LoadingManager.getDefault();
+
+    if (!!ref) {
+        ref.hideLoading();
+    }
 }
 class LoadingComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             progress: 0,
-            visible: false
+            isLoading: false
         };
     }
-    showLoading = (progress) => {
-        if (progress >= 1) {
-            this.setState({ visible: false, progress: 0 })
-            return
-        }
-        this.setState({ progress, visible: true })
-
-
+    componentWillUnmount() {
+        if (this.loadingTimeout) clearTimeout(this.loadingTimeout);
     }
 
     hideLoading = () => {
-        this.setState({ visible: false })
-    }
+        if (this.loadingTimeout) clearTimeout(this.loadingTimeout);
+        this.setState({ isLoading: false });
+    };
+
+    showLoading = () => {
+        this.loadingTimeout = setTimeout(() => {
+            this.setState({ isLoading: false });
+        }, TIME_OUT);
+        this.setState({ isLoading: true });
+    };
+
     render() {
         return (
             <Modal
-                visible={this.state.visible}
+                visible={this.state.isLoading}
                 transparent={true}
                 animationType="fade"
                 onRequestClose={this.hideLoading}
             >
-                <View style={{
-                    flex: 1,
-                    backgroundColor: R.colors.transparent,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <Progress.Circle thickness={5}
-                        showsText={true}
-                        strokeCap={"square"}
-                        formatText={(progress) => {
-                            return <Text style={styles.txtPercent}>{progress.toFixed(2) * 100}%</Text>
-                        }}
-                        color={R.colors.defaultColor}
-                        progress={this.state.progress} size={150} />
-                </View>
-            </Modal>
+            <View style={{
+                flex: 1,
+                backgroundColor: R.colors.transparent,
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                zIndex: 1000,
+            }}>
+                <AnimatedLoader
+                    visible={true}
+                    overlayColor="rgba(255,255,255,0.4)"
+                    source={R.animations.loading}
+                    animationStyle={styles.lottie}
+                    speed={1}
+                />
+            </View>
+             </Modal>
         );
     }
 }
@@ -65,4 +84,8 @@ const styles = StyleSheet.create({
         color: R.colors.defaultColor,
         fontWeight: 'bold'
     },
+    lottie: {
+        width: 100,
+        height: 100
+    }
 })

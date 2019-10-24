@@ -9,7 +9,6 @@ import {
     Fade,
 
 } from "rn-placeholder";
-import AnimatedLoader from "react-native-animated-loader";
 import LinearGradient from 'react-native-linear-gradient';
 import R from 'res/R';
 const prototype = {
@@ -21,7 +20,7 @@ const prototype = {
     iconRight: PropTypes.number,
     scrollView: PropTypes.bool,
     isLoading: PropTypes.bool,
-    title:PropTypes.string
+    title: PropTypes.string
 }
 class Container extends Component {
     constructor(props) {
@@ -67,18 +66,9 @@ class Container extends Component {
                     showsVerticalScrollIndicator={false}
                     style={ContainerComponent == ScrollView ? styles.containerComponent : [{ flex: 1 }, styles.containerComponent]}
                     keyboardShouldPersistTaps="handled">
-                    <AnimatedLoader
-                        visible={isLoading}
-                        
-                        overlayColor="rgba(255,255,255,0.4)"
-                        source={R.animations.loading}
-                        animationStyle={styles.lottie}
-                        speed={1}
-                    />
+
                     {this.props.children}
                 </ContainerComponent>
-
-
             </LinearGradient >
         );
     }

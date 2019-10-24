@@ -12,9 +12,10 @@ class SplashScreen extends Component {
     this.scroll = new Animated.Value(0)
   }
   componentDidMount = async () => {
-    // firebase.messaging().getToken().then(res => {
-    //   utils.database.tokenFCM = res
-    // })
+    firebase.messaging().getToken().then(res => {
+      console.log('res: ', res);
+      utils.database.tokenFCM = res
+    })
     let token = await utils.getItem(utils.KEY.TOKEN)
     if (token) {
       utils.database.token = token

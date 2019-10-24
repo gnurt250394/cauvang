@@ -2,6 +2,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import { Dimensions } from 'react-native';
 import { showMessage } from 'react-native-flash-message'
+import NavigationServices from 'routes/NavigationServices';
+import screenName from './screenName';
+import firebase from 'react-native-firebase';
 const database = {
   token: '',
   tokenFCM: ''
@@ -78,6 +81,12 @@ function alertDanger(description) {
     description,
   })
 }
+
+function logout (){
+  removeItem(KEY.TOKEN)
+  NavigationServices.navigate(screenName.AuthenStack)
+  firebase.messaging().deleteToken(database.tokenFCM)
+}
 export default {
   getItem,
   setItem,
@@ -89,5 +98,6 @@ export default {
   alertNone,
   alertSuccess,
   alertWarn,
-  guid
+  guid,
+  logout
 }

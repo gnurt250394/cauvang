@@ -1,10 +1,22 @@
 class LoadingManager {
-    loadingRef = null;
-    registerLoading = (loadingRef) => {
-        this.loadingRef = loadingRef
+    _defaultLoading = null;
+  
+    register(_ref) {
+      if (!this._defaultLoading) {
+        this._defaultLoading = _ref;
+      }
     }
-    getDefault = () => {
-        return this.loadingRef
+  
+    unregister(_ref) {
+      if (!!this._defaultLoading && this._defaultLoading._id === _ref._id) {
+        this._defaultLoading = null;
+      }
     }
-}
-export default new LoadingManager()
+  
+    getDefault() {
+      return this._defaultLoading;
+    }
+  }
+  
+  export default new LoadingManager();
+  
