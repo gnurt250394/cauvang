@@ -46,8 +46,8 @@ class LoginScreen extends Component {
   render() {
     return (
       <Container scrollView={true} isLoading={this.state.isLoading}>
-        <InputAuthen placeholder="Số điện thoại" ref={ref => this.inputEmail = ref} keyboardType="numeric" maxLength={10} />
-        <InputAuthen placeholder="Mật khẩu" ref={ref => this.inputPass = ref} secureTextEntry={true} />
+        <InputAuthen label="Số điện thoại" placeholder="Số điện thoại" ref={ref => this.inputEmail = ref} keyboardType="numeric" maxLength={10} />
+        <InputAuthen label="Mật khẩu" placeholder="Mật khẩu" ref={ref => this.inputPass = ref} secureTextEntry={true} />
         <ButtonBase
           onPress={this.onLogin}
           styleButton={styles.buttonLogin}

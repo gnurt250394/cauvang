@@ -5,6 +5,8 @@ import LoginScreen from 'screens/Login/LoginScreen'
 import { fromLeft, zoomIn, zoomOut ,fadeIn,fadeOut,flipX,flipY,fromBottom,fromRight,fromTop,} from 'react-navigation-transitions';
 import RegisterScreen from 'screens/Register/RegisterScreen'
 import ForgotPassScreen from 'screens/ForgotPassWord/ForgotPassScreen';
+import ListHospitalScreen from 'screens/Register/ListHospitalScreen';
+import OtpScreen from 'screens/Register/OtpScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -24,6 +26,8 @@ const authenStack = createStackNavigator({
     [screenName.LoginScreen]: { screen: LoginScreen },
     [screenName.RegisterScreen]: { screen: RegisterScreen },
     [screenName.ForgotPasswordScreen]: { screen: ForgotPassScreen },
+    [screenName.ListHospitalScreen]: { screen: ListHospitalScreen },
+    [screenName.OtpScreen]: { screen: OtpScreen },
 }, {
     initialRouteName: screenName.loginScreen,
     headerMode: 'none',

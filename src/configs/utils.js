@@ -4,10 +4,18 @@ import { Dimensions } from 'react-native';
 import { showMessage } from 'react-native-flash-message'
 const database = {
   token: '',
-  tokenFCM:''
+  tokenFCM: ''
 }
 const KEY = {
   TOKEN: 'TOKEN'
+}
+export function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 export const { width, height } = Dimensions.get('window')
 async function getItem(key, object) {
@@ -30,43 +38,43 @@ function removeItem(key) {
     AsyncStorage.removeItem(key)
   } catch (error) { }
 }
-function alertWarn(description){
+function alertWarn(description) {
   showMessage({
-    type:'warning',
-    icon:'warning',
-    message:'Cảnh báo',
+    type: 'warning',
+    icon: 'warning',
+    message: 'Cảnh báo',
     description,
   })
 }
-function alertSuccess(description){
+function alertSuccess(description) {
   showMessage({
-    type:'success',
-    icon:'success',
-    message:'Thông báo',
+    type: 'success',
+    icon: 'success',
+    message: 'Thông báo',
     description,
   })
 }
-function alertNone(description){
+function alertNone(description) {
   showMessage({
-    type:'none',
-    icon:'none',
-    message:'Thông báo',
+    type: 'none',
+    icon: 'none',
+    message: 'Thông báo',
     description,
   })
 }
-function alertInfo(description){
+function alertInfo(description) {
   showMessage({
-    type:'info',
-    icon:'info',
-    message:'Thông tin',
+    type: 'info',
+    icon: 'info',
+    message: 'Thông tin',
     description,
   })
 }
-function alertDanger(description){
+function alertDanger(description) {
   showMessage({
-    type:'danger',
-    icon:'danger',
-    message:'Lỗi!!!',
+    type: 'danger',
+    icon: 'danger',
+    message: 'Lỗi!!!',
     description,
   })
 }
@@ -80,5 +88,6 @@ export default {
   alertInfo,
   alertNone,
   alertSuccess,
-  alertWarn
+  alertWarn,
+  guid
 }

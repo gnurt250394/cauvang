@@ -9,12 +9,12 @@ export const requestLogin = (username, password) => {
   }
   return apis.post(apis.PATH.LOGIN, params)
 }
-export const requestRegister = (fullname, password, email, phone, gender) => {
+export const requestRegister = (fullName, password, hospitalId, phone, gender) => {
   let params = {
-    name: fullname,
+    fullName,
     password,
     phone,
-    email,
+    hospitalId,
     gender
   }
   return apis.post(apis.PATH.REGISTER, params)

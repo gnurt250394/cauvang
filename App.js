@@ -7,7 +7,7 @@
  */
 
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, AppRegistry } from 'react-native'
 import { Provider } from 'react-redux'
 import store from 'middlewares/stores'
 import * as Sentry from '@sentry/react-native'
@@ -23,6 +23,8 @@ import LoadingManager from 'library/Loading/LoadingManager'
 // })
 
 const App = (props) => {
+  console.log('AppRegistry.getAppKeys(): ', AppRegistry.getAppKeys());
+
   return (
     <Provider store={store}>
       <RootView>

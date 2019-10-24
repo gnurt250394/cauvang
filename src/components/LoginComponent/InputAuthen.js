@@ -27,17 +27,25 @@ class InputAuthen extends Component {
         return this.state.value
     }
     render() {
-        const { placeholder, style, ...otherProps } = this.props
+        const { placeholder, style, label, reqiure,containerStyle, ...otherProps } = this.props
         const { value } = this.state
         return (
-            <TextInput
-                {...otherProps}
-                placeholder={placeholder}
-                value={value}
-                onChangeText={this.onChangeText}
-                style={[styles.input, style]}
-                onBlur={this.onBlur}
-            />
+            <View style={[styles.container, containerStyle]}>
+                <Text style={{
+                    fontFamily:R.fonts.Bold
+                }}>{label} {reqiure && <Text style={{
+                    color: R.colors.red
+                }}>(*)</Text>}</Text>
+                <TextInput
+                    {...otherProps}
+                    placeholder={placeholder}
+                    value={value}
+                    onChangeText={this.onChangeText}
+                    style={[styles.input, style]}
+                    onBlur={this.onBlur}
+                />
+            </View>
+
         )
     }
 }
@@ -47,15 +55,22 @@ InputAuthen.defaultProps = {
 InputAuthen.prototype.props = {
     placeholder: PropTypes.string,
     style: PropTypes.object,
+    label: PropTypes.string,
+    reqiure: PropTypes.string,
+    containerStyle:PropTypes.object
 }
 export default InputAuthen
 
 
 const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 10,
+        paddingTop: 10,
+    },
     input: {
-        borderBottomColor: R.colors.black,
-        borderBottomWidth: 1,
+        borderColor: R.colors.defaultColor,
+        borderWidth: 1,
         paddingLeft: 10,
-        marginHorizontal: 10,
+        borderRadius: 5
     },
 })

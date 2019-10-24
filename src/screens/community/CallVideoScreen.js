@@ -52,7 +52,8 @@ export default class VideoCallScreen extends React.Component {
       localStream: false,
       remoteStream: false
     }
-    this.socket = io.connect(BASE_SOCKET, { transports: 'websocket' })
+    this.socket = io.connect(BASE_SOCKET)
+
   }
 
   getNavigationParam = () => {
@@ -78,6 +79,7 @@ export default class VideoCallScreen extends React.Component {
     this.rtcPeerConnection = new RTCPeerConnection(config)
 
     this.rtcPeerConnection.onicecandidate = event => {
+      console.log('event: ', event);
       console.log('onicecandidate fired')
       if (event.candidate) {
         let data = {
@@ -101,7 +103,7 @@ export default class VideoCallScreen extends React.Component {
     }
   }
 
-  closeVideoCall = (activeMode) => {
+  closeVideoCall = (activeMode) => () => {
 
     InCallManager.stop()
 
@@ -141,6 +143,7 @@ export default class VideoCallScreen extends React.Component {
   beginVideoCall = () => {
     let isFront = true;
     mediaDevices.enumerateDevices().then(sourceInfos => {
+      console.log('sourceInfos: ', sourceInfos);
       let videoSourceId;
       for (let i = 0; i < sourceInfos.length; i++) {
         const sourceInfo = sourceInfos[i];
@@ -169,7 +172,8 @@ export default class VideoCallScreen extends React.Component {
           })
 
           this.socket.emit(ApiConfig.SOCKET_EVENT_USER_WEBRTC_ACCEPT, {
-            toUserId: this.getNavigationParam().doctor_id
+            toUserId: this.getNavigationParam()._id
+            
           })
           console.log('socket emitted accept')
 
@@ -184,6 +188,7 @@ export default class VideoCallScreen extends React.Component {
   screenWillFocus = () => {
     if (this.socket) {
       this.initOrRenewRtcPeerConnection()
+      console.log('this.rtcPeerConnection.localDescription: ', this.rtcPeerConnection.localDescription);
 
       this.socket.on(ApiConfig.SOCKET_EVENT_USER_WEBRTC_OFFER, async data => {
         this.rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp))
@@ -195,6 +200,7 @@ export default class VideoCallScreen extends React.Component {
       })
 
       this.socket.on(ApiConfig.SOCKET_EVENT_USER_WEBRTC_CANDIDATE, data => {
+        console.log('data: ', data);
         if (typeof data.candidate != 'object') {
           try {
             data.candidate = JSON.parse(data.candidate)
@@ -244,7 +250,9 @@ export default class VideoCallScreen extends React.Component {
               objectFit='cover'
               streamURL={this.state.localStream ? this.state.localStream.toURL() : null} />
           </View>
-          <TouchableOpacity style={styles.buttonClose}>
+          <TouchableOpacity
+            onPress={this.closeVideoCall(true)}
+            style={styles.buttonClose}>
             <Image source={R.images.icons.ic_close} style={styles.imageClose} />
           </TouchableOpacity>
         </View>

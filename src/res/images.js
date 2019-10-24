@@ -4,6 +4,10 @@ export default {
         ic_next: require('res/images/icons/ic_next.png'),
         ic_facetime: require('res/images/icons/ic_facetime.png'),
         ic_close: require('res/images/icons/ic_close.png'),
+        ic_eye_black: require('res/images/icons/eye_black.png'),
+        ic_hide_pass: require('res/images/icons/ic_hide_pass.png'),
+        ic_up_down: require('res/images/icons/ic_up_down.png'),
+        ic_hospital: require('res/images/icons/ic_hospital.png'),
         drug: {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
             ic_cart: require('res/images/icons/drug/ic_cart.png'),

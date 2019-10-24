@@ -69,7 +69,7 @@ class Container extends Component {
                     keyboardShouldPersistTaps="handled">
                     <AnimatedLoader
                         visible={isLoading}
-
+                        
                         overlayColor="rgba(255,255,255,0.4)"
                         source={R.animations.loading}
                         animationStyle={styles.lottie}

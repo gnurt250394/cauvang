@@ -3,7 +3,7 @@ import utils from './utils'
 import { showLoading } from 'library/Loading/LoadingComponent'
 const BASE_URL = 'http://10.0.40.13:8000/api/'
 export const BASE_URI = 'http://10.0.40.13:8000/'
-export const BASE_SOCKET = 'http://10.0.40.13:8000/'
+export const BASE_SOCKET = 'http://10.0.40.13:3001'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -63,6 +63,7 @@ function fetch(url, params) {
     })
     .catch(error => {
       logError(error)
+      return error
     })
 }
 function put(url, params) {
@@ -85,6 +86,7 @@ function put(url, params) {
     })
     .catch(error => {
       logError(error)
+      return error
     })
 }
 function post(url, params) {
@@ -107,6 +109,7 @@ function post(url, params) {
     })
     .catch(error => {
       logError(error)
+      return error
 
     })
 }
@@ -132,6 +135,7 @@ function postForm(url, params) {
     })
     .catch(error => {
       logError(error)
+      return error
 
     })
 }
@@ -156,6 +160,7 @@ function removeRequest(url) {
     })
     .catch(error => {
       logError(error)
+      return error 
     })
 }
 export default {
@@ -163,7 +168,9 @@ export default {
     LOGIN: 'login',
     REGISTER: 'register',
     UPLOAD_IMAGE: 'update_avatar',
-    CHATS:'chats'
+    CHATS: 'chats',
+    VIDEO_CALL: 'event-video-call',
+    LIST_HOSPITAL:'list-hospital'
   },
   fetch,
   put,

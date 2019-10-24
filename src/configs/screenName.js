@@ -7,7 +7,7 @@ export default {
     RegisterScreen:'Đăng ký',
     ForgotPasswordScreen:'Quên mật khẩu',
     SplashScreen:'SplashScreen',
-    AccountScreen:'AccountScreen',
+    AccountScreen:'Tài khoản',
     NotificationScreen:'NotificationScreen',
     IntoScreen:'IntoScreen',
     ScheduleScreen:'Lịch khám',
@@ -20,4 +20,6 @@ export default {
     MessageScreen:'Chi tiết tin nhắn',
     ListDoctorScreen:'Danh sách bác sĩ',
     VideoCallScreen:'VideoCallScreen',
+    ListHospitalScreen:'Danh sách bệnh viện',
+    OtpScreen:'Xác thực số điện thoại'
 }

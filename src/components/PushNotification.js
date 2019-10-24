@@ -1,6 +1,6 @@
 import firebase from 'react-native-firebase';
 import React from 'react'
-import { AppState, View } from 'react-native'
+import { AppState, View, Platform } from 'react-native'
 import LaunchApplication from 'react-native-launch-application';
 import RNCallKeepManager from './RNCallKeepManager'
 import utils from 'configs/utils';
@@ -81,8 +81,16 @@ function sendEventDidDisplayIncommingCall(doctorId, videoCallId) {
 // }
 class PushNotification extends React.Component {
 
-    showBroadcast(notificationId) {
+    showBroadcast() {
+        const notification = new firebase.notifications.Notification()
+            .setNotificationId(utils.guid())
+            .setBody('hong hac')
+            .setTitle('hong hac')
+            .android.setChannelId("honghac-channel")
+            .android.setSmallIcon("ic_launcher")
+            .setSound("default")
 
+        firebase.notifications().displayNotification(notification)
     }
 
 
@@ -91,7 +99,7 @@ class PushNotification extends React.Component {
         const channel = new firebase.notifications.Android.Channel('honghac-channel', 'honghac-channel', firebase.notifications.Android.Importance.Max).setDescription('Hồng hạc Notification channel');
         // Create the channel
         firebase.notifications().android.createChannel(channel);
-        showBroadcast = this.showBroadcast;
+        // showBroadcast = this.showBroadcast();
         firebase.messaging().hasPermission()
             .then(enabled => {
                 console.log('enabled: ', enabled);
@@ -112,7 +120,8 @@ class PushNotification extends React.Component {
                 utils.database.tokenFCM = token;
                 firebase.messaging().subscribeToTopic("honghac_test");
             });
-        RNCallKeepManager.displayIncommingCall(0)
+
+
         this.notificationListener = firebase.notifications().onNotification(this.onNotification.bind(this));
         this.notificationOpenedListener = firebase.notifications().onNotificationOpened(this.onNotificationOpened.bind(this));
         this.notificationInitialListener = firebase.notifications().getInitialNotification().then(this.getInitialNotification.bind(this));
@@ -121,47 +130,45 @@ class PushNotification extends React.Component {
         console.log('onNotification: ', notification);
         console.log('onNotification: ', notification.data);
 
+        if (Platform.OS === 'android') {
 
-        if (!notification || notification.show_in_foreground) {
-            return;
+            const localNotification = new firebase.notifications.Notification({
+                sound: 'default',
+                show_in_foreground: true,
+            })
+                .setNotificationId(notification.notificationId)
+                .setTitle(notification.title)
+                .setSubtitle(notification.subtitle)
+                .setBody(notification.body)
+                .setData(notification.data)
+                .android.setChannelId('honghac-channel') // e.g. the id you chose above
+                .android.setSmallIcon('ic_launcher') // create this icon in Android Studio
+                .android.setColor('#000000') // you can set a color here
+                .android.setPriority(firebase.notifications.Android.Priority.High);
+
+            firebase.notifications()
+                .displayNotification(localNotification)
+                .catch(err => console.error(err));
+
+        } else if (Platform.OS === 'ios') {
+
+            const localNotification = new firebase.notifications.Notification()
+                .setNotificationId(notification.notificationId)
+                .setTitle(notification.title)
+                .setSubtitle(notification.subtitle)
+                .setBody(notification.body)
+                .setData(notification.data)
+                .ios.setBadge(notification.ios.badge);
+
+            firebase.notifications()
+                .displayNotification(localNotification)
+                .catch(err => console.error(err));
+
         }
-        // if (notification.data && notification.data.formId) {
-            const type = Number(notification.data.type)
-            let body = "";
-            let title = "";
-            if (Platform.OS == 'ios') {
-                body = notification.title;
-                title = "Hồng hạc";
-            } else {
-                title = notification.title;
-                body = "";
-            }
-
-
-            let fbNotification = new firebase.notifications.Notification()
-                .setNotificationId(StringUtils.guid())
-                .setBody(body)
-                .setTitle(title)
-                .android.setChannelId("honghac-channel")
-                .android.setSmallIcon("ic_launcher")
-                .android.setPriority(2)
-                .setSound("default")
-                .setData(notification.data);
-
-            firebase.notifications().displayNotification(fbNotification)
-            console.log(fbNotification, 'fbNotification')
-        // }
-        // this.openSignature(notification.data)
-        // if (this.props.userApp.isLogin) {
-        //     firebase.notifications().setBadge(this.props.userApp.unReadNotificationCount + 1);
-        //     this.props.dispatch(redux.getUnreadNotificationCount());
-        // }
-        // else {
-        //     firebase.notifications().setBadge(0);
-        // }
 
     }
     onNotificationOpened(notificationOpen) {
+        RNCallKeepManager.displayIncommingCall(0)
         console.log('onNotificationOpened: ', notificationOpen);
         try {
             firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);
