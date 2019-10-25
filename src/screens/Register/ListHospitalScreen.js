@@ -54,7 +54,7 @@ class ListHospitalScreen extends Component {
     render() {
         const { data, isLoading } = this.state
         return (
-            <Container isLoading={isLoading}>
+            <Container >
                 <FlatList
                     data={data}
                     renderItem={this._renderItem}

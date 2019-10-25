@@ -12,7 +12,9 @@ import Container from 'library/Container';
 import { requestLogin } from 'configs/apis/requestAuthen';
 import status from 'configs/constants';
 import utils from 'configs/utils';
+import { connect } from 'react-redux';
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent';
+import { login } from 'middlewares/actions/login/actionLogin';
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -23,12 +25,11 @@ class LoginScreen extends Component {
   onLogin = async () => {
     let email = this.inputEmail.getValue()
     let password = this.inputPass.getValue()
-    showLoading()
     let res = await requestLogin(email, password)
-    hideLoading()
     if (res && res.code == status.SUCCESS) {
       utils.setItem(utils.KEY.TOKEN, res.token)
       utils.database.token = res.token
+      this.props.dispatch(login(res.data))
       utils.alertSuccess('Đăng nhập thành công')
       NavigationServices.navigate(screenName.HomeStack)
     } else {
@@ -65,7 +66,7 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen;
+export default connect()(LoginScreen);
 
 
 const styles = StyleSheet.create({

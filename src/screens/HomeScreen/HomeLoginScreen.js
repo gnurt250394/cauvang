@@ -8,6 +8,8 @@ import screenName from 'configs/screenName';
 import utils, { height } from 'configs/utils';
 import ActionSheet from 'react-native-actionsheet'
 import PushNotification from 'components/PushNotification';
+import { connect } from 'react-redux';
+
 class HomeLoginScreen extends Component {
     constructor(props) {
         super(props);
@@ -65,6 +67,7 @@ class HomeLoginScreen extends Component {
 
     render() {
         const { listButton } = this.state
+        const { userApp } = this.props
         return (
             <Container style={styles.flex}
                 scrollView={true}
@@ -73,7 +76,7 @@ class HomeLoginScreen extends Component {
                 <View style={styles.containerView1}>
                     <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
                         color: R.colors.defaultColor
-                    }}>{'User'}</ScaleText></ScaleText>
+                    }}>{userApp.fullName}</ScaleText></ScaleText>
                     <View style={styles.containerHeaderTitle}>
                         <ScaleText size={16} style={styles.TxtQuestion} >Hôm nay chỉ số đường huyết của bạn là bao nhiêu?</ScaleText>
                         <View style={styles.containerInput}>
@@ -118,13 +121,16 @@ class HomeLoginScreen extends Component {
                         }
                     }}
                 /> */}
-                <PushNotification/>
+                <PushNotification />
             </Container>
         );
     }
 }
+const mapStateToProps = (state) => ({
+    userApp: state.loginReducer.userApp
+});
 
-export default HomeLoginScreen;
+export default connect(mapStateToProps)(HomeLoginScreen);
 
 
 const styles = StyleSheet.create({

@@ -27,26 +27,9 @@ class Container extends Component {
         super(props);
         this.state = {
             isReady: true,
-            isLoading: true
         };
     }
-    static getDerivedStateFromProps(props, state) {
-        if (props.isLoading !== state.isLoading) {
-            return {
-                isLoading: props.isLoading
-            };
-        }
-        return null
-    }
-    componentDidMount = () => {
-        this.timeOut = setTimeout(() => {
-            this.setState({ isLoading: false })
-        }, 10000)
-    };
-
-    componentWillUnmount = () => {
-        clearTimeout(this.timeOut)
-    }
+  
     render() {
         const { onPressLeft, onPressRight, valueRight, iconRight, valueLeft, iconLeft, scrollView, isLoading, title } = this.props
         const ContainerComponent = scrollView ? ScrollView : View

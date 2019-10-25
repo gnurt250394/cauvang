@@ -10,46 +10,28 @@ class InputOtp extends Component {
         };
     }
     onChangeText1 = (value) => {
-        if (value && value.length >= 1) {
-            this.input2.focus()
-            return
-        }
+        // this.input2.focus()
         this.setState({ value })
 
     }
     onChangeText2 = (value) => {
-        if (value && value.length >= 1) {
-            this.input3.focus()
-            return
-        }
+        this.input3.focus()
         this.setState({ value })
     }
     onChangeText3 = (value) => {
-        if (value && value.length >= 1) {
-            this.input4.focus()
-            return
-        }
+        this.input4.focus()
         this.setState({ value })
     }
     onChangeText4 = (value) => {
-        if (value && value.length >= 1) {
-            this.input5.focus()
-            return
-        }
+        this.input5.focus()
         this.setState({ value })
     }
     onChangeText5 = (value) => {
-        if (value && value.length >= 1) {
-            this.input6.focus()
-            return
-        }
+        this.input6.focus()
         this.setState({ value })
     }
     onChangeText6 = (value) => {
-        if (value && value.length >= 1) {
-            Keyboard.dismiss()
-            return
-        }
+        Keyboard.dismiss()
         this.setState({ value })
     }
     render() {
@@ -59,12 +41,12 @@ class InputOtp extends Component {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <TextInput ref={ref => this.input1 = ref} style={styles.input} onChangeText={this.onChangeText1} />
-                <TextInput ref={ref => this.input2 = ref} style={styles.input} onChangeText={this.onChangeText2} />
-                <TextInput ref={ref => this.input3 = ref} style={styles.input} onChangeText={this.onChangeText3} />
-                <TextInput ref={ref => this.input4 = ref} style={styles.input} onChangeText={this.onChangeText4} />
-                <TextInput ref={ref => this.input5 = ref} style={styles.input} onChangeText={this.onChangeText5} />
-                <TextInput ref={ref => this.input6 = ref} style={styles.input} onChangeText={this.onChangeText6} />
+                <TextInput ref={ref => this.input1 = ref} keyboardType="numeric" maxLength={6} style={styles.input} onChangeText={this.onChangeText1} />
+                {/* <TextInput ref={ref => this.input2 = ref} keyboardType="numeric" maxLength={1} style={styles.input} onChangeText={this.onChangeText2} />
+                <TextInput ref={ref => this.input3 = ref} keyboardType="numeric" maxLength={1} style={styles.input} onChangeText={this.onChangeText3} />
+                <TextInput ref={ref => this.input4 = ref} keyboardType="numeric" maxLength={1} style={styles.input} onChangeText={this.onChangeText4} />
+                <TextInput ref={ref => this.input5 = ref} keyboardType="numeric" maxLength={1} style={styles.input} onChangeText={this.onChangeText5} />
+                <TextInput ref={ref => this.input6 = ref} keyboardType="numeric" maxLength={1} style={styles.input} onChangeText={this.onChangeText6} /> */}
             </View>
         );
     }

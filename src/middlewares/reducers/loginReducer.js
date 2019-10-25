@@ -1,13 +1,27 @@
 import actionTypes from 'middlewares/actions/actionTypes'
+import utils from 'configs/utils'
+import NavigationServices from 'routes/NavigationServices'
+import screenName from 'configs/screenName'
+import firebase from 'react-native-firebase'
 
-const initialState = {}
+const initialState = {
+  userApp: {}
+}
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOGIN:
       return {
         ...state,
-
+        userApp: action.payload
+      }
+    case actionTypes.LOGOUT:
+      utils.removeItem(utils.KEY.TOKEN)
+      NavigationServices.navigate(screenName.AuthenStack)
+      firebase.messaging().deleteToken(utils.database.tokenFCM)
+      return {
+        ...state,
+        userApp: {}
       }
     default:
       return state

@@ -11,6 +11,7 @@ import utils from 'configs/utils'
 import status from 'configs/constants'
 import NavigationServices from 'routes/NavigationServices'
 import screenName from 'configs/screenName'
+import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
 
 class RegisterScreen extends Component {
     state = {
@@ -32,19 +33,16 @@ class RegisterScreen extends Component {
         let params = {
             fullName, password, hospitalId, phone, gender
         }
-        NavigationServices.navigate(screenName.OtpScreen, {
-            params
-        })
-        // this.setState({ isLoading: true }, async () => {
-        //     let res = await requestRegister(fullName, password, hospitalId, phone, gender)
-        //     this.setState({ isLoading: false })
-        //     if (res && res.code == status.SUCCESS) {
-        //         utils.alertSuccess('Đăng ký thành công')
-        //         NavigationServices.pop()
-        //     } else {
-        //         utils.alertDanger(res.message)
-        //     }
-        // })
+        // NavigationServices.navigate(screenName.OtpScreen, {
+        //     params
+        // })   
+        let res = await requestRegister(fullName, password, hospitalId, phone, gender)
+        if (res && res.code == status.SUCCESS) {
+            utils.alertSuccess('Đăng ký thành công')
+            NavigationServices.pop()
+        } else {
+            utils.alertDanger(res.message)
+        }
 
     }
     selectHospital = (hospital) => {

@@ -1,12 +1,12 @@
 import Axios from 'axios'
 import utils from './utils'
-import { showLoading } from 'library/Loading/LoadingComponent'
-const BASE_URL = 'http://192.168.0.104:8000/api/'
-export const BASE_URI = 'http://192.168.0.104:8000/'
-export const BASE_SOCKET = 'http://192.168.0.104:3001'
-// const BASE_URL = 'http://10.0.40.13:8000/api/'
-// export const BASE_URI = 'http://10.0.40.13:8000/'
-// export const BASE_SOCKET = 'http://10.0.40.13:3001'
+import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
+// const BASE_URL = 'http://192.168.0.104:8000/api/'
+// export const BASE_URI = 'http://192.168.0.104:8000/'
+// export const BASE_SOCKET = 'http://192.168.0.104:3001'
+const BASE_URL = 'http://10.0.40.13:8000/api/'
+export const BASE_URI = 'http://10.0.40.13:8000/'
+export const BASE_SOCKET = 'http://10.0.40.13:3001'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -46,25 +46,27 @@ function logResponse(res) {
   console.log('res: ', res)
   console.groupEnd && console.groupEnd()
 }
-function fetch(url, params) {
+function fetch(url, params, loading) {
   let headers = {
     'Content-Type': 'application/json'
   }
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
+  loading == false ? showLoading() : null
   return constants
     .get(url, {
       params, headers, onDownloadProgress: (progressEvent) => {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
-        showLoading(percentCompleted)
       }
     })
     .then(res => {
+      hideLoading()
       logResponse(res)
       return res.data
     })
     .catch(error => {
+      hideLoading()
       logError(error)
       return error
     })
@@ -76,18 +78,20 @@ function put(url, params) {
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
+  showLoading()
   return constants
     .put(url, params, {
       headers, onUploadProgress: (progressEvent) => {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
-        showLoading(percentCompleted)
       }
     })
     .then(res => {
       logResponse(res)
+      hideLoading()
       return res.data
     })
     .catch(error => {
+      hideLoading()
       logError(error)
       return error
     })
@@ -99,18 +103,20 @@ function post(url, params) {
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
+  showLoading()
   return constants
     .post(url, params, {
       headers, onUploadProgress: (progressEvent) => {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
-        showLoading(percentCompleted)
       }
     })
     .then(res => {
+      hideLoading()
       logResponse(res)
       return res.data
     })
     .catch(error => {
+      hideLoading()
       logError(error)
       return error
 
@@ -123,20 +129,21 @@ function postForm(url, params) {
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
-
+  showLoading()
   return constants
     .post(url, params, {
       headers,
       onUploadProgress: (progressEvent) => {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
-        showLoading(percentCompleted)
       }
     })
     .then(res => {
+      hideLoading()
       logResponse(res)
       return res.data
     })
     .catch(error => {
+      hideLoading()
       logError(error)
       return error
 
@@ -149,21 +156,23 @@ function removeRequest(url) {
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
+  showLoading()
   return constants
     .delete(url, {
       headers,
       onUploadProgress: (progressEvent) => {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100;
-        showLoading(percentCompleted)
       }
     })
     .then(res => {
+      hideLoading()
       logResponse(res)
       return res.data
     })
     .catch(error => {
+      hideLoading()
       logError(error)
-      return error 
+      return error
     })
 }
 export default {
@@ -172,8 +181,9 @@ export default {
     REGISTER: 'register',
     UPLOAD_IMAGE: 'update_avatar',
     CHATS: 'chats',
+    USER: 'user',
     VIDEO_CALL: 'event-video-call',
-    LIST_HOSPITAL:'list-hospital'
+    LIST_HOSPITAL: 'list-hospital'
   },
   fetch,
   put,
