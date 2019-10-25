@@ -38,7 +38,7 @@ class LoginScreen extends Component {
   }
 
   onRegister = () => {
-    NavigationServices.navigate(screenName.RegisterScreen)
+    NavigationServices.navigate(screenName.InputPhoneScreen)
   }
   onForgotPass = () => {
     console.log(1111)

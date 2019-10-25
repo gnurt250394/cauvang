@@ -12,12 +12,14 @@ import status from 'configs/constants'
 import NavigationServices from 'routes/NavigationServices'
 import screenName from 'configs/screenName'
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
+import apis from 'configs/apis'
 
 class RegisterScreen extends Component {
     state = {
         isLoading: false,
         hospital: '',
-        gender: ''
+        gender: '',
+        phone: this.props.navigation.getParam('phone', '')
     }
     onRegister = async () => {
         let fullName = this.inputFullName.getValue()
@@ -39,7 +41,7 @@ class RegisterScreen extends Component {
         let res = await requestRegister(fullName, password, hospitalId, phone, gender)
         if (res && res.code == status.SUCCESS) {
             utils.alertSuccess('Đăng ký thành công')
-            NavigationServices.pop()
+            NavigationServices.navigate(screenName.LoginScreen)
         } else {
             utils.alertDanger(res.message)
         }
@@ -54,14 +56,14 @@ class RegisterScreen extends Component {
         })
     }
     render() {
-        const { hospital } = this.state
+        const { hospital, phone } = this.state
         return (
             <Container isLoading={this.state.isLoading}>
                 <InputAuthen label="Họ và tên" reqiure={true} placeholder={"Họ và Tên*"} ref={ref => this.inputFullName = ref} />
                 <View style={styles.containerPhoneGender}>
                     <InputAuthen containerStyle={{
                         width: '70%',
-                    }} placeholder={"Số điện thoại*"} ref={ref => this.inputPhone = ref} keyboardType="numeric" />
+                    }} placeholder={"Số điện thoại*"} value={phone} ref={ref => this.inputPhone = ref} keyboardType="numeric" />
                     <TouchableOpacity style={styles.buttonGender}>
                         <Text>Giới tính</Text>
                         <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />

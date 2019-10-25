@@ -6,6 +6,7 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
 //           packages.add(new RNCViewPagerPackage());
             packages.add(new RNFirebaseNotificationsPackage());
             packages.add(new RNFirebaseMessagingPackage());
+            packages.add(new RNFirebaseAuthPackage());
             return packages;
         }
 

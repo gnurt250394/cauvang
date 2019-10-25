@@ -6,6 +6,7 @@ import { fromLeft, zoomIn, zoomOut ,fadeIn,fadeOut,flipX,flipY,fromBottom,fromRi
 import RegisterScreen from 'screens/Register/RegisterScreen'
 import ForgotPassScreen from 'screens/ForgotPassWord/ForgotPassScreen';
 import ListHospitalScreen from 'screens/Register/ListHospitalScreen';
+import InputPhone from 'screens/Register/InputPhone';
 import OtpScreen from 'screens/Register/OtpScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
@@ -27,6 +28,7 @@ const authenStack = createStackNavigator({
     [screenName.RegisterScreen]: { screen: RegisterScreen },
     [screenName.ForgotPasswordScreen]: { screen: ForgotPassScreen },
     [screenName.ListHospitalScreen]: { screen: ListHospitalScreen },
+    [screenName.InputPhoneScreen]: { screen: InputPhone },
     [screenName.OtpScreen]: { screen: OtpScreen },
 }, {
     initialRouteName: screenName.loginScreen,

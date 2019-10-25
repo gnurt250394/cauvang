@@ -21,5 +21,6 @@ export default {
     ListDoctorScreen:'Danh sách bác sĩ',
     VideoCallScreen:'VideoCallScreen',
     ListHospitalScreen:'Danh sách bệnh viện',
-    OtpScreen:'Xác thực số điện thoại'
+    InputPhoneScreen:'Xác thực số điện thoại',
+    OtpScreen:'OtpScreen',
 }

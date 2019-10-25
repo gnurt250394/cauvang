@@ -5,7 +5,7 @@ import R from 'res/R';
 import { showMessage } from 'react-native-flash-message';
 class InputAuthen extends Component {
     state = {
-        value: ''
+        value: this.props.value || ''
     }
 
     onChangeText = (value) => {
@@ -27,12 +27,12 @@ class InputAuthen extends Component {
         return this.state.value
     }
     render() {
-        const { placeholder, style, label, reqiure,containerStyle, ...otherProps } = this.props
+        const { placeholder, style, label, reqiure, containerStyle, ...otherProps } = this.props
         const { value } = this.state
         return (
             <View style={[styles.container, containerStyle]}>
                 <Text style={{
-                    fontFamily:R.fonts.Bold
+                    fontFamily: R.fonts.Bold
                 }}>{label} {reqiure && <Text style={{
                     color: R.colors.red
                 }}>(*)</Text>}</Text>
@@ -57,7 +57,7 @@ InputAuthen.prototype.props = {
     style: PropTypes.object,
     label: PropTypes.string,
     reqiure: PropTypes.string,
-    containerStyle:PropTypes.object
+    containerStyle: PropTypes.object
 }
 export default InputAuthen
 

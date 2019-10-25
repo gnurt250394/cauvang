@@ -1,12 +1,12 @@
 import Axios from 'axios'
 import utils from './utils'
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
-// const BASE_URL = 'http://192.168.0.104:8000/api/'
-// export const BASE_URI = 'http://192.168.0.104:8000/'
-// export const BASE_SOCKET = 'http://192.168.0.104:3001'
-const BASE_URL = 'http://10.0.40.13:8000/api/'
-export const BASE_URI = 'http://10.0.40.13:8000/'
-export const BASE_SOCKET = 'http://10.0.40.13:3001'
+const BASE_URL = 'http://192.168.0.104:8000/api/'
+export const BASE_URI = 'http://192.168.0.104:8000/'
+export const BASE_SOCKET = 'http://192.168.0.104:3001'
+// const BASE_URL = 'http://10.0.40.13:8000/api/'
+// export const BASE_URI = 'http://10.0.40.13:8000/'
+// export const BASE_SOCKET = 'http://10.0.40.13:3001'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -53,7 +53,7 @@ function fetch(url, params, loading) {
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
-  loading == false ? showLoading() : null
+  !loading  ? showLoading() : null
   return constants
     .get(url, {
       params, headers, onDownloadProgress: (progressEvent) => {
@@ -183,7 +183,8 @@ export default {
     CHATS: 'chats',
     USER: 'user',
     VIDEO_CALL: 'event-video-call',
-    LIST_HOSPITAL: 'list-hospital'
+    LIST_HOSPITAL: 'list-hospital',
+    CHECK_PHONE:'check-phone'
   },
   fetch,
   put,
