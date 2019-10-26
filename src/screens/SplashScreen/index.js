@@ -36,7 +36,7 @@ class SplashScreen extends Component {
   getData = async () => {
     let res = await apis.fetch(apis.PATH.USER, {}, true)
     if (res && res.code == 200) {
-      this.props.dispatch(login(res.data))
+      this.props.dispatch(login(res.data, res.count))
     } else {
       this.props.dispatch(logout())
     }

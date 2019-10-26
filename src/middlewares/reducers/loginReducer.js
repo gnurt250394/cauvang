@@ -5,7 +5,8 @@ import screenName from 'configs/screenName'
 import firebase from 'react-native-firebase'
 
 const initialState = {
-  userApp: {}
+  userApp: {},
+  count: 0
 }
 
 const loginReducer = (state = initialState, action) => {
@@ -13,7 +14,8 @@ const loginReducer = (state = initialState, action) => {
     case actionTypes.LOGIN:
       return {
         ...state,
-        userApp: action.payload
+        userApp: action.payload,
+        count: action.count
       }
     case actionTypes.LOGOUT:
       utils.removeItem(utils.KEY.TOKEN)
@@ -21,7 +23,8 @@ const loginReducer = (state = initialState, action) => {
       firebase.messaging().deleteToken(utils.database.tokenFCM)
       return {
         ...state,
-        userApp: {}
+        userApp: {},
+        count: 0
       }
     default:
       return state

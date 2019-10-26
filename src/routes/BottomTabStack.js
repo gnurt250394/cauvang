@@ -9,6 +9,7 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import AccountScreen from 'screens/AccountScreen';
 import NotificationScreen from 'screens/NotificationScreen';
 import utils from 'configs/utils';
+import IconTab from 'components/IconTab';
 
 export default createBottomTabNavigator(
     {
@@ -40,7 +41,7 @@ export default createBottomTabNavigator(
             screen: NotificationScreen,
             navigationOptions: {
                 title: 'Thông báo',
-                tabBarIcon: ({ tintColor }) => <Image source={R.images.icons.home.ic_noti} style={[styles.imageTab, { tintColor }]} />,
+                tabBarIcon: ({ tintColor }) => <IconTab tintColor={tintColor} />,
                 tabBarOnPress: ({ navigation, defaultHandler }) => {
                     if (!utils.database.token) {
                         utils.alertWarn("Vui lòng đăng nhập")

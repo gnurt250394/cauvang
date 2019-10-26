@@ -88,7 +88,10 @@ export default class InputPhone extends Component {
                 // this.sendOtpWithFireBase()
                 // this.autoConfirmOtp()
                 // this.form.refs.textInput.setNativeProps({ text: '' });
-                NavigationServices.navigate(screenName.OtpScreen)
+                NavigationServices.navigate(screenName.OtpScreen, {
+                    phone: this.form.getValues().phoneNumber,
+                    callingCode: '+' + this.state.country.callingCode
+                })
             } else {
                 utils.alertDanger(res.message)
             }
@@ -102,75 +105,7 @@ export default class InputPhone extends Component {
 
     }
 
-    // xác thực số điện thoại bằng firebase
-    sendOtpWithFireBase = () => {
-        firebase.auth().signInWithPhoneNumber(this.form.getValues().phoneNumber)
-            .then(confirmResult => {
-                if (confirmResult) {
-                    this.form.refs.textInput.focus();
-                    this.setState({ confirmResult })
-                }
 
-            })
-            .catch(error => {
-            });
-    }
-
-
-    // xác thực mã otp từ client gửi lên firebase
-    confirmCode = () => {
-        const { otp_code, confirmResult } = this.state;
-        // showLoading()
-        let { code } = this.form.getValues()
-        if (code.length == 0) {
-            utils.alertWarn('Mã xác thực không được để trống')
-            return
-        }
-        NavigationServices.navigate(screenName.RegisterScreen, {
-            phone: this.form.getValues().phoneNumber
-        })
-        if (confirmResult) {
-            confirmResult.confirm(this.form.getValues().code)
-                .then((user) => {
-                    hideLoading()
-                    if (user) {
-
-                        NavigationServices.navigate(screenName.RegisterScreen, {
-                            phone: this.form.getValues().phoneNumber
-                        })
-                    }
-                })
-                .catch(error => {
-                    hideLoading()
-                    if (error) {
-                        utils.alertDanger('Mã xác thực không đúng hoặc đã hết hạn')
-                        // nếu xác thực mã thất bại thì show thông báo
-                    }
-                });
-        }
-    };
-
-    autoConfirmOtp = () => {
-        const phone = this.form.getValues().phoneNumber
-        this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-
-            if (user) {
-                // thành công đi nhảy vào api đăng ký tài khoản mật khẩu
-                NavigationServices.navigate(screenName.RegisterScreen, {
-                    phone: this.form.getValues().phoneNumber
-                })
-
-            }
-        });
-    }
-
-
-
-    componentWillUnmount() {
-        firebase.auth().signOut()
-        if (this.interval) clearInterval(this.interval);
-        if (this.unsubscribe) this.unsubscribe();
-    }
 
 
     _onChangeText = (val) => {
@@ -290,7 +225,7 @@ export default class InputPhone extends Component {
                             maxLength={this.state.enterCode ? 6 : 10}
                             onSubmitEditing={this._getSubmitAction} />
 
-                       
+
                     </View>
 
                     <TouchableOpacity style={styles.button} onPress={this._getSubmitAction}>

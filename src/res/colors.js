@@ -14,5 +14,6 @@ export default {
     pink2:'#f57096',
     pink3:'#f788a7',
     pink4:'#fab7ca',
-    gray:'#777'
+    gray:'#777',
+    blue:'#3161AD'
 }

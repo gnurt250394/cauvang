@@ -1,9 +1,10 @@
 import actionTypes from "../actionTypes"
 
-const _login = (payload) => {
+const _login = (payload, count) => {
     return {
         type: actionTypes.LOGIN,
-        payload
+        payload,
+        count
     }
 }
 const _logout = () => {
@@ -11,9 +12,9 @@ const _logout = () => {
         type: actionTypes.LOGOUT
     }
 }
-export const login = (payload) => {
+export const login = (payload, count) => {
     return (dispatch, getState) => {
-        dispatch(_login(payload))
+        dispatch(_login(payload, count))
     }
 }
 

@@ -37,45 +37,107 @@ class OtpScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      otp_code: '',
+      confirmResult: null,
+      phone: this.props.navigation.getParam('phone', ""),
+      callingCode: this.props.navigation.getParam('callingCode', ""),
     };
-  }
-  _onChangeText = (val) => {
-
-    if (!this.state.enterCode) return;
-    if (val.length === MAX_LENGTH_CODE)
-      this.confirmCode();
   }
 
   _tryAgain = () => {
     NavigationServices.pop()
   }
 
-  _getSubmitAction = () => {
-    this.state.enterCode ? this.confirmCode() : this._getCode();
-  }
-
-  _changeCountry = (country) => {
-
-    this.setState({ country });
-    this.form.refs.textInput.focus();
-  }
-
   _renderFooter = () => {
 
-      return (
-        <View>
-          <Text style={styles.wrongNumberText} onPress={this._tryAgain}>
-            Enter the wrong number or need a new code?
+    return (
+      <View>
+        <Text style={styles.wrongNumberText} onPress={this._tryAgain}>
+          Enter the wrong number or need a new code?
       </Text>
-        </View>
-      );
+      </View>
+    );
 
-   
 
+
+  }
+  componentDidMount = () => {
+    this.sendOtpWithFireBase()
+    this.autoConfirmOtp()
+  };
+
+  // xác thực số điện thoại bằng firebase
+  sendOtpWithFireBase = () => {
+    let { phone, callingCode } = this.state
+    console.log('phone: ', phone);
+    firebase.auth().signInWithPhoneNumber('+' + callingCode + phone)
+      .then(confirmResult => {
+        console.log('confirmResult: ', confirmResult);
+        if (confirmResult) {
+          this.setState({ confirmResult })
+        }
+
+      })
+      .catch(error => {
+        console.log('error: ', error);
+      });
   }
 
 
+  // xác thực mã otp từ client gửi lên firebase
+  confirmCode = (code) => () => {
+    const { confirmResult, phone } = this.state;
+    showLoading()
+    if (code.length == 0) {
+      utils.alertWarn('Mã xác thực không được để trống')
+      return
+    }
+    NavigationServices.navigate(screenName.RegisterScreen, {
+      phone
+    })
+    if (confirmResult) {
+      confirmResult.confirm(code)
+        .then((user) => {
+          console.log('user: ', user);
+          hideLoading()
+          if (user) {
+
+            NavigationServices.navigate(screenName.RegisterScreen, {
+              phone
+            })
+          }
+        })
+        .catch(error => {
+          hideLoading()
+          if (error) {
+            utils.alertDanger('Mã xác thực không đúng hoặc đã hết hạn')
+            // nếu xác thực mã thất bại thì show thông báo
+          }
+        });
+    }
+  };
+
+  autoConfirmOtp = () => {
+    this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+      console.log('user: ', user);
+
+      if (user) {
+        // thành công đi nhảy vào api đăng ký tài khoản mật khẩu
+        NavigationServices.navigate(screenName.RegisterScreen, {
+          phone: this.state.phone
+        })
+
+      }
+    });
+  }
+
+
+
+  componentWillUnmount() {
+    firebase.auth().signOut()
+    if (this.interval) clearInterval(this.interval);
+    if (this.unsubscribe) this.unsubscribe();
+  }
   render() {
     let headerText = `What's your verification code?`;
     let buttonText = 'Verify confirmation code';
@@ -104,13 +166,15 @@ class OtpScreen extends Component {
             autoFocusOnLoad
             codeInputFieldStyle={styles.underlineStyleBase}
             codeInputHighlightStyle={styles.underlineStyleHighLighted}
-            onCodeFilled={(code => {
+            onCodeFilled={code => {
+              this.setState({ otp_code: code })
+              this.confirmCode(code)
               console.log(`Code is ${code}, you are good to go!`)
-            })}
+            }}
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={this._getSubmitAction}>
+        <TouchableOpacity style={styles.button} onPress={this.confirmCode(this.state.otp_code)}>
           <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>
 
