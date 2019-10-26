@@ -29,7 +29,7 @@ class LoginScreen extends Component {
     if (res && res.code == status.SUCCESS) {
       utils.setItem(utils.KEY.TOKEN, res.token)
       utils.database.token = res.token
-      this.props.dispatch(login(res.data))
+      this.props.dispatch(login(res.data, res.count))
       utils.alertSuccess('Đăng nhập thành công')
       NavigationServices.navigate(screenName.HomeStack)
     } else {

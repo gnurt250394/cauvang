@@ -23,4 +23,5 @@ export default {
     ListHospitalScreen:'Danh sách bệnh viện',
     InputPhoneScreen:'Xác thực số điện thoại',
     OtpScreen:'OtpScreen',
+    TestScreen:'TestScreen',
 }

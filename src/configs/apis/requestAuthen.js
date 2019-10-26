@@ -15,7 +15,8 @@ export const requestRegister = (fullName, password, hospitalId, phone, gender) =
     password,
     phone,
     hospitalId,
-    gender
+    gender,
+    token: utils.database.tokenFCM
   }
   return apis.post(apis.PATH.REGISTER, params)
 }

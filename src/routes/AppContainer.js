@@ -14,7 +14,6 @@ import IntroScreen from 'screens/Intro/IntroScreen';
 const appNavigator = createAnimatedSwitchNavigator({
   [screenName.SplashScreen]: { screen: SplashScreen },
   [screenName.HomeStack]: { screen: HomeStack },
-  [screenName.AuthenStack]: { screen: AuthenStack },
 }, {
   transition: (
     <Transition.Together>

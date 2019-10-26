@@ -26,6 +26,11 @@ const loginReducer = (state = initialState, action) => {
         userApp: {},
         count: 0
       }
+    case actionTypes.NOTIFICATION:
+      return {
+        ...state,
+        count: action.count
+      }
     default:
       return state
   }

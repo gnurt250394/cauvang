@@ -27,14 +27,14 @@ export default createBottomTabNavigator(
             navigationOptions: {
                 title: 'Tài khoản',
                 tabBarIcon: ({ tintColor }) => <Image source={R.images.icons.home.ic_account} style={[styles.imageTab, { tintColor }]} />,
-                tabBarOnPress: ({ navigation, defaultHandler }) => {
-                    if (!utils.database.token) {
-                        utils.alertWarn("Vui lòng đăng nhập")
-                        return
-                    }
-                    navigation.navigate(screenName.AccountScreen)
+                // tabBarOnPress: ({ navigation, defaultHandler }) => {
+                //     if (!utils.database.token) {
+                //         utils.alertWarn("Vui lòng đăng nhập")
+                //         return
+                //     }
+                //     navigation.navigate(screenName.AccountScreen)
 
-                }
+                // }
             }
         },
         [screenName.NotificationScreen]: {

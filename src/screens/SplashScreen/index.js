@@ -17,7 +17,6 @@ class SplashScreen extends Component {
   }
   componentDidMount = async () => {
     firebase.messaging().getToken().then(res => {
-
       utils.database.tokenFCM = res
     })
     let token = await utils.getItem(utils.KEY.TOKEN)

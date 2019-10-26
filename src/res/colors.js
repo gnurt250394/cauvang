@@ -3,6 +3,15 @@ export default {
     secondColor:'#FBC5D8',
     buttonColor:'rgb(253,179,3)',
     black:'rgb(0,0,0)',
+    black1:'#111',
+    black2:'#222',
+    black3:'#333',
+    black4:'#444',
+    black5:'#555',
+    black6:'#666',
+    black7:'#777',
+    black8:'#888',
+    black9:'#999',
     transparent:'rgba(0,0,0,0.5)',
     textColor:'rgb(6,112,90)',
     drawerColor:'rgb(61,86,84)',
@@ -14,6 +23,6 @@ export default {
     pink2:'#f57096',
     pink3:'#f788a7',
     pink4:'#fab7ca',
-    gray:'#777',
+    gray:'#808080',
     blue:'#3161AD'
 }

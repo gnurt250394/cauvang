@@ -15,9 +15,14 @@ class IconTab extends Component {
         return (
             <View>
                 <Image source={R.images.icons.home.ic_noti} style={[styles.imageTab, { tintColor }]} />
-                <View style={styles.containerIcon}>
-                    <Text style={styles.txtCOunt}>{count > 99 ? '99' : count}</Text>
-                </View>
+                {
+                    count > 0 ?
+                        <View style={styles.containerIcon}>
+                            <Text style={styles.txtCOunt}>{count > 99 ? '99' : count}</Text>
+                        </View>
+                        : null
+
+                }
             </View>
         );
     }

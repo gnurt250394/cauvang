@@ -13,6 +13,8 @@ import NavigationServices from 'routes/NavigationServices'
 import screenName from 'configs/screenName'
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
 import apis from 'configs/apis'
+import { login } from 'middlewares/actions/login/actionLogin'
+import { connect } from 'react-redux';
 
 class RegisterScreen extends Component {
     state = {
@@ -41,7 +43,9 @@ class RegisterScreen extends Component {
         let res = await requestRegister(fullName, password, hospitalId, phone, gender)
         if (res && res.code == status.SUCCESS) {
             utils.alertSuccess('Đăng ký thành công')
-            NavigationServices.navigate(screenName.LoginScreen)
+            NavigationServices.navigate(screenName.TestScreen)
+            this.props.dispatch(login(res.data))
+            utils.setItem(utils.KEY.TOKEN, res.token)
         } else {
             utils.alertDanger(res.message)
         }
@@ -84,7 +88,7 @@ class RegisterScreen extends Component {
     }
 }
 
-export default RegisterScreen
+export default connect()(RegisterScreen)
 
 
 const styles = StyleSheet.create({

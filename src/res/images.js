@@ -8,6 +8,10 @@ export default {
         ic_hide_pass: require('res/images/icons/ic_hide_pass.png'),
         ic_up_down: require('res/images/icons/ic_up_down.png'),
         ic_hospital: require('res/images/icons/ic_hospital.png'),
+        ic_notification: require('res/images/icons/ic_notification.png'),
+        ic_user: require('res/images/icons/ic_user.png'),
+        ic_next_arrow: require('res/images/icons/ic_next_arrow.png'),
+        ic_back_arrow: require('res/images/icons/ic_back_arrow.png'),
         drug: {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
             ic_cart: require('res/images/icons/drug/ic_cart.png'),
