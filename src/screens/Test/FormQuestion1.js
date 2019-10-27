@@ -35,56 +35,58 @@ class FormQuestion1 extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.txtDate}>Ngày tháng năm sinh</Text>
-                <DatePicker
-                    style={{ width: width - 20 }}
-                    date={this.state.date}
-                    mode="date"
-                    placeholder="dd/mm/yyyy"
-                    format="DD/MM/YYYY"
-                    confirmBtnText="Xác nhận"
-                    cancelBtnText="Hủy"
-                    showIcon={false}
-                    customStyles={{
-                        dateInput: styles.dateInput,
-                        placeholderText: {
-                            color: R.colors.black7
-                        }
-                        // ... You can check the source to find the other keys.
-                    }}
-                    onDateChange={(date) => { this.setState({ date }) }}
-                />
-                <View style={styles.containerHeightWeight}>
-                    <View style={styles.width40}>
-                        <Text style={styles.txtHeight}>Chiều cao</Text>
-                        <TextInput
-                            keyboardType="numeric"
-                            style={styles.inputHeight}
-                            placeholder="cm"
-                            onChangeText={this.onChangeText('height')}
-                        />
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.txtDate}>Ngày tháng năm sinh</Text>
+                    <DatePicker
+                        style={{ width: width - 20 }}
+                        date={this.state.date}
+                        mode="date"
+                        placeholder="dd/mm/yyyy"
+                        format="DD/MM/YYYY"
+                        confirmBtnText="Xác nhận"
+                        cancelBtnText="Hủy"
+                        showIcon={false}
+                        customStyles={{
+                            dateInput: styles.dateInput,
+                            placeholderText: {
+                                color: R.colors.black7
+                            }
+                            // ... You can check the source to find the other keys.
+                        }}
+                        onDateChange={(date) => { this.setState({ date }) }}
+                    />
+                    <View style={styles.containerHeightWeight}>
+                        <View style={styles.width40}>
+                            <Text style={styles.txtHeight}>Chiều cao</Text>
+                            <TextInput
+                                keyboardType="numeric"
+                                style={styles.inputHeight}
+                                placeholder="cm"
+                                onChangeText={this.onChangeText('height')}
+                            />
+                        </View>
+                        <View style={styles.width40}>
+                            <Text style={styles.txtHeight}>Cân nặng</Text>
+                            <TextInput
+                                keyboardType="numeric"
+                                style={styles.inputHeight}
+                                placeholder="kg"
+                                onChangeText={this.onChangeText('weight')}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.width40}>
-                        <Text style={styles.txtHeight}>Cân nặng</Text>
-                        <TextInput
-                            keyboardType="numeric"
-                            style={styles.inputHeight}
-                            placeholder="kg"
-                            onChangeText={this.onChangeText('weight')}
-                        />
-                    </View>
+                    {
+                        BMI ? <Text style={styles.txtBMI}>BMI của bạn là <Text style={{ color: R.colors.white }}>({BMI})</Text></Text> : null
+                    }
                 </View>
-                {
-                    BMI ? <Text style={styles.txtBMI}>BMI của bạn là <Text style={{ color: R.colors.white }}>({BMI})</Text></Text> : null
-                }
-
                 <View style={styles.containerPage}>
+                
                     <TouchableOpacity
                         onPress={this.props.onPressBack}
                         style={styles.button}>
-                        <Image source={R.images.icons.ic_back_arrow} style={styles.imageBack} />
+                        <Image source={R.images.icons.ic_back_arrow} style={[styles.imageBack,{tintColor:index == 0 ? R.colors.gray:R.colors.white}]} />
                     </TouchableOpacity>
-                    <Text style={styles.txtBetween}>{parseInt(index + 1)}/{length}</Text>
+                    <Text style={styles.txtBetween}>{index + 1}/{length}</Text>
                     <TouchableOpacity
                         onPress={this.props.onPress}
                         style={styles.button}>
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         flex: 1,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     txtDate: {
         paddingBottom: 6,
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     imageBack: {
         height: 22,
         width: 22,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     containerPage: {
         flexDirection: 'row',

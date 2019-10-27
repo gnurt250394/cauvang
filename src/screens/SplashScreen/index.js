@@ -28,7 +28,7 @@ class SplashScreen extends Component {
       }, 1000)
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate(screenName.AuthenStack)
+        this.props.navigation.navigate(screenName.LoginScreen)
       }, 1000)
     }
   };

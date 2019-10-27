@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image, FlatList } from 'react-native';
 import ScaleText from 'components/TextScale';
 import DatePicker from 'react-native-datepicker'
 import R from 'res/R';
 import { width } from 'configs/utils';
+import { CheckBox } from 'native-base'
 class FormQuestion2 extends Component {
     constructor(props) {
         super(props);
@@ -11,7 +12,10 @@ class FormQuestion2 extends Component {
             date: '',
             height: '',
             weight: '',
-            BMI: ''
+            BMI: '',
+            checked1: false,
+            checked2: false,
+            checked3: false
         };
     }
     onChangeText = (state) => (value) => {
@@ -29,79 +33,122 @@ class FormQuestion2 extends Component {
         })
 
     }
+    onPressCheck = (data, e) => () => {
+        data.forEach(item => {
+            if (item._id == e._id) {
+                item.checked = true
+            } else {
+                item.checked = false
+            }
+        })
+        this.props.onPressCheck && this.props.onPressCheck(data, e)
+    }
     render() {
         const { BMI } = this.state
-        const { index, length } = this.props
+        const { index, length, item } = this.props
         return (
             <View style={styles.container}>
-                <Text style={styles.txtDate}>Ngày tháng năm sinh</Text>
-                <DatePicker
-                    style={{ width: width - 20 }}
-                    date={this.state.date}
-                    mode="date"
-                    placeholder="dd/mm/yyyy"
-                    format="DD/MM/YYYY"
-                    confirmBtnText="Xác nhận"
-                    cancelBtnText="Hủy"
-                    showIcon={false}
-                    customStyles={{
-                        dateInput: styles.dateInput,
-                        placeholderText: {
-                            color: R.colors.black7
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.txtDate}>{item.name}</Text>
+                    <View >
+                        {item.anwser && item.anwser.length > 0 ?
+                            item.anwser.map((e, i) => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={this.onPressCheck(item.anwser, e)}
+                                        key={i} style={styles.buttonChecked}>
+                                        <View style={styles.containerChecked}>
+                                            {
+                                                e.checked ? <Image source={R.images.icons.ic_checked} style={styles.iconChecked} /> : null
+                                            }
+                                        </View>
+                                        <Text style={styles.TxtAnwser}>{e.name}</Text>
+                                    </TouchableOpacity>
+                                )
+                            }) : null
                         }
-                        // ... You can check the source to find the other keys.
-                    }}
-                    onDateChange={(date) => { this.setState({ date }) }}
-                />
-                <View style={styles.containerHeightWeight}>
-                    <View style={styles.width40}>
-                        <Text style={styles.txtHeight}>Chiều cao</Text>
-                        <TextInput
-                            keyboardType="numeric"
-                            style={styles.inputHeight}
-                            placeholder="cm"
-                            onChangeText={this.onChangeText('height')}
-                        />
-                    </View>
-                    <View style={styles.width40}>
-                        <Text style={styles.txtHeight}>Cân nặng</Text>
-                        <TextInput
-                            keyboardType="numeric"
-                            style={styles.inputHeight}
-                            placeholder="kg"
-                            onChangeText={this.onChangeText('weight')}
-                        />
+
+
                     </View>
                 </View>
+                {/**footer */}
                 {
-                    BMI ? <Text style={styles.txtBMI}>BMI của bạn là <Text style={{ color: R.colors.white }}>({BMI})</Text></Text> : null
-                }
+                    length - 1 == index ?
+                        <TouchableOpacity
+                        onPress={this.props.onSend}
+                        style={styles.buttonSend}>
+                            <Text style={styles.txtSend}>Gửi</Text>
+                        </TouchableOpacity>
+                        :
+                        null
 
+                }
                 <View style={styles.containerPage}>
                     <TouchableOpacity
                         onPress={this.props.onPressBack}
                         style={styles.button}>
                         <Image source={R.images.icons.ic_back_arrow} style={styles.imageBack} />
                     </TouchableOpacity>
-                    <Text style={styles.txtBetween}>{parseInt(index + 1)}/{length}</Text>
+                    <Text style={styles.txtBetween}>{index + 1}/{length}</Text>
                     <TouchableOpacity
                         onPress={this.props.onPress}
                         style={styles.button}>
-                        <Image source={R.images.icons.ic_next_arrow} style={styles.imageBack} />
+                        <Image source={R.images.icons.ic_next_arrow} style={[styles.imageBack, { tintColor: index == length - 1 ? R.colors.gray : R.colors.white }]} />
                     </TouchableOpacity>
                 </View>
+
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    TxtAnwser: {
+        paddingLeft: 10,
+        color: R.colors.white,
+        fontFamily: R.fonts.BlackItalic
+    },
+    buttonChecked: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6
+    },
+    iconChecked: {
+        height: 17,
+        width: 17,
+        resizeMode: 'contain'
+    },
+    containerChecked: {
+        backgroundColor: R.colors.white,
+        height: 20,
+        width: 20,
+        borderRadius: 3,
+        borderColor: R.colors.gray,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    txtSend: {
+        fontFamily: R.fonts.Bold,
+        color: R.colors.textColor
+    },
+    buttonSend: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        backgroundColor: R.colors.white,
+        width: '30%',
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginTop: 15
+    },
     container: {
         padding: 10,
         flex: 1,
     },
     txtDate: {
-        paddingBottom: 6,
+        paddingBottom: 10,
         color: R.colors.white,
         fontFamily: R.fonts.Bold
     },

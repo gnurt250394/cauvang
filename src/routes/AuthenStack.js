@@ -9,6 +9,7 @@ import ListHospitalScreen from 'screens/Register/ListHospitalScreen';
 import InputPhone from 'screens/Register/InputPhone';
 import OtpScreen from 'screens/Register/OtpScreen';
 import TestScreen from 'screens/Test/TestScreen';
+import TestResultScreen from 'screens/Test/TestResultScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -32,6 +33,7 @@ const authenStack = createStackNavigator({
     [screenName.InputPhoneScreen]: { screen: InputPhone },
     [screenName.OtpScreen]: { screen: OtpScreen },
     [screenName.TestScreen]: { screen: TestScreen },
+    [screenName.TestResultScreen]: { screen: TestResultScreen },
 }, {
     initialRouteName: screenName.TestScreen,
     headerMode: 'none',

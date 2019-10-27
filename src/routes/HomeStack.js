@@ -15,6 +15,7 @@ import ConfirmBookingScreen from 'screens/drug/ConfirmBookingScreen';
 import MessageScreen from 'screens/community/MessageScreen';
 import ListDoctorScreen from 'screens/community/ListDoctorScreen';
 import CallVideoScreen from 'screens/community/CallVideoScreen';
+import ReportScreen from 'screens/Report/ReportScreen';
 import authenStack from './AuthenStack';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
@@ -49,6 +50,7 @@ const homeStack = createStackNavigator({
     [screenName.ListDoctorScreen]: { screen: ListDoctorScreen },
     [screenName.VideoCallScreen]: { screen: CallVideoScreen },
     [screenName.AuthenStack]: { screen: authenStack },
+    [screenName.ReportScreen]: { screen: ReportScreen },
 
 }, {
     initialRouteName: screenName.AuthenStack,

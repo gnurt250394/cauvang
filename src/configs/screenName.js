@@ -24,4 +24,6 @@ export default {
     InputPhoneScreen:'Xác thực số điện thoại',
     OtpScreen:'OtpScreen',
     TestScreen:'TestScreen',
+    ReportScreen:'ReportScreen',
+    TestResultScreen:'Theo dõi sức khỏe',
 }

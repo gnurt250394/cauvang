@@ -31,7 +31,7 @@ class LoginScreen extends Component {
       utils.database.token = res.token
       this.props.dispatch(login(res.data, res.count))
       utils.alertSuccess('Đăng nhập thành công')
-      NavigationServices.navigate(screenName.HomeStack)
+      NavigationServices.navigate(screenName.HomeScreen)
     } else {
       utils.alertDanger(res.message)
     }

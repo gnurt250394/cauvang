@@ -188,6 +188,8 @@ export default {
     NOTIFICATION:'list-notification',
     UPDATE_NOTIFICATION:'update-notification',
     COUNT_NOTIFICATION:'count-notification',
+    QUESTION:'list-questions',
+    ADD_FOLLOW:'add-follows'
   },
   fetch,
   put,

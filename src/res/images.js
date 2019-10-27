@@ -12,6 +12,7 @@ export default {
         ic_user: require('res/images/icons/ic_user.png'),
         ic_next_arrow: require('res/images/icons/ic_next_arrow.png'),
         ic_back_arrow: require('res/images/icons/ic_back_arrow.png'),
+        ic_checked: require('res/images/icons/ic_checked.png'),
         drug: {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
             ic_cart: require('res/images/icons/drug/ic_cart.png'),
