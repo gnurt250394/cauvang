@@ -42,6 +42,7 @@ class RegisterScreen extends Component {
         // })   
         let res = await requestRegister(fullName, password, hospitalId, phone, gender)
         if (res && res.code == status.SUCCESS) {
+            utils.database.token = res.token
             utils.alertSuccess('Đăng ký thành công')
             NavigationServices.navigate(screenName.TestScreen)
             this.props.dispatch(login(res.data))
@@ -51,6 +52,13 @@ class RegisterScreen extends Component {
         }
 
     }
+    componentDidMount = () => {
+        let fullName = ''
+        let name = fullName.substring(fullName.lastIndexOf(" ") + 1)
+
+        console.log('name: ', name);
+    };
+
     selectHospital = (hospital) => {
         this.setState({ hospital })
     }
@@ -67,7 +75,7 @@ class RegisterScreen extends Component {
                 <View style={styles.containerPhoneGender}>
                     <InputAuthen containerStyle={{
                         width: '70%',
-                    }} placeholder={"Số điện thoại*"} value={phone} ref={ref => this.inputPhone = ref} keyboardType="numeric" />
+                    }} placeholder={"Số điện thoại*"} editable={false} value={phone} ref={ref => this.inputPhone = ref} keyboardType="numeric" />
                     <TouchableOpacity style={styles.buttonGender}>
                         <Text>Giới tính</Text>
                         <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />

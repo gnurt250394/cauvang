@@ -44,7 +44,7 @@ class TestResultScreen extends Component {
                             : null
 
                     }
-
+                    
                 </View>
             </Container>
         );

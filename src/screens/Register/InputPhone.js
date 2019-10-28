@@ -122,7 +122,7 @@ export default class InputPhone extends Component {
     }
 
     _getSubmitAction = () => {
-        this.state.enterCode ? this.confirmCode() : this._getCode();
+        this._getCode();
     }
 
     _changeCountry = (country) => {
@@ -144,7 +144,7 @@ export default class InputPhone extends Component {
 
         return (
             <View>
-                <Text style={styles.disclaimerText}>By tapping "Send confirmation code" above, we will send you an SMS to confirm your phone number. Message &amp; data rates may apply.</Text>
+                <Text style={styles.disclaimerText}>Bằng cách nhấn vào "Xác nhận" ở trên, chúng tôi sẽ gửi cho bạn một SMS để xác nhận số điện thoại của bạn. Tin nhắn &amp; dữ liệu có thể được áp dụng.</Text>
             </View>
         );
 
@@ -184,14 +184,13 @@ export default class InputPhone extends Component {
 
     render() {
 
-        let headerText = `What's your ${this.state.enterCode ? 'verification code' : 'phone number'}?`
-        let buttonText = this.state.enterCode ? 'Verify confirmation code' : 'Send confirmation code';
+        let headerText = `Xác thực số điện thoại của bạn?`
+        let buttonText =  'Xác nhận';
         let textStyle = this.state.enterCode ? {
             height: 50,
             textAlign: 'center',
             fontSize: 40,
-            fontWeight: 'bold',
-            fontFamily: 'Courier'
+            fontFamily: R.fonts.Regular
         } : {};
 
         return (
@@ -209,26 +208,26 @@ export default class InputPhone extends Component {
 
                         <TextInput
                             ref={'textInput'}
-                            name={this.state.enterCode ? 'code' : 'phoneNumber'}
+                            name={'phoneNumber'}
                             type={'TextInput'}
                             underlineColorAndroid={'transparent'}
                             autoCapitalize={'none'}
                             autoCorrect={false}
-                            onChangeText={this._onChangeText}
-                            placeholder={this.state.enterCode ? '_ _ _ _ _ _' : 'Phone Number'}
+                            // onChangeText={this._onChangeText}
+                            placeholder={'Số điện thoại'}
                             keyboardType={Platform.OS === 'ios' ? 'number-pad' : 'numeric'}
                             style={[styles.textInput, textStyle]}
                             returnKeyType='go'
                             autoFocus
-                            placeholderTextColor={brandColor}
+                            // placeholderTextColor={brandColor}
                             selectionColor={brandColor}
-                            maxLength={this.state.enterCode ? 6 : 10}
-                            onSubmitEditing={this._getSubmitAction} />
+                            maxLength={10}
+                            onSubmitEditing={this._getCode} />
 
 
                     </View>
 
-                    <TouchableOpacity style={styles.button} onPress={this._getSubmitAction}>
+                    <TouchableOpacity style={styles.button} onPress={this._getCode}>
                         <Text style={styles.buttonText}>{buttonText}</Text>
                     </TouchableOpacity>
 
@@ -256,9 +255,11 @@ const styles = StyleSheet.create({
     header: {
         textAlign: 'center',
         marginTop: 60,
+        paddingBottom:40,
         fontSize: 22,
         margin: 20,
         color: '#4A4A4A',
+        fontFamily:R.fonts.Regular
     },
     form: {
         margin: 20
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontFamily: 'Helvetica',
+        fontFamily: R.fonts.Bold,
         fontSize: 16,
         fontWeight: 'bold'
     },
@@ -292,7 +293,9 @@ const styles = StyleSheet.create({
     disclaimerText: {
         marginTop: 30,
         fontSize: 12,
-        color: 'grey'
+        color: 'grey',
+        textAlign:'center',
+        fontFamily:R.fonts.LightItalic
     },
     callingCodeView: {
         alignItems: 'center',
@@ -301,7 +304,7 @@ const styles = StyleSheet.create({
     callingCodeText: {
         fontSize: 20,
         color: brandColor,
-        fontFamily: 'Helvetica',
+        fontFamily: R.fonts.Black,
         fontWeight: 'bold',
         paddingRight: 10
     },

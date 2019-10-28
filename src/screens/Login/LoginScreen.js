@@ -56,7 +56,7 @@ class LoginScreen extends Component {
         <ButtonBase
           onPress={this.onRegister}
           styleButton={{
-            backgroundColor: R.colors.textColor,
+            backgroundColor: R.colors.green,
           }}
           styleText={{ color: R.colors.black }}
           value="Đăng ký" />
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   buttonLogin: {
-    backgroundColor: R.colors.buttonColor,
+    backgroundColor: R.colors.secondColor,
     marginTop: 10,
   },
 })

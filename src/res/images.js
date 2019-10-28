@@ -13,6 +13,11 @@ export default {
         ic_next_arrow: require('res/images/icons/ic_next_arrow.png'),
         ic_back_arrow: require('res/images/icons/ic_back_arrow.png'),
         ic_checked: require('res/images/icons/ic_checked.png'),
+        profile:{
+        ic_logout: require('res/images/icons/profile/ic_logout.png'),
+        ic_pass: require('res/images/icons/profile/ic_pass.png'),
+        ic_profile: require('res/images/icons/profile/ic_profile.png'),
+        },
         drug: {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
             ic_cart: require('res/images/icons/drug/ic_cart.png'),

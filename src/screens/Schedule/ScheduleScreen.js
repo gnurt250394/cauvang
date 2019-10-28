@@ -37,6 +37,10 @@ class ScheduleScreen extends Component {
                             '2012-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
                             '2012-05-19': { disabled: true, disableTouchEvent: true }
                         }}
+                        onDayPress={(date)=>{
+                            console.log('date: ', date);
+
+                        }}
                     />
                     <View style={{
                         alignSelf: 'center',
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
         backgroundColor: R.colors.secondColor,
         flexDirection: 'row',
         alignItems: 'center',
-        width: '50%',
+        width: 200,
         paddingVertical: 15,
         borderRadius: 7,
         paddingHorizontal: 5,
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     },
     buttonFirstSchedule: {
         backgroundColor: R.colors.defaultColor,
-        width: '40%',
+        width: 200,
         paddingVertical: 10,
         borderRadius: 7,
         marginBottom: 7,

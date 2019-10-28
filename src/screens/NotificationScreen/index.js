@@ -52,6 +52,12 @@ class NotificationScreen extends Component {
     )
   }
   keyExtractor = (item, index) => `${item._id || index}`
+  listEmpty=()=> <Text style={{
+    paddingTop:30,
+    textAlign:'center',
+    fontFamily:R.fonts.Black,
+    fontSize:19
+  }}>Không có dữ liệu</Text>
   render() {
     const { data } = this.state
     return (
@@ -63,6 +69,7 @@ class NotificationScreen extends Component {
           data={data}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          ListEmptyComponent={this.listEmpty}
         />
       </View>
     );

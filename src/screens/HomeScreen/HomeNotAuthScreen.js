@@ -45,10 +45,10 @@ class HomeNotAuthScreen extends Component {
     )
     _keyExtractor = (item, index) => `${item.id || index}`
     headerComponent = () => (
-        <View style={styles.headerList}>
+        <TouchableOpacity style={styles.headerList}>
             <ScaleText style={styles.txtHeaderList}>Chọn bệnh muốn hỗ trợ</ScaleText>
             <Image source={R.images.icons.home.ic_dropdown} style={[styles.imageDropdown, { tintColor: R.colors.white }]} />
-        </View>
+        </TouchableOpacity>
     )
     footerComponent = () => (
         <View style={[styles.containerText, {

@@ -200,7 +200,10 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation "com.google.android.gms:play-services-base:17.0.0"
     implementation "com.google.firebase:firebase-core:16.0.9"
-    implementation "com.google.firebase:firebase-messaging:18.0.0"
+    implementation ("com.google.firebase:firebase-messaging:18.0.0"){
+         exclude group: 'com.google.firebase', module: 'firebase-iid'
+    }
+    implementation 'com.google.firebase:firebase-iid:17.0.3'
     implementation 'androidx.annotation:annotation:1.0.0'
     implementation'com.google.firebase:firebase-auth:17.0.0' // => add this line
     implementation "com.google.android.gms:play-services-auth:17.0.0"

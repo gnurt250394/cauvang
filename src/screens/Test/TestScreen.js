@@ -71,13 +71,16 @@ class TestScreen extends Component {
         let list = [...this.state.listChecked]
         let listFinal = []
         let obj = {}
-        obj = { ...e }
+        let listChecked = []
+        obj = e
         var id = e._id
         var index = list.findIndex(elm => elm._id === id)
         console.log('index: ', index);
         console.log(list)
         if (index == -1) {
             this.list.push(obj)
+            let indexList = this.list.findIndex(e => e._id === id)
+            this.list.splice(index, 1, e)
             listFinal = this.list
         } else {
             list.splice(index, 1, e)
@@ -167,7 +170,7 @@ class TestScreen extends Component {
                 }}>
                     <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
                         color: R.colors.defaultColor
-                    }}>{userApp.fullName}</ScaleText></ScaleText>
+                    }}>{userApp.name}</ScaleText></ScaleText>
                     <ScaleText size={16} style={styles.TxtQuestion} >Trả lời ngay các câu hỏi sau đây để đánh giá tình trạng sức khỏe của bạn</ScaleText>
 
                 </View>

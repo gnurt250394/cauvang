@@ -44,6 +44,8 @@ class HomeLoginScreen extends Component {
                 {
                     id: 4,
                     onPress: () => {
+                        utils.alertWarn('Chức năng đang phát triển')
+                        return
                         NavigationServices.navigate(screenName.ListDoctorScreen)
                     },
                     image: R.images.icons.home.ic_doctor,
@@ -52,6 +54,7 @@ class HomeLoginScreen extends Component {
                 },
 
             ],
+            value: ''
 
         };
     }
@@ -64,7 +67,17 @@ class HomeLoginScreen extends Component {
         </TouchableOpacity>
     )
     _keyExtractor = (item, index) => `${item.id || index}`
-
+    onReport = () => {
+        NavigationServices.navigate(screenName.ReportScreen)
+    }
+    onSend = () => {
+        NavigationServices.navigate(screenName.TestTodayScreen, {
+            value: this.state.value
+        })
+    }
+    onChangeText = (value) => {
+        this.setState({ value })
+    }
     render() {
         const { listButton } = this.state
         const { userApp } = this.props
@@ -76,19 +89,25 @@ class HomeLoginScreen extends Component {
                 <View style={styles.containerView1}>
                     <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
                         color: R.colors.defaultColor
-                    }}>{userApp.fullName}</ScaleText></ScaleText>
+                    }}>{userApp.name}</ScaleText></ScaleText>
                     <View style={styles.containerHeaderTitle}>
                         <ScaleText size={16} style={styles.TxtQuestion} >Hôm nay chỉ số đường huyết của bạn là bao nhiêu?</ScaleText>
                         <View style={styles.containerInput}>
                             <TextInput
                                 placeholder="Nhập câu trả lời"
+                                keyboardType="numeric"
+                                onChangeText={this.onChangeText}
                                 style={styles.input} />
-                            <TouchableOpacity style={styles.buttonSend}>
+                            <TouchableOpacity
+                                onPress={this.onSend}
+                                style={styles.buttonSend}>
                                 <ScaleText style={styles.txtSend}>Gửi</ScaleText>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.buttonWarning}>
+                    <TouchableOpacity
+                        onPress={this.onReport}
+                        style={styles.buttonWarning}>
                         <Image source={R.images.icons.home.ic_warning} style={styles.imageWarning} />
                         <ScaleText>Báo cáo dấu hiệu bất thường</ScaleText>
                     </TouchableOpacity>

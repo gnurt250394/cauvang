@@ -53,7 +53,7 @@ class OtpScreen extends Component {
     return (
       <View>
         <Text style={styles.wrongNumberText} onPress={this._tryAgain}>
-          Enter the wrong number or need a new code?
+        Nhấn vào đây nếu bạn nhập sai số điện thoại hoặc bạn cần một mã mới?
       </Text>
       </View>
     );
@@ -139,8 +139,8 @@ class OtpScreen extends Component {
     if (this.unsubscribe) this.unsubscribe();
   }
   render() {
-    let headerText = `What's your verification code?`;
-    let buttonText = 'Verify confirmation code';
+    let headerText = `Mã xác minh của bạn là gì?`;
+    let buttonText = 'Xác nhận';
     let textStyle = this.state.enterCode ? {
       height: 50,
       textAlign: 'center',
@@ -231,7 +231,8 @@ const styles = StyleSheet.create({
   wrongNumberText: {
     margin: 10,
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'center',
+    textDecorationLine:'underline'
   },
   disclaimerText: {
     marginTop: 30,

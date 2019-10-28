@@ -6,103 +6,118 @@ import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts'
 import { height } from 'configs/utils';
 import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
+import apis from 'configs/apis';
+import moment from 'moment';
 class FollowHealthScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [
-                {
-                    id: 1,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 2,
-                    time: '10',
-                    overRating: 5
-                },
-                {
-                    id: 3,
-                    time: '10',
-                    overRating: 1
-                },
-                {
-                    id: 4,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 1,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 2,
-                    time: '10',
-                    overRating: 5
-                },
-                {
-                    id: 3,
-                    time: '10',
-                    overRating: 1
-                },
-                {
-                    id: 4,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 1,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 2,
-                    time: '10',
-                    overRating: 5
-                },
-                {
-                    id: 3,
-                    time: '10',
-                    overRating: 1
-                },
-                {
-                    id: 4,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 1,
-                    time: '10',
-                    overRating: 10
-                },
-                {
-                    id: 2,
-                    time: '10',
-                    overRating: 5
-                },
-                {
-                    id: 3,
-                    time: '10',
-                    overRating: 1
-                },
-                {
-                    id: 4,
-                    time: '10',
-                    overRating: 10
-                },
+                // {
+                //     id: 1,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 2,
+                //     time: '10',
+                //     overRating: 5
+                // },
+                // {
+                //     id: 3,
+                //     time: '10',
+                //     overRating: 1
+                // },
+                // {
+                //     id: 4,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 1,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 2,
+                //     time: '10',
+                //     overRating: 5
+                // },
+                // {
+                //     id: 3,
+                //     time: '10',
+                //     overRating: 1
+                // },
+                // {
+                //     id: 4,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 1,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 2,
+                //     time: '10',
+                //     overRating: 5
+                // },
+                // {
+                //     id: 3,
+                //     time: '10',
+                //     overRating: 1
+                // },
+                // {
+                //     id: 4,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 1,
+                //     time: '10',
+                //     overRating: 10
+                // },
+                // {
+                //     id: 2,
+                //     time: '10',
+                //     overRating: 5
+                // },
+                // {
+                //     id: 3,
+                //     time: '10',
+                //     overRating: 1
+                // },
+                // {
+                //     id: 4,
+                //     time: '10',
+                //     overRating: 10
+                // },
             ]
         };
     }
+    componentDidMount = () => {
+        this.getData()
+    };
+
+    getData = async () => {
+        let res = await apis.fetch(apis.PATH.LIST_FOLLOW)
+        if (res && res.code == 200) {
+            this.setState({ data: res.data })
+        }
+    }
     getRating = (item) => {
-        const overRating = item.overRating
-        if (overRating >= 7) {
+        const type = item.type
+        if (type == 1) {
             return R.colors.green
-        } else if (overRating >= 5 && overRating < 7) {
+        } else if (type == 2) {
             return R.colors.orange
         } else {
             return R.colors.red
         }
+    }
+    formatDate = (item) => {
+        return moment(item.create_at).format('DD')
     }
     _renderItem = ({ item, index }) => {
         const data = [50, 40, 50, 20]
@@ -110,7 +125,7 @@ class FollowHealthScreen extends Component {
             <View key={index}>
                 <Text style={{
                     paddingHorizontal: 10
-                }}>{item.time}</Text>
+                }}>{this.formatDate(item)}</Text>
                 <View style={[styles.viewDots, { backgroundColor: this.getRating(item) }]} />
 
             </View>
@@ -119,7 +134,7 @@ class FollowHealthScreen extends Component {
     renderLineChart = (data) => {
         const contentInset = { top: 20, bottom: 20 }
         return (
-            <View style={{ height: height / 4, flexDirection: 'row',paddingLeft:5 }}>
+            <View style={{ height: height / 4, flexDirection: 'row', paddingLeft: 5 }}>
                 <YAxis
                     data={data}
                     contentInset={{ top: 35, bottom: 20 }}
