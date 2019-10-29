@@ -1,12 +1,12 @@
 import Axios from 'axios'
 import utils from './utils'
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
-// const BASE_URL = 'http://192.168.0.104:8000/api/'
-// export const BASE_URI = 'http://192.168.0.104:8000/'
-// export const BASE_SOCKET = 'http://192.168.0.104:3001'
-const BASE_URL = 'http://10.0.40.13:8000/api/'
-export const BASE_URI = 'http://10.0.40.13:8000/'
-export const BASE_SOCKET = 'http://10.0.40.13:3001'
+const BASE_URL = 'http://192.168.0.104:8000/api/'
+export const BASE_URI = 'http://192.168.0.104:8000/'
+export const BASE_SOCKET = 'http://192.168.0.104:3001'
+// const BASE_URL = 'http://10.0.40.13:8000/api/'
+// export const BASE_URI = 'http://10.0.40.13:8000/'
+// export const BASE_SOCKET = 'http://10.0.40.13:3001'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -35,7 +35,6 @@ function logError(error) {
     console.log('API Error', error.message);
     console.groupEnd && console.groupEnd()
   }
-  throw error
 }
 function logResponse(res) {
   console.group
@@ -194,7 +193,10 @@ export default {
     LIST_FOLLOW: 'list-follows',
     QUESTION: 'questions',
     REPORT: 'report',
-    ADD_TOKEN_FCM: 'add-token'
+    ADD_TOKEN_FCM: 'add-token',
+    COMMUNES:'list-communes',
+    DISTRICT:'list-districts',
+    CITY:'list-city'
   },
   fetch,
   put,

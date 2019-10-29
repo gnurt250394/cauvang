@@ -21,6 +21,7 @@ export default {
     ListDoctorScreen:'Danh sách bác sĩ',
     VideoCallScreen:'VideoCallScreen',
     ListHospitalScreen:'Danh sách bệnh viện',
+    HospitalScreen:'Danh sách bệnh viện',
     InputPhoneScreen:'Xác thực số điện thoại',
     OtpScreen:'OtpScreen',
     TestScreen:'TestScreen',
@@ -28,4 +29,8 @@ export default {
     ReportScreen:'Dấu hiệu bất thường',
     TestResultScreen:'Theo dõi sức khỏe',
     ProfileScreen:'Thông tin cá nhân',
+    MyDrugScreen:'Đơn thuốc của bạn',
+    CityScreen:'Tỉnh / Thành phố',
+    DistrictScreen:'Quận / Huyện',
+    CommunesScreen:'Xã / Phường'
 }

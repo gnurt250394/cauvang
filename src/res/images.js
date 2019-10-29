@@ -17,6 +17,7 @@ export default {
         ic_logout: require('res/images/icons/profile/ic_logout.png'),
         ic_pass: require('res/images/icons/profile/ic_pass.png'),
         ic_profile: require('res/images/icons/profile/ic_profile.png'),
+        ic_upload: require('res/images/icons/profile/ic_upload.png'),
         },
         drug: {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),

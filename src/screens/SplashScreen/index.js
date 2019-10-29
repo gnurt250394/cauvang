@@ -22,10 +22,20 @@ class SplashScreen extends Component {
     let token = await utils.getItem(utils.KEY.TOKEN)
     if (token) {
       utils.database.token = token
-      this.getData()
-      setTimeout(() => {
-        this.props.navigation.navigate(screenName.HomeStack)
-      }, 1000)
+      let res = await apis.fetch(apis.PATH.USER, {}, true)
+      console.log('res: aaaa', res);
+      if (res && res.code == 200) {
+        setTimeout(() => {
+          this.props.navigation.navigate(screenName.HomeStack)
+        }, 1000)
+        this.props.dispatch(login(res.data, res.count))
+      } else {
+        setTimeout(() => {
+          this.props.navigation.navigate(screenName.AuthenStack)
+        }, 1000)
+        this.props.dispatch(logout())
+      }
+
     } else {
       setTimeout(() => {
         this.props.navigation.navigate(screenName.AuthenStack)
@@ -34,12 +44,7 @@ class SplashScreen extends Component {
     this.animation()
   };
   getData = async () => {
-    let res = await apis.fetch(apis.PATH.USER, {}, true)
-    if (res && res.code == 200) {
-      this.props.dispatch(login(res.data, res.count))
-    } else {
-      this.props.dispatch(logout())
-    }
+
   }
   animation = () => {
     Animated.spring(this.anim, {

@@ -14,6 +14,9 @@ class DrugScreen extends Component {
     onBookingDrug = () => {
         NavigationServices.navigate(screenName.BookingDrugScreen)
     }
+    onMyDrug=()=>{
+        NavigationServices.navigate(screenName.MyDrugScreen)
+    }
     render() {
         return (
             <Container>
@@ -22,9 +25,10 @@ class DrugScreen extends Component {
                     flex: 1,
                 }}>
                     <TouchableOpacity
+                        onPress={this.onMyDrug}
                         style={[styles.button, { backgroundColor: R.colors.secondColor, }]}>
                         <Image source={R.images.icons.drug.ic_prescription} style={styles.imageButton} />
-                        <Text style={styles.txtButton}>Lịch sử mua thuốc</Text>
+                        <Text style={styles.txtButton}>Đơn thuốc của bạn</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={this.onBookingDrug}

@@ -63,7 +63,7 @@ class ReportScreen extends Component {
                 <View style={styles.containerView1}>
                     <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
                         color: R.colors.defaultColor
-                    }}>{userApp.fullName}</ScaleText></ScaleText>
+                    }}>{userApp.name}</ScaleText></ScaleText>
                     <View style={styles.containerHeaderTitle}>
                         <View style={{
                             flexDirection: 'row',

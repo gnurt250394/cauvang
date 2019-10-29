@@ -19,6 +19,12 @@ import ReportScreen from 'screens/Report/ReportScreen';
 import authenStack from './AuthenStack';
 import ProfileScreen from 'screens/AccountScreen/ProfileScreen';
 import TestTodayScreen from 'screens/HomeScreen/TestTodayScreen';
+import MyDrugScreen from 'screens/drug/MyDrugScreen';
+import ListHospitalScreen from 'screens/Register/ListHospitalScreen';
+import HospitalScreen from 'screens/AccountScreen/HospitalScreen';
+import CityScreen from 'screens/AccountScreen/CityScreen';
+import DistrictScreen from 'screens/AccountScreen/DistrictScreen';
+import CommunesScreen from 'screens/AccountScreen/CommunesScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -54,6 +60,11 @@ const homeStack = createStackNavigator({
     [screenName.ReportScreen]: { screen: ReportScreen },
     [screenName.ProfileScreen]: { screen: ProfileScreen },
     [screenName.TestTodayScreen]: { screen: TestTodayScreen },
+    [screenName.MyDrugScreen]: { screen: MyDrugScreen },
+    [screenName.ListHospitalScreen]: { screen: HospitalScreen },
+    [screenName.CityScreen]: { screen: CityScreen },
+    [screenName.DistrictScreen]: { screen: DistrictScreen },
+    [screenName.CommunesScreen]: { screen: CommunesScreen },
 
 }, {
     initialRouteName: screenName.HomeScreen,

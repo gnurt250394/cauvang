@@ -25,40 +25,44 @@ class ScheduleScreen extends Component {
     render() {
         return (
             <Container>
-                    <Calendar
-                        style={{
-                            borderTopLeftRadius: 15,
-                            borderTopRightRadius:15
-                        }}
-                        // Collection of dates that have to be marked. Default = {}
-                        markedDates={{
-                            '2019-10-22': { selected: true, marked: true, selectedColor: R.colors.defaultColor },
-                            '2012-05-17': { marked: true },
-                            '2012-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
-                            '2012-05-19': { disabled: true, disableTouchEvent: true }
-                        }}
-                        onDayPress={(date)=>{
-                            console.log('date: ', date);
+                <Calendar
+                    style={{
+                        borderTopLeftRadius: 15,
+                        borderTopRightRadius: 15
+                    }}
+                    // Collection of dates that have to be marked. Default = {}
+                    markedDates={{
+                        '2019-10-22': { selected: true, marked: true, selectedColor: R.colors.defaultColor },
+                        '2012-05-17': { marked: true },
+                        '2012-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
+                        '2012-05-19': { disabled: true, disableTouchEvent: true }
+                    }}
+                    onDayPress={(date) => {
+                        console.log('date: ', date);
 
-                        }}
-                    />
-                    <View style={{
-                        alignSelf: 'center',
-                        justifyContent: 'center',
-                        flex: 1
-                    }}>
-                        <TouchableOpacity
-                            onPress={this.goToDetail}
-                            style={styles.buttonFirstSchedule}>
-                            <Text style={styles.TxtFirstSchedule}>Đến lịch khám gần nhất</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonAddSchedule}>
-                            <Image source={R.images.icons.ic_next} style={styles.imgNext} />
-                            <Text style={{
-                                fontFamily: R.fonts.Bold,
-                            }}> Thêm lịch khám</Text>
-                        </TouchableOpacity>
-                    </View>
+                    }}
+                />
+                <View style={{
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    flex: 1
+                }}>
+                    <TouchableOpacity
+                    onPress={this.goToDetail}
+                    style={styles.buttonFirstSchedule}>
+                        <Text style={{
+                            fontFamily: R.fonts.Bold,
+                            textAlign: 'center'
+                        }}>Đến lịch khám gần nhất</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonAddSchedule}>
+                        <Text style={{
+                            fontFamily: R.fonts.Bold,
+                            textAlign: 'center'
+                        }}> Thêm lịch khám</Text>
+                    </TouchableOpacity>
+                </View>
             </Container>
         );
     }
@@ -75,12 +79,11 @@ const styles = StyleSheet.create({
     },
     buttonAddSchedule: {
         backgroundColor: R.colors.secondColor,
-        flexDirection: 'row',
         alignItems: 'center',
-        width: 200,
-        paddingVertical: 15,
+        justifyContent: 'center',
+        height: 50,
+        width: '40%',
         borderRadius: 7,
-        paddingHorizontal: 5,
     },
     TxtFirstSchedule: {
         textAlign: 'center',
@@ -89,9 +92,11 @@ const styles = StyleSheet.create({
     },
     buttonFirstSchedule: {
         backgroundColor: R.colors.defaultColor,
-        width: 200,
-        paddingVertical: 10,
+        height: 50,
+        width: '40%',
         borderRadius: 7,
-        marginBottom: 7,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 10
     },
 })
