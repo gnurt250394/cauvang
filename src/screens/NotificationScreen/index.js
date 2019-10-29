@@ -6,20 +6,33 @@ import R from 'res/R';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/vi'
+import firebase from 'react-native-firebase';
 class NotificationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      isLoading: false,
+      count: ''
     };
   }
+
   componentDidMount() {
+    this.notificationListener = firebase.notifications().onNotification(this.getData);
     this.getData()
   }
+  componentWillUnmount() {
+    try {
+        this.notificationListener();
+    } catch (error) {
+
+    }
+}
+
   getData = async () => {
     let res = await apis.fetch(apis.PATH.NOTIFICATION)
     if (res && res.code == 200) {
-      this.setState({ data: res.data })
+      this.setState({ data: res.data, count: res.count })
       this.props.dispatch(updateCountNoti(res.count))
     }
   }
@@ -37,10 +50,22 @@ class NotificationScreen extends Component {
   formatDate = (item) => {
     return moment(item.create_at).fromNow()
   }
+  watchNoti = (item, index) => async () => {
+    let res = await apis.post(apis.PATH.UPDATE_NOTIFICATION, { id: item._id },true)
+    if (res && res.code == 200) {
+      let data = [...this.state.data]
+      data[index].watched = 1
+      this.setState({ data })
+      this.props.dispatch(updateCountNoti(this.state.count - 1))
+    }
+
+  }
   renderItem = ({ item, index }) => {
     const icon = item.image ? { uri: item.image } : R.images.icons.ic_notification
     return (
-      <TouchableOpacity style={styles.containerItem}>
+      <TouchableOpacity
+        onPress={this.watchNoti(item, index)}
+        style={[styles.containerItem, { backgroundColor: item.watched == 0 ? R.colors.secondColor : R.colors.white }]}>
         <Image source={icon} style={[styles.imageNoti, { resizeMode: item.image ? 'cover' : 'contain' }]} />
         <View style={styles.containerText}>
           <Text style={styles.txtTitle}>{this.renderTitle(item)}</Text>
@@ -68,6 +93,8 @@ class NotificationScreen extends Component {
         <FlatList
           data={data}
           renderItem={this.renderItem}
+          onRefresh={this.getData}
+          refreshing={false}
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={this.listEmpty}
         />
@@ -96,7 +123,7 @@ const styles = StyleSheet.create({
   },
   containerText: {
     flexWrap: 'wrap',
-    paddingLeft:15
+    paddingLeft: 15
   },
   imageNoti: {
     height: 50,

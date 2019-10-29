@@ -5,6 +5,8 @@ import LaunchApplication from 'react-native-launch-application';
 import RNCallKeepManager from './RNCallKeepManager'
 import utils from 'configs/utils';
 import apis from 'configs/apis';
+import NavigationServices from 'routes/NavigationServices';
+import screenName from 'configs/screenName';
 
 function sendEventDidDisplayIncommingCall(doctorId, videoCallId) {
     fetch(
@@ -179,6 +181,29 @@ class PushNotification extends React.Component {
                 var data = notificationOpen.notification.data;
                 const type = notificationOpen.notification.data.type
                 console.log('type: ', type);
+                switch (type) {
+                    //  1 thông báo trước 1 ngày đến lịch khám 
+                    case '1':
+                        break;
+                    //  2 thông báo đã gửi báo cáo dấu hiệu, nhân viên y tế sẽ lien lạc với bạn sớm
+                    case '2':
+                        NavigationServices.navigate(screenName.NotificationScreen)
+                        break;
+                    //  3 Thông báo có lời dặn mới của bác sĩ
+                    case '3':
+                        break;
+                    //  4 Thông báo bác sĩ trả lời chat tư vấn
+                    case '4':
+                        break;
+                    case '5':
+                        //  5  thông báo đơn thuốc đã được nhập và tìm thấy địa chỉ bán, ấn vào để đặt mua
+                        break;
+                    case '6':
+                        //  6 Thông báo đặt mua thành công, đơn hàng sẽ đến trong ít phut
+                        break;
+                    default:
+                        break;
+                }
             }
         } catch (error) {
             console.log(error);
@@ -192,9 +217,39 @@ class PushNotification extends React.Component {
         if (notificationOpen) {
             try {
                 firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);
+                console.log('notificationOpen.notification.notificationId: ', notificationOpen.notification.notificationId);
                 if (notificationOpen && notificationOpen.notification && notificationOpen.notification.data) {
                     var data = notificationOpen.notification.data;
-                    const type = Number(notificationOpen.notification.data.type)
+                    const type = notificationOpen.notification.data.type
+                    console.log('type: ', type);
+                    switch (type) {
+                        //  1 thông báo trước 1 ngày đến lịch khám 
+                        case '1':
+                            NavigationServices.navigate(screenName.NotificationScreen)
+                            break;
+                        //  2 thông báo đã gửi báo cáo dấu hiệu, nhân viên y tế sẽ lien lạc với bạn sớm
+                        case '2':
+                            NavigationServices.navigate(screenName.NotificationScreen)
+                            break;
+                        //  3 Thông báo có lời dặn mới của bác sĩ
+                        case '3':
+                            NavigationServices.navigate(screenName.NotificationScreen)
+                            break;
+                        //  4 Thông báo bác sĩ trả lời chat tư vấn
+                        case '4':
+                            NavigationServices.navigate(screenName.NotificationScreen)
+                            break;
+                        //  5  thông báo đơn thuốc đã được nhập và tìm thấy địa chỉ bán, ấn vào để đặt mua
+                        case '5':
+                            NavigationServices.navigate(screenName.NotificationScreen)
+                            break;
+                        //  6 Thông báo đặt mua thành công, đơn hàng sẽ đến trong ít phut
+                        case '6':
+                            NavigationServices.navigate(screenName.NotificationScreen)
+                            break;
+                        default:
+                            break;
+                    }
                 }
             } catch (error) {
                 console.log(error);

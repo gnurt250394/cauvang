@@ -52,5 +52,6 @@ export default {
         logo: require('res/images/defaults/logo.png'),
         isofh: require('res/images/defaults/isofh.png'),
         drug: require('res/images/defaults/drug.jpg'),
+        flamigos:require('res/images/defaults/flamigos.jpg')
     }
 }
