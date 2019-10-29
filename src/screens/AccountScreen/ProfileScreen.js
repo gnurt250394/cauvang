@@ -46,10 +46,10 @@ class ProfileScreen extends Component {
             return 'Giới tính'
         }
     }
-    selectAvatar = async() => {
+    selectAvatar = async () => {
         let res = await uploadImage(this.state.images)
-        if(res && res.code == 200){
-            this.setState({images:res.image})
+        if (res && res.code == 200) {
+            this.setState({ images: res.image })
         }
     }
     selectHospital = (hospital) => {
