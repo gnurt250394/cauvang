@@ -53,6 +53,7 @@ export default createBottomTabNavigator(
         },
     },
     {
+        resetOnBlur:true,
         lazy: true,
         defaultNavigationOptions: {
         },

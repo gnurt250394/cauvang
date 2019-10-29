@@ -44,7 +44,7 @@ class NotificationScreen extends Component {
         <Image source={icon} style={[styles.imageNoti, { resizeMode: item.image ? 'cover' : 'contain' }]} />
         <View style={styles.containerText}>
           <Text style={styles.txtTitle}>{this.renderTitle(item)}</Text>
-          <Text>{item.title}</Text>
+          <Text style={styles.txtContent} numberOfLines={2}>{item.title}</Text>
           <Text style={styles.txtTime}>{this.formatDate(item)}</Text>
 
         </View>
@@ -52,11 +52,11 @@ class NotificationScreen extends Component {
     )
   }
   keyExtractor = (item, index) => `${item._id || index}`
-  listEmpty=()=> <Text style={{
-    paddingTop:30,
-    textAlign:'center',
-    fontFamily:R.fonts.Black,
-    fontSize:19
+  listEmpty = () => <Text style={{
+    paddingTop: 30,
+    textAlign: 'center',
+    fontFamily: R.fonts.Black,
+    fontSize: 19
   }}>Không có dữ liệu</Text>
   render() {
     const { data } = this.state
@@ -80,6 +80,10 @@ export default connect()(NotificationScreen);
 
 
 const styles = StyleSheet.create({
+  txtContent: {
+    flexWrap: 'wrap',
+    width: '90%'
+  },
   txtTime: {
     paddingTop: 3,
     fontFamily: R.fonts.Italic,
@@ -88,10 +92,11 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontFamily: R.fonts.Black,
     fontSize: 15,
-    paddingBottom: 7
+    paddingBottom: 7,
   },
   containerText: {
-    paddingLeft: 10
+    flexWrap: 'wrap',
+    paddingLeft:15
   },
   imageNoti: {
     height: 50,

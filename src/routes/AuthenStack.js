@@ -35,7 +35,7 @@ const authenStack = createStackNavigator({
     [screenName.TestScreen]: { screen: TestScreen },
     [screenName.TestResultScreen]: { screen: TestResultScreen },
 }, {
-    initialRouteName: screenName.TestScreen,
+    initialRouteName: screenName.LoginScreen,
     headerMode: 'none',
     transitionConfig:(transitionProps)=>handleCustomTransition(transitionProps)
 })

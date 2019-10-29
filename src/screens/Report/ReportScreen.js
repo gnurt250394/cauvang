@@ -9,12 +9,14 @@ import utils, { height } from 'configs/utils';
 import ActionSheet from 'react-native-actionsheet'
 import PushNotification from 'components/PushNotification';
 import { connect } from 'react-redux';
+import apis from 'configs/apis';
 
 class ReportScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            value: '',
+            doctor_id: ''
 
         };
     }
@@ -28,10 +30,24 @@ class ReportScreen extends Component {
     )
     _keyExtractor = (item, index) => `${item.id || index}`
 
-    onSend = () => {
-        NavigationServices.navigate(screenName.TestScreen, {
-            value: this.state.value
-        })
+    onSend = async () => {
+        const { value, doctor_id } = this.state
+        if (!value) {
+            utils.alertDanger('Bạn chưa nhập nội dung cần báo cáo')
+            return
+        }
+        let params = {
+            content: value,
+            doctor_id
+        }
+        let res = await apis.post(apis.PATH.REPORT, params)
+        if (res && res.code == 200) {
+            NavigationServices.pop()
+            utils.alertSuccess(res.message)
+        } else {
+            utils.alertDanger(res.message)
+        }
+     
     }
     onChangeText = (value) => {
         this.setState({ value })
@@ -40,7 +56,7 @@ class ReportScreen extends Component {
         const { listButton } = this.state
         const { userApp } = this.props
         return (
-            <Container 
+            <Container
                 scrollView={true}
             >
                 {/**view 1 */}

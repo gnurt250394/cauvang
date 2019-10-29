@@ -53,7 +53,7 @@ function fetch(url, params, loading) {
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
-  !loading  ? showLoading() : null
+  !loading ? showLoading() : null
   return constants
     .get(url, {
       params, headers, onDownloadProgress: (progressEvent) => {
@@ -96,14 +96,15 @@ function put(url, params) {
       return error
     })
 }
-function post(url, params) {
+function post(url, params, isLoading) {
   let headers = {
     'Content-Type': 'application/json'
   }
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
-  showLoading()
+  !isLoading ? showLoading() : null
+
   return constants
     .post(url, params, {
       headers, onUploadProgress: (progressEvent) => {
@@ -184,14 +185,16 @@ export default {
     USER: 'user',
     VIDEO_CALL: 'event-video-call',
     LIST_HOSPITAL: 'list-hospital',
-    CHECK_PHONE:'check-phone',
-    NOTIFICATION:'list-notification',
-    UPDATE_NOTIFICATION:'update-notification',
-    COUNT_NOTIFICATION:'count-notification',
-    LIST_QUESTION:'list-questions',
-    ADD_FOLLOW:'add-follows',
-    LIST_FOLLOW:'list-follows',
-    QUESTION:'questions'
+    CHECK_PHONE: 'check-phone',
+    NOTIFICATION: 'list-notification',
+    UPDATE_NOTIFICATION: 'update-notification',
+    COUNT_NOTIFICATION: 'count-notification',
+    LIST_QUESTION: 'list-questions',
+    ADD_FOLLOW: 'add-follows',
+    LIST_FOLLOW: 'list-follows',
+    QUESTION: 'questions',
+    REPORT: 'report',
+    ADD_TOKEN_FCM: 'add-token'
   },
   fetch,
   put,

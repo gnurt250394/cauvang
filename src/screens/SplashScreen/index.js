@@ -24,7 +24,7 @@ class SplashScreen extends Component {
       utils.database.token = token
       this.getData()
       setTimeout(() => {
-        this.props.navigation.navigate(screenName.AuthenStack)
+        this.props.navigation.navigate(screenName.HomeStack)
       }, 1000)
     } else {
       setTimeout(() => {

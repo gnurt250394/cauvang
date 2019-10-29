@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, Image, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import HeaderDefault from 'components/HeaderDefault'
 import Container from 'library/Container'
 import InputAuthen from 'components/LoginComponent/InputAuthen'
@@ -21,7 +21,8 @@ class RegisterScreen extends Component {
         isLoading: false,
         hospital: '',
         gender: '',
-        phone: this.props.navigation.getParam('phone', '')
+        phone: this.props.navigation.getParam('phone', ''),
+        isShow: false
     }
     onRegister = async () => {
         let fullName = this.inputFullName.getValue()
@@ -67,30 +68,75 @@ class RegisterScreen extends Component {
             onItemSelected: this.selectHospital
         })
     }
+    selectGender = () => {
+        this.setState({ isShow: true })
+    }
+    hideGender = () => {
+        Keyboard.dismiss()
+        this.setState({ isShow: false })
+    }
+    setGender = (gender) => () => {
+        this.hideGender()
+        this.setState({ gender })
+    }
+    renderGender = () => {
+        const { gender } = this.state
+        console.log('gender: ', gender);
+        if (gender == '1') {
+            return "Nam"
+        } else if (gender == '0') {
+            return "Nữ"
+        } else {
+            return 'Giới tính'
+        }
+    }
     render() {
-        const { hospital, phone } = this.state
+        const { hospital, phone, isShow, gender } = this.state
         return (
-            <Container isLoading={this.state.isLoading}>
-                <InputAuthen label="Họ và tên" reqiure={true} placeholder={"Họ và Tên*"} ref={ref => this.inputFullName = ref} />
-                <View style={styles.containerPhoneGender}>
-                    <InputAuthen containerStyle={{
-                        width: '70%',
-                    }} placeholder={"Số điện thoại*"} editable={false} value={phone} ref={ref => this.inputPhone = ref} keyboardType="numeric" />
-                    <TouchableOpacity style={styles.buttonGender}>
-                        <Text>Giới tính</Text>
-                        <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />
-                    </TouchableOpacity>
-                </View>
+            <Container scrollView={true} isLoading={this.state.isLoading}>
+                <TouchableWithoutFeedback onPress={this.hideGender}>
+                    <View style={{ flex: 1 }}>
+                        <InputAuthen label="Họ và tên" reqiure={true} placeholder={"Họ và Tên*"} ref={ref => this.inputFullName = ref} />
+                        <View style={styles.containerPhoneGender}>
+                            <InputAuthen containerStyle={{
+                                width: '70%',
+                            }} placeholder={"Số điện thoại*"} editable={false} value={phone} ref={ref => this.inputPhone = ref} keyboardType="numeric" />
+                            <View>
+                                <TouchableOpacity
+                                    onPress={this.selectGender}
+                                    style={[styles.buttonGender]}>
+                                    <Text>{this.renderGender()}</Text>
+                                    <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />
+                                </TouchableOpacity>
+                                {isShow ?
+                                    <View style={styles.containerMenuGender}>
+                                        <TouchableOpacity
+                                            onPress={this.setGender(1)}
+                                            style={styles.buttonFale}>
+                                            <Text>Nam</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={this.setGender(0)}
+                                            style={styles.buttonMale}>
+                                            <Text>Nữ</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    : null
+                                }
+                            </View>
+                        </View>
 
-                <InputAuthen label="Mật khẩu" reqiure={true} placeholder={"Mật khẩu*"} ref={ref => this.inputPassword = ref} secureTextEntry={true} />
-                <InputAuthen label="Nhập lại mật khẩu" reqiure={true} placeholder={"Nhập lại mật khẩu*"} ref={ref => this.inputPassword2 = ref} secureTextEntry={true} />
-                <TouchableOpacity
-                    onPress={this.onSelectHospital}
-                    style={[styles.buttonGender, styles.buttonOutpatient]}>
-                    <Text>{hospital && hospital.name ? hospital.name : 'Chọn bệnh viện đang điều trị ngoại trú'}</Text>
-                    <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />
-                </TouchableOpacity>
-                <ButtonBase value="Đăng ký" onPress={this.onRegister} styleButton={styles.buttonRegister} />
+                        <InputAuthen label="Mật khẩu" reqiure={true} placeholder={"Mật khẩu*"} ref={ref => this.inputPassword = ref} secureTextEntry={true} />
+                        <InputAuthen label="Nhập lại mật khẩu" reqiure={true} placeholder={"Nhập lại mật khẩu*"} ref={ref => this.inputPassword2 = ref} secureTextEntry={true} />
+                        <TouchableOpacity
+                            onPress={this.onSelectHospital}
+                            style={[styles.buttonGender, styles.buttonOutpatient]}>
+                            <Text>{hospital && hospital.name ? hospital.name : 'Chọn bệnh viện đang điều trị ngoại trú'}</Text>
+                            <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />
+                        </TouchableOpacity>
+                        <ButtonBase value="Đăng ký" onPress={this.onRegister} styleButton={styles.buttonRegister} />
+                    </View>
+                </TouchableWithoutFeedback>
             </Container>
         )
     }
@@ -100,6 +146,29 @@ export default connect()(RegisterScreen)
 
 
 const styles = StyleSheet.create({
+    buttonMale: {
+        height: 30,
+        justifyContent: 'center',
+        paddingLeft: 10
+    },
+    buttonFale: {
+        height: 30,
+        justifyContent: 'center',
+        borderBottomColor: R.colors.black,
+        borderBottomWidth: 1,
+        paddingLeft: 10
+    },
+    containerMenuGender: {
+        position: 'absolute',
+        bottom: -30,
+        backgroundColor: '#FFF',
+        zIndex: 100,
+        width: '100%',
+        borderColor: R.colors.gray,
+        borderWidth: 0.6,
+        borderRadius: 5,
+        elevation: 3
+    },
     buttonOutpatient: {
         marginTop: 10,
         marginHorizontal: 10,
@@ -121,11 +190,10 @@ const styles = StyleSheet.create({
         borderColor: R.colors.defaultColor,
         borderWidth: 1,
         paddingVertical: 15,
-        paddingHorizontal: 10,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
-
+        paddingHorizontal: 10
     },
     buttonRegister: {
         backgroundColor: R.colors.secondColor,

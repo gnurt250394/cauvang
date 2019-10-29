@@ -90,40 +90,28 @@ class BookingDrugScreen extends Component {
     onChangeText = (value) => {
 
     }
-    compressArray(original) {
-
-        var compressed = [];
-        // make a copy of the input array
-        var copy = original.slice(0);
-
-        // first loop goes over every element
-        for (var i = 0; i < original.length; i++) {
-
-            var myCount = 0;
-            // loop over every element in the copy and see if it's the same
-            for (var w = 0; w < copy.length; w++) {
-                if (original[i] == copy[w]) {
-                    // increase amount of times duplicate is found
-                    myCount++;
-                    // sets item to undefined
-                    delete copy[w];
+    duplicateArray(arr) {
+        var obj = {}
+        var result = [];
+        let newArr = [...arr]
+        newArr.forEach((item) => {
+            var id = item["id"];
+            if (obj[id]) {
+                obj[id].count++;
+            } else {
+                obj[id] = {
+                    count: 1,
+                    ...item
                 }
+                result.push(obj[id]);
             }
-
-            if (myCount > 0) {
-                var a = new Object();
-                a = original[i];
-                a.count = myCount;
-                compressed.push(a);
-            }
-        }
-
-        return compressed;
-    };
+        });
+        return result
+    }
     onSelectDrug = (item) => {
         let data = []
         data.push(item)
-        this.setState({ listDrug: this.compressArray([...this.state.listDrug, ...data]) })
+        this.setState({ listDrug: this.duplicateArray([...this.state.listDrug, ...data]) })
 
     }
     onBooking=()=>{

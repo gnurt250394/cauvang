@@ -4,6 +4,7 @@ import { AppState, View, Platform } from 'react-native'
 import LaunchApplication from 'react-native-launch-application';
 import RNCallKeepManager from './RNCallKeepManager'
 import utils from 'configs/utils';
+import apis from 'configs/apis';
 
 function sendEventDidDisplayIncommingCall(doctorId, videoCallId) {
     fetch(
@@ -118,6 +119,8 @@ class PushNotification extends React.Component {
             .then((token) => {
                 console.log('Device FCM Token: ', token);
                 utils.database.tokenFCM = token;
+                apis.post(apis.PATH.ADD_TOKEN_FCM, { token }, true).then(res => { })
+                    .catch(err => { })
                 firebase.messaging().subscribeToTopic("honghac_test");
             });
 
@@ -168,13 +171,14 @@ class PushNotification extends React.Component {
 
     }
     onNotificationOpened(notificationOpen) {
-        RNCallKeepManager.displayIncommingCall(0)
+        // RNCallKeepManager.displayIncommingCall(0)
         console.log('onNotificationOpened: ', notificationOpen);
         try {
             firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);
             if (notificationOpen && notificationOpen.notification && notificationOpen.notification.data) {
                 var data = notificationOpen.notification.data;
-
+                const type = notificationOpen.notification.data.type
+                console.log('type: ', type);
             }
         } catch (error) {
             console.log(error);

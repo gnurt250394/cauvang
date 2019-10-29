@@ -15,6 +15,7 @@ import utils from 'configs/utils';
 import { connect } from 'react-redux';
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent';
 import { login } from 'middlewares/actions/login/actionLogin';
+import firebase from 'react-native-firebase';
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,14 @@ class LoginScreen extends Component {
       utils.alertDanger(res.message)
     }
   }
+componentDidMount = () => {
+  firebase.messaging().getToken()
+  .then((token) => {
+      console.log('Device FCM Token: ', token);
+      utils.database.tokenFCM = token;
+      firebase.messaging().subscribeToTopic("honghac_test");
+  });
+};
 
   onRegister = () => {
     NavigationServices.navigate(screenName.InputPhoneScreen)
