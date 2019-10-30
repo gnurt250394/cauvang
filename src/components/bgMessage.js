@@ -1,7 +1,7 @@
 import firebase from 'react-native-firebase';
 import React from 'react'
 import { AppState, View } from 'react-native'
-import LaunchApplication from 'react-native-launch-application';
+// import LaunchApplication from 'react-native-launch-application';
 import RNCallKeepManager from './RNCallKeepManager'
 import utils from 'configs/utils';
 export default async (message) => {
@@ -27,9 +27,9 @@ export default async (message) => {
         console.log('display callkeep even app is not running')
         RNCallKeepManager.displayIncommingCall(0)
         // sendEventDidDisplayIncommingCall(message.data.doctor_id, message.data.videoCallId)
-        setTimeout(() => {
-            LaunchApplication.open('com.baseappreactnative')
-        }, 500)
+        // setTimeout(() => {
+        //     LaunchApplication.open('com.baseappreactnative')
+        // }, 500)
     }
 
 
