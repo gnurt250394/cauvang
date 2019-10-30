@@ -7,9 +7,9 @@ import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
 // const BASE_URL = 'http://10.0.40.13:8000/api/'
 // export const BASE_URI = 'http://10.0.40.13:8000/'
 // export const BASE_SOCKET = 'http://10.0.40.13:3001'
-const BASE_URL = 'https://demo-apis-2503.herokuapp.com/api/'
-export const BASE_URI = 'https://demo-apis-2503.herokuapp.com/'
-export const BASE_SOCKET = 'https://demo-apis-2503.herokuapp.com:3001'
+const BASE_URL = 'https://app-hackathon-2019.herokuapp.com/api/'
+export const BASE_URI = 'https://app-hackathon-2019.herokuapp.com/'
+export const BASE_SOCKET = 'https://app-hackathon-2019.herokuapp.com:3001'
 
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
