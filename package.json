@@ -50,7 +50,6 @@
     "react-native-gesture-handler": "^1.4.1",
     "react-native-image-picker": "^1.1.0",
     "react-native-incall-manager": "^3.2.6",
-    "react-native-launch-application": "^1.0.1",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-network-info": "^5.2.1",
     "react-native-paper": "^2.16.0",
