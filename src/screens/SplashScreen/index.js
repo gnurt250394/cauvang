@@ -25,15 +25,16 @@ class SplashScreen extends Component {
       let res = await apis.fetch(apis.PATH.USER, {}, true)
       console.log('res: aaaa', res);
       if (res && res.code == 200) {
+        this.props.dispatch(login(res.data, res.count))
         setTimeout(() => {
           this.props.navigation.navigate(screenName.HomeStack)
         }, 1000)
-        this.props.dispatch(login(res.data, res.count))
       } else {
+        this.props.dispatch(logout())
+
         setTimeout(() => {
           this.props.navigation.navigate(screenName.AuthenStack)
         }, 1000)
-        this.props.dispatch(logout())
       }
 
     } else {
