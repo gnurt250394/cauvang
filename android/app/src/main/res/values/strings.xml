@@ -3,5 +3,5 @@
     <string name="default_notification_channel_id">honghac-chanel</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
-     <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">_df6liudFOshZwuWm-fOaGmPI4ntOyGCAUswf</string>
+     <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">YgwFlZHKRhw3l-ybc6eQ1beL3ZF_jgYqYv10A</string>
 </resources>

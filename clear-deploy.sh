@@ -1,2 +1,2 @@
-appcenter codepush deployment clear -a gnurt250394-gmail.com/app-react-native-test Production
-appcenter codepush deployment clear -a gnurt250394-gmail.com/app-react-native-test-ios Production
+appcenter codepush release-react -a gnurt250394-gmail.com/APP-HACKATHON-ANDROID -d Production
+appcenter codepush release-react -a gnurt250394-gmail.com/APP-HACKATHON-IOS -d Production
