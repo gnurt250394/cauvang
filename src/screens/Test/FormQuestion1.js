@@ -38,7 +38,7 @@ class FormQuestion1 extends Component {
                 <View style={{ flex: 1 }}>
                     <Text style={styles.txtDate}>Ngày tháng năm sinh</Text>
                     <DatePicker
-                        style={{ width: width - 20 }}
+                        style={{ width:'40%' }}
                         date={this.state.date}
                         mode="date"
                         placeholder="dd/mm/yyyy"
@@ -135,7 +135,9 @@ const styles = StyleSheet.create({
     inputHeight: {
         backgroundColor: R.colors.white,
         borderRadius: 5,
-        height: 40
+        height: 40,
+        borderColor:R.colors.gray,
+        borderWidth:1
     },
     txtHeight: {
         color: R.colors.white,

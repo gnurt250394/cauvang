@@ -8,20 +8,22 @@ import screenName from 'configs/screenName';
 import apis from 'configs/apis';
 import { login } from 'middlewares/actions/login/actionLogin';
 import { uploadImage } from 'configs/apis/UploadImage';
+import ChooseImage from 'configs/ChooseImage';
 
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
-        let user = this.props.userApp || {}
+        this.user = this.props.userApp || {}
         this.state = {
-            gender: user.gender,
+            gender: this.gender,
             isShow: false,
             hospital: {},
-            images: user.image,
+            images: this.image,
             city: {},
             district: {},
             communes: {},
-            fullName: user.fullName,
+            fullName: this.fullName,
+        
         };
     }
     selectGender = () => {
@@ -37,7 +39,7 @@ class ProfileScreen extends Component {
     }
     renderGender = () => {
         const { gender } = this.state
-        console.log('gender: ', gender);
+        
         if (gender == '1') {
             return "Nam"
         } else if (gender == '0') {
@@ -47,10 +49,16 @@ class ProfileScreen extends Component {
         }
     }
     selectAvatar = async () => {
-        let res = await uploadImage(this.state.images)
-        if (res && res.code == 200) {
-            this.setState({ images: res.image })
+        let uri = await ChooseImage()
+        if (uri) {
+            let res = await uploadImage(uri)
+            if (res && res.code == 200) {
+                this.user.image = res.image
+                this.props.dispatch(login(this.user))
+                this.setState({ images: res.image })
+            }
         }
+
     }
     selectHospital = (hospital) => {
         this.setState({ hospital })
@@ -93,6 +101,7 @@ class ProfileScreen extends Component {
         const { userApp } = this.props
         const image = userApp && userApp.image ? { uri: userApp.image } : R.images.icons.ic_user
         const source = images ? { uri: images } : image
+        
         return (
             <Container>
                 <View style={styles.containerAvatar}>

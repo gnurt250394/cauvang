@@ -1,12 +1,12 @@
 import Axios from 'axios'
 import utils from './utils'
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
-const BASE_URL = 'http://192.168.0.104:8000/api/'
-export const BASE_URI = 'http://192.168.0.104:8000/'
-export const BASE_SOCKET = 'http://192.168.0.104:3001'
-// const BASE_URL = 'http://10.0.40.13:8000/api/'
-// export const BASE_URI = 'http://10.0.40.13:8000/'
-// export const BASE_SOCKET = 'http://10.0.40.13:3001'
+// const BASE_URL = 'http://192.168.0.104:8000/api/'
+// export const BASE_URI = 'http://192.168.0.104:8000/'
+// export const BASE_SOCKET = 'http://192.168.0.104:3001'
+const BASE_URL = 'http://10.0.40.13:8000/api/'
+export const BASE_URI = 'http://10.0.40.13:8000/'
+export const BASE_SOCKET = 'http://10.0.40.13:3001'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -70,14 +70,14 @@ function fetch(url, params, loading) {
       return error
     })
 }
-function put(url, params) {
+function put(url, params, isLoading) {
   let headers = {
     'Content-Type': 'application/json'
   }
   if (utils.database.token) {
     headers.Authorization = `Bearer ${utils.database.token}`
   }
-  showLoading()
+  !isLoading ? showLoading() : null
   return constants
     .put(url, params, {
       headers, onUploadProgress: (progressEvent) => {
@@ -194,9 +194,12 @@ export default {
     QUESTION: 'questions',
     REPORT: 'report',
     ADD_TOKEN_FCM: 'add-token',
-    COMMUNES:'list-communes',
-    DISTRICT:'list-districts',
-    CITY:'list-city'
+    COMMUNES: 'list-communes',
+    DISTRICT: 'list-districts',
+    CITY: 'list-city',
+    LIST_DOCTOR: 'list-doctor',
+    CHECK_QUESTION: 'check-questions',
+    CONFIRM_ANWSER:'confirm-anwser'
   },
   fetch,
   put,

@@ -13,6 +13,7 @@ export default {
         ic_next_arrow: require('res/images/icons/ic_next_arrow.png'),
         ic_back_arrow: require('res/images/icons/ic_back_arrow.png'),
         ic_checked: require('res/images/icons/ic_checked.png'),
+        ic_doctor: require('res/images/icons/ic_doctor.jpg'),
         profile:{
         ic_logout: require('res/images/icons/profile/ic_logout.png'),
         ic_pass: require('res/images/icons/profile/ic_pass.png'),

@@ -18,11 +18,11 @@ const crashReporter = store => next => action => {
       err,
       redux: {
         action,
-        state: store.getState()
+        // state: store.getState()
       }
     })
     throw err
   }
 }
-const store = createStore(allReducer, applyMiddleware(thunkMiddleware, loggerMiddleware, logger, crashReporter))
+const store = createStore(allReducer, applyMiddleware(thunkMiddleware, loggerMiddleware, logger))
 export default store

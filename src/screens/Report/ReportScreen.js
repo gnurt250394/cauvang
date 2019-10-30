@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import R from 'res/R';
 import Container from 'library/Container';
 import ScaleText from 'components/TextScale';
 import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
-import utils, { height } from 'configs/utils';
+import utils, { height, width } from 'configs/utils';
 import ActionSheet from 'react-native-actionsheet'
 import PushNotification from 'components/PushNotification';
 import { connect } from 'react-redux';
@@ -16,18 +16,55 @@ class ReportScreen extends Component {
         super(props);
         this.state = {
             value: '',
-            doctor_id: ''
+            doctor_id: '',
+            data: [],
+            keyword: ''
 
         };
     }
-    _renderItem = ({ item, index }) => (
-        <TouchableOpacity
-            onPress={item.onPress}
-            style={styles.containerText}>
-            <Image source={item.image} style={styles.imageButton} />
-            <ScaleText fontFamily="bold" style={styles.txtNameButton}>{item.name}</ScaleText>
-        </TouchableOpacity>
-    )
+    componentDidMount = () => {
+        this.getData()
+    };
+
+    getData = async (keyword) => {
+        let params = {}
+        if (keyword) params.keyword = keyword
+        let res = await apis.fetch(apis.PATH.LIST_DOCTOR, params)
+        if (res && res.code == 200) {
+            this.setState({ data: res.data })
+        }
+    }
+    onChecked = (item) => () => {
+        let data = [...this.state.data]
+        this.setState({ doctor_id: item._id })
+        data.forEach(e => {
+            if (e._id == item._id) {
+                e.checked = !e.checked
+            } else {
+                e.checked = false
+            }
+        })
+        this.setState({ data })
+    }
+    _renderItem = ({ item, index }) => {
+        const image = item.image ? { uri: item.image } : R.images.icons.ic_doctor
+        return (
+            <TouchableOpacity
+                onPress={this.onChecked(item)}
+                style={styles.containerText}>
+                <View style={styles.containerName}>
+                    <Image source={image} style={styles.imageButton} />
+                    <ScaleText fontFamily="bold" style={styles.txtNameButton}>{item.fullName}</ScaleText>
+                </View>
+                <View style={styles.containerChecked}>
+                    {
+                        item.checked ? <Image source={R.images.icons.ic_checked} style={styles.imgChecked} /> : null
+                    }
+                </View>
+            </TouchableOpacity>
+        )
+
+    }
     _keyExtractor = (item, index) => `${item.id || index}`
 
     onSend = async () => {
@@ -47,13 +84,20 @@ class ReportScreen extends Component {
         } else {
             utils.alertDanger(res.message)
         }
-     
+
     }
     onChangeText = (value) => {
         this.setState({ value })
     }
+    _onChangeText = (value) => {
+        this.setState({ keyword: value })
+    }
+    onSubmit = () => {
+        this.getData(this.state.keyword)
+
+    }
     render() {
-        const { listButton } = this.state
+        const { data } = this.state
         const { userApp } = this.props
         return (
             <Container
@@ -65,11 +109,7 @@ class ReportScreen extends Component {
                         color: R.colors.defaultColor
                     }}>{userApp.name}</ScaleText></ScaleText>
                     <View style={styles.containerHeaderTitle}>
-                        <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            paddingBottom: 25,
-                        }}>
+                        <View style={styles.containerTitleHeader}>
                             <Image source={R.images.icons.home.ic_warning} style={styles.imageWarning} />
                             <ScaleText style={{
                                 color: R.colors.white
@@ -85,31 +125,29 @@ class ReportScreen extends Component {
 
                         </View>
                     </View>
+                    <View style={styles.containerList}>
+                        <TextInput
+                            placeholder="Tìm kiếm BS"
+                            style={styles.textInput}
+                            onChangeText={this._onChangeText}
+                            onSubmitEditing={this.onSubmit}
+                        />
+                        <FlatList
+                            data={data}
+                            nestedScrollEnabled={true}
+                            renderItem={this._renderItem}
+                            ListEmptyComponent={() => <Text style={{paddingVertical:15}}>Không có bác sĩ nào</Text>}
+                            keyExtractor={this._keyExtractor}
+                        />
+
+                    </View>
+
                     <TouchableOpacity
                         onPress={this.onSend}
                         style={styles.buttonSend}>
                         <ScaleText style={styles.txtSend}>Gửi báo cáo</ScaleText>
                     </TouchableOpacity>
                 </View>
-
-
-
-
-                {/**view 3 */}
-                <View style={styles.containerView3}>
-
-                    <FlatList
-                        data={listButton}
-                        numColumns={2}
-                        renderItem={this._renderItem}
-                        keyExtractor={this._keyExtractor}
-                    />
-
-
-
-                </View>
-
-                <PushNotification />
             </Container>
         );
     }
@@ -122,6 +160,49 @@ export default connect(mapStateToProps)(ReportScreen);
 
 
 const styles = StyleSheet.create({
+    textInput: {
+        borderRadius: 5,
+        borderColor: R.colors.gray,
+        borderWidth: 1,
+        height: 38,
+        width: '80%',
+        backgroundColor: R.colors.white,
+        marginTop: 5,
+        paddingLeft: 10,
+        marginBottom: 5
+    },
+    containerTitleHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 25,
+    },
+    containerList: {
+        backgroundColor: R.colors.secondColor,
+        maxHeight: height / 3,
+        width: width - 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        borderRadius: 5
+    },
+    containerName: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    imgChecked: {
+        height: 18,
+        width: 18,
+        resizeMode: 'contain',
+        alignSelf: 'center'
+    },
+    containerChecked: {
+        borderColor: R.colors.defaultColor,
+        borderWidth: 1,
+        borderRadius: 11,
+        height: 22,
+        width: 22,
+    },
     imageWarning: {
         height: 18,
         width: 18,
@@ -163,12 +244,12 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     txtNameButton: {
-        paddingTop: 10,
+        paddingLeft: 10,
     },
     imageButton: {
         height: 40,
         width: 40,
-        resizeMode: 'contain',
+        borderRadius: 20,
     },
 
 
@@ -179,10 +260,12 @@ const styles = StyleSheet.create({
         paddingTop: 50,
     },
     containerText: {
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: '50%',
-        paddingVertical: 20
+        paddingVertical: 10,
+        paddingLeft: 10,
+        width: width - 100,
+        paddingRight: 10
     },
     containerHeaderTitle: {
         backgroundColor: R.colors.black5,

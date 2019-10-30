@@ -41,6 +41,7 @@ class AccountScreen extends Component {
 
     render() {
         const { userApp } = this.props
+        const source = userApp.image ? {uri:userApp.image}: R.images.icons.ic_user
         return (
             <ScrollView>
                 <View style={{
@@ -59,7 +60,7 @@ class AccountScreen extends Component {
                                 alignItems: 'center',
                                 paddingTop: 20,
                             }}>
-                                <Image source={R.images.icons.ic_user} style={{
+                                <Image source={source} style={{
                                     height: 80,
                                     width: 80,
                                     borderRadius: 40,

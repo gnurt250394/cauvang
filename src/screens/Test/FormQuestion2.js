@@ -9,29 +9,17 @@ class FormQuestion2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: '',
-            height: '',
-            weight: '',
-            BMI: '',
             checked1: false,
             checked2: false,
-            checked3: false
+            checked3: false,
+            value: ''
         };
+        this.data = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'X', 'Y', 'Z']
     }
-    onChangeText = (state) => (value) => {
-        this.setState({ [state]: value }, () => {
-            const { date, height, weight } = this.state
-            if (height && weight) {
-                if (this.timeout) clearTimeout(this.timeout)
-                this.timeout = setTimeout(() => {
-                    let BMI = weight / ((height / 100) * (height / 100))
-                    this.setState({ BMI: BMI.toFixed(2) })
-                }, 10)
-
-
-            }
-        })
-
+    onChangeText = (value) => {
+        console.log('value: 111', value);
+        this.setState({ value })
+        this.props.onChangeText1 && this.props.onChangeText1(value)
     }
     onPressCheck = (data, e) => () => {
         data.forEach(item => {
@@ -41,7 +29,67 @@ class FormQuestion2 extends Component {
                 item.checked = false
             }
         })
-        this.props.onPressCheck && this.props.onPressCheck(data, e)
+        this.props.onPressCheck && this.props.onPressCheck(e)
+    }
+    onCheckBox = (e) => () => {
+        e.checked = !e.checked
+        this.props.onPressCheck && this.props.onPressCheck(e)
+    }
+    renderItemAnwser = (item) => {
+        switch (item.type) {
+            case 1:
+                return (
+                    <TextInput placeholder="Nhập nội dung"
+                        style={{
+                            backgroundColor: R.colors.white,
+                            borderRadius: 5,
+                            paddingLeft: 10,
+                        }}
+                        onChangeText={this.onChangeText}
+                    />
+                )
+
+            case 2:
+                return (
+                    item.anwser && item.anwser.length > 0 ?
+                        item.anwser.map((e, i) => {
+                            return (
+                                <TouchableOpacity
+                                    onPress={this.onPressCheck(item.anwser, e)}
+                                    key={i} style={styles.buttonChecked}>
+                                    <View style={styles.containerChecked}>
+                                        {
+                                            e.checked ? <Image source={R.images.icons.ic_checked} style={styles.iconChecked} /> : null
+                                        }
+                                    </View>
+                                    <Text style={styles.TxtAnwser}>{this.data[i]}. {e.name}</Text>
+                                </TouchableOpacity>
+                            )
+                        }) : null
+
+                )
+            case 3:
+                return (
+                    item.anwser && item.anwser.length > 0 ?
+                        item.anwser.map((e, i) => {
+                            return (
+                                <TouchableOpacity
+                                    onPress={this.onCheckBox(e)}
+                                    key={i} style={styles.buttonChecked}>
+                                    <View style={styles.containerChecked}>
+                                        {
+                                            e.checked ? <Image source={R.images.icons.ic_checked} style={styles.iconChecked} /> : null
+                                        }
+                                    </View>
+                                    <Text style={styles.TxtAnwser}>{e.name}</Text>
+                                </TouchableOpacity>
+                            )
+                        }) : null
+
+                )
+            default:
+                break;
+        }
     }
     render() {
         const { BMI } = this.state
@@ -51,21 +99,7 @@ class FormQuestion2 extends Component {
                 <View style={{ flex: 1 }}>
                     <Text style={styles.txtDate}>{item.name}</Text>
                     <View >
-                        {item.anwser && item.anwser.length > 0 ?
-                            item.anwser.map((e, i) => {
-                                return (
-                                    <TouchableOpacity
-                                        onPress={this.onPressCheck(item.anwser, e)}
-                                        key={i} style={styles.buttonChecked}>
-                                        <View style={styles.containerChecked}>
-                                            {
-                                                e.checked ? <Image source={R.images.icons.ic_checked} style={styles.iconChecked} /> : null
-                                            }
-                                        </View>
-                                        <Text style={styles.TxtAnwser}>{e.name}</Text>
-                                    </TouchableOpacity>
-                                )
-                            }) : null
+                        {this.renderItemAnwser(item)
                         }
 
 
@@ -75,8 +109,8 @@ class FormQuestion2 extends Component {
                 {
                     length - 1 == index ?
                         <TouchableOpacity
-                        onPress={this.props.onSend}
-                        style={styles.buttonSend}>
+                            onPress={this.props.onSend}
+                            style={styles.buttonSend}>
                             <Text style={styles.txtSend}>Gửi</Text>
                         </TouchableOpacity>
                         :
