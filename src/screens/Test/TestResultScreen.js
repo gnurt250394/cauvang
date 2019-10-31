@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import R from 'res/R';
 import Container from 'library/Container';
+import NavigationServices from 'routes/NavigationServices';
+import screenName from 'configs/screenName';
 
 class TestResultScreen extends Component {
     constructor(props) {
@@ -27,26 +29,54 @@ class TestResultScreen extends Component {
             default: return R.images.icons.follow_health.ic_success
         }
     }
+    goHome=()=>{
+        NavigationServices.navigate(screenName.HomeScreen)
+    }
     render() {
         return (
-            <Container >
-                <View style={styles.containerAlert}>
+            <View style={styles.containerAlert}>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
                     <Image source={this.renderImage()} style={styles.imageAlert} />
                     <Text style={styles.txtAlert}>{this.renderType()} </Text>
                     {
                         this.state.type == '2' ?
                             <TouchableOpacity>
                                 <Text style={{
-                                    fontFamily: R.fonts.Black,
-
+                                    fontFamily: R.fonts.Bold,
                                 }}>Lời dặn của bác sĩ</Text>
                             </TouchableOpacity>
                             : null
 
                     }
-                    
                 </View>
-            </Container>
+                <View style={{
+                    flex: 2,
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    paddingBottom: 35
+                }}>
+                    <TouchableOpacity
+                        onPress={this.goHome}
+                        style={{
+                            backgroundColor: R.colors.blue,
+                            borderRadius: 10,
+                            paddingHorizontal: 10,
+                            height: 50,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                        <Text style={{
+                            color: R.colors.white,
+                            fontFamily: R.fonts.Heavy,
+                            fontSize: 17
+                        }}>Về trang chủ</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         );
     }
 }
@@ -61,9 +91,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40
     },
     containerAlert: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 15
+        flex: 1
     },
     imageAlert: {
         height: 50,

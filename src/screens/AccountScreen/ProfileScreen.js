@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     txtName: {
-        fontFamily: R.fonts.Black,
+        fontFamily: R.fonts.Bold,
         paddingTop: 10
     },
     containerAvatar: {

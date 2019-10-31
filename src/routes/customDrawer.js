@@ -43,7 +43,7 @@ export const CustomDrawerContentComponent = props => {
 const styles = StyleSheet.create({
     icon: { height: 17, width: 17, },
     txtlabel: {
-        fontFamily: R.fonts.Black,
+        fontFamily: R.fonts.Bold,
     },
     containerLabel: {
         paddingVertical: 15

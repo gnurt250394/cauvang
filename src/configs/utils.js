@@ -45,7 +45,7 @@ function alertWarn(description) {
   showMessage({
     type: 'warning',
     icon: 'warning',
-    message: 'Cảnh báo',
+    message: 'Hồng Hạc',
     description,
   })
 }
@@ -53,7 +53,7 @@ function alertSuccess(description) {
   showMessage({
     type: 'success',
     icon: 'success',
-    message: 'Thông báo',
+    message: 'Hồng Hạc',
     description,
   })
 }
@@ -61,7 +61,7 @@ function alertNone(description) {
   showMessage({
     type: 'none',
     icon: 'none',
-    message: 'Thông báo',
+    message: 'Hồng Hạc',
     description,
   })
 }
@@ -69,7 +69,7 @@ function alertInfo(description) {
   showMessage({
     type: 'info',
     icon: 'info',
-    message: 'Thông tin',
+    message: 'Hồng Hạc',
     description,
   })
 }
@@ -77,7 +77,7 @@ function alertDanger(description) {
   showMessage({
     type: 'danger',
     icon: 'danger',
-    message: 'Lỗi!!!',
+    message: 'Hồng Hạc',
     description,
   })
 }

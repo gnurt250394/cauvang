@@ -27,7 +27,7 @@ export default {
     TestScreen:'TestScreen',
     TestTodayScreen:'Kiểm tra tình trạng sức khỏe',
     ReportScreen:'Dấu hiệu bất thường',
-    TestResultScreen:'Theo dõi sức khỏe',
+    TestResultScreen:'TestResultScreen',
     ProfileScreen:'Thông tin cá nhân',
     MyDrugScreen:'Đơn thuốc của bạn',
     CityScreen:'Tỉnh / Thành phố',

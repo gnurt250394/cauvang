@@ -26,7 +26,7 @@ class HeaderDefault extends Component {
                     :
                     <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
                 }
-                <ScaleText size={18} style={styles.txtNameHeader}>{title || navigation.state.routeName}</ScaleText>
+                <ScaleText fontFamily="bold" size={20} style={styles.txtNameHeader}>{title || navigation.state.routeName}</ScaleText>
                 {onPressRight ?
                     <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
                     :

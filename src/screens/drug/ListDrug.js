@@ -24,7 +24,7 @@ class ListDrug extends Component {
                     borderBottomWidth: 1
                 }}
             >
-                <Text style={{ fontFamily: R.fonts.Black }}>{item.name}</Text>
+                <Text style={{ fontFamily: R.fonts.Bold }}>{item.name}</Text>
                 <View style={{
                     flexDirection: 'row',
                     alignItems:'center'

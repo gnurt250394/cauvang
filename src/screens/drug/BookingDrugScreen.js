@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     txtLabel: {
-        fontFamily: R.fonts.Black,
+        fontFamily: R.fonts.Bold,
         color: R.colors.textColor
     },
     containerBookingDrug: {

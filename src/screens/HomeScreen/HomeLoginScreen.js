@@ -87,11 +87,11 @@ class HomeLoginScreen extends Component {
             >
                 {/**view 1 */}
                 <View style={styles.containerView1}>
-                    <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
+                    <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText fontFamily="boldItalic" size={20} style={{
                         color: R.colors.defaultColor
                     }}>{userApp.name}</ScaleText></ScaleText>
                     <View style={styles.containerHeaderTitle}>
-                        <ScaleText size={16} style={styles.TxtQuestion} >Hôm nay chỉ số đường huyết của bạn là bao nhiêu?</ScaleText>
+                        <ScaleText  fontFamily="lightItalic" size={16} style={styles.TxtQuestion} >Hôm nay chỉ số đường huyết của bạn là bao nhiêu?</ScaleText>
                         <View style={styles.containerInput}>
                             <TextInput
                                 placeholder="Nhập câu trả lời"
@@ -101,7 +101,7 @@ class HomeLoginScreen extends Component {
                             <TouchableOpacity
                                 onPress={this.onSend}
                                 style={styles.buttonSend}>
-                                <ScaleText style={styles.txtSend}>Gửi</ScaleText>
+                                <ScaleText fontFamily="bold" style={styles.txtSend}>Gửi</ScaleText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -129,17 +129,7 @@ class HomeLoginScreen extends Component {
 
 
                 </View>
-                {/* <ActionSheet
-                    ref={o => this.actionSheetChooseType = o}
-                    options={actions}
-                    cancelButtonIndex={actions.length - 1}
-                    destructiveButtonIndex={actions.length - 1}
-                    onPress={(index) => {
-                        if (index <= this.state.medicalTestResult.length - 1) {
-                            this.setState({ currentGroup: this.state.medicalTestResult[index] });
-                        }
-                    }}
-                /> */}
+               
                 <PushNotification />
             </Container>
         );
@@ -187,7 +177,7 @@ const styles = StyleSheet.create({
     TxtQuestion: {
         color: R.colors.white,
         textAlign: 'center',
-        paddingBottom: 5
+        paddingBottom: 20
     },
     txtNameButton: {
         paddingTop: 10,
@@ -214,7 +204,8 @@ const styles = StyleSheet.create({
         backgroundColor: R.colors.defaultColor,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 20
+        paddingVertical: 20,
+        width: '100%',
     },
     containerView3: {
         flex: 3,

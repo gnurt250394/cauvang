@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     callingCodeText: {
         fontSize: 20,
         color: brandColor,
-        fontFamily: R.fonts.Black,
+        fontFamily: R.fonts.Bold,
         fontWeight: 'bold',
         paddingRight: 10
     },
