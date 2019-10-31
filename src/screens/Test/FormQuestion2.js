@@ -33,6 +33,7 @@ class FormQuestion2 extends Component {
 
     }
     onCheckBox = (e) => () => {
+        console.log('e: ', e);
         e.checked = !e.checked
         this.props.onPressCheck && this.props.onPressCheck(e)
     }
@@ -109,20 +110,32 @@ class FormQuestion2 extends Component {
                 break;
         }
     }
+    renderItem = ({ item, index }) => {
+        return (
+            <View style={{ flex: 1,paddingTop:20 }}>
+                <Text style={styles.txtDate}>{index + 1}. {item.name}</Text>
+                <View >
+                    {this.renderItemAnwser(item)
+                    }
+
+
+                </View>
+            </View>
+        )
+    }
+    keyExtractor = (item, index) => `${item._id || index}`
     render() {
         const { BMI } = this.state
         const { index, length, item } = this.props
         return (
             <View style={styles.container}>
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.txtDate}>{index + 1}. {item.name}</Text>
-                    <View >
-                        {this.renderItemAnwser(item)
-                        }
+                <FlatList
+                    data={item.itemsQuestion}
+                    renderItem={this.renderItem}
+                    extraData={item.itemsQuestion}
+                    keyExtractor={this.keyExtractor}
+                />
 
-
-                    </View>
-                </View>
                 {/**footer */}
                 {
                     length - 1 == index ?

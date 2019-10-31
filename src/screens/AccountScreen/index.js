@@ -34,6 +34,8 @@ class AccountScreen extends Component {
                 name: 'Đăng xuất',
                 onPress: () => {
                     this.props.dispatch(logout())
+                    NavigationServices.navigate(screenName.AuthenStack)
+                    utils.logout()
                 }
             },
         ]
@@ -41,7 +43,7 @@ class AccountScreen extends Component {
 
     render() {
         const { userApp } = this.props
-        const source = userApp.image ? {uri:userApp.image}: R.images.icons.ic_user
+        const source = userApp.image ? { uri: userApp.image } : R.images.icons.ic_user
         return (
             <ScrollView>
                 <View style={{
@@ -82,7 +84,7 @@ class AccountScreen extends Component {
                                 style={{
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    paddingVertical:15,
+                                    paddingVertical: 15,
                                     paddingHorizontal: 10,
                                     borderBottomColor: R.colors.black,
                                     borderBottomWidth: 1,
@@ -95,7 +97,7 @@ class AccountScreen extends Component {
                                 }} />
                                 <Text style={{
                                     paddingLeft: 10,
-                                    fontFamily:R.fonts.Bold
+                                    fontFamily: R.fonts.Bold
                                 }}>{e.name}</Text>
                             </TouchableOpacity>
                         )

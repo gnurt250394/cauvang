@@ -55,7 +55,11 @@ class TestTodayScreen extends Component {
     getData = async () => {
         try {
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 2 })
-            if (res && res.code == 200) {
+            if (res && res.code == 200 ) {
+                let data = res.data
+                data.forEach(e=>{
+
+                })
                 this.setState({ data: res.data })
             }
         } catch (error) {
@@ -75,22 +79,26 @@ class TestTodayScreen extends Component {
     onPressCkeck = (item) => (e) => {
         let listChecked = [];
         let data = [...this.state.data]
-        data.forEach(elm => {
-            if (elm._id == item._id) {
-                if (item.type == 3) {
-                    listChecked = elm.anwser.filter(element => element.checked == true)
-
-                } else {
-                    let index = this.list.findIndex(element => e._id == element._id)
-                    if (index == -1) {
-                        this.list.push(e)
-                        listChecked = this.list
+        data.forEach(element => {
+            console.log('elm: ', element);
+            if (element._id == item._id) {
+                element.itemsQuestion.forEach(elm=>{
+                    if (item.type == 3) {
+                        listChecked = elm.anwser.filter(element => element.checked == true)
+    
                     } else {
-                        this.list.splice(index, 1, e)
-                        listChecked = this.list
+                        let index = this.list.findIndex(element => e._id == element._id)
+                        if (index == -1) {
+                            this.list.push(e)
+                            listChecked = this.list
+                        } else {
+                            this.list.splice(index, 1, e)
+                            listChecked = this.list
+                        }
+    
                     }
-
-                }
+                })
+                
 
             }
         })
@@ -181,12 +189,12 @@ class TestTodayScreen extends Component {
     _renderItem = ({ item, index }) => {
         switch (index) {
             case 0:
-                // return <FormQuestion1
-                //     key={`${item._id}`}
-                //     onPress={this.nextQuestion(item)}
-                //     onPressBack={this.backQuestion(item)}
-                //     index={index}
-                //     length={this.state.data.length} />
+            // return <FormQuestion1
+            //     key={`${item._id}`}
+            //     onPress={this.nextQuestion(item)}
+            //     onPressBack={this.backQuestion(item)}
+            //     index={index}
+            //     length={this.state.data.length} />
             default:
                 return <FormQuestion2
                     key={`${item._id}`}
@@ -307,7 +315,7 @@ const styles = StyleSheet.create({
     },
     containerHeaderTitle: {
         backgroundColor: R.colors.defaultColor,
-        width:null,
+        width: null,
         // height: height / 2,
 
     },

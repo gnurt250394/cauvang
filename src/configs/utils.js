@@ -84,7 +84,6 @@ function alertDanger(description) {
 
 function logout() {
   removeItem(KEY.TOKEN)
-  NavigationServices.navigate(screenName.AuthenStack)
   firebase.messaging().deleteToken(database.tokenFCM)
 }
 

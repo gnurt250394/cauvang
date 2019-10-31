@@ -33,6 +33,7 @@ class SplashScreen extends Component {
         this.props.dispatch(logout())
 
         setTimeout(() => {
+          utils.logout()
           this.props.navigation.navigate(screenName.AuthenStack)
         }, 1000)
       }

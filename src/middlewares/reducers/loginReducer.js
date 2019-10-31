@@ -18,9 +18,6 @@ const loginReducer = (state = initialState, action) => {
         count: action.count
       }
     case actionTypes.LOGOUT:
-      utils.removeItem(utils.KEY.TOKEN)
-      NavigationServices.navigate(screenName.AuthenStack)
-      firebase.messaging().deleteToken(utils.database.tokenFCM)
       return {
         ...state,
         userApp: {},

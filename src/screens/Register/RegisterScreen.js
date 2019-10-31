@@ -134,7 +134,7 @@ class RegisterScreen extends Component {
                             <Text>{hospital && hospital.name ? hospital.name : 'Chọn bệnh viện đang điều trị ngoại trú'}</Text>
                             <Image source={R.images.icons.ic_up_down} style={styles.imgGender} />
                         </TouchableOpacity>
-                        <ButtonBase value="Đăng ký" onPress={this.onRegister} styleButton={styles.buttonRegister} />
+                        <ButtonBase value="Đăng ký " onPress={this.onRegister} styleButton={styles.buttonRegister} />
                     </View>
                 </TouchableWithoutFeedback>
             </Container>

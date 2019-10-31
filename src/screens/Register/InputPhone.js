@@ -9,7 +9,9 @@ import {
     TouchableOpacity,
     View,
     Platform,
-    Alert
+    Alert,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 
 import Form from 'react-native-form';
@@ -132,16 +134,6 @@ export default class InputPhone extends Component {
     }
 
     _renderFooter = () => {
-
-        if (this.state.enterCode)
-            return (
-                <View>
-                    <Text style={styles.wrongNumberText} onPress={this._tryAgain}>
-                        Enter the wrong number or need a new code?
-          </Text>
-                </View>
-            );
-
         return (
             <View>
                 <Text style={styles.disclaimerText}>Bằng cách nhấn vào "Xác nhận" ở trên, chúng tôi sẽ gửi cho bạn một SMS để xác nhận số điện thoại của bạn. Tin nhắn &amp; dữ liệu có thể được áp dụng.</Text>
@@ -181,11 +173,16 @@ export default class InputPhone extends Component {
         );
 
     }
-
+    onLogin = () => {
+        NavigationServices.navigate(screenName.LoginScreen)
+    }
+    hideKeyboard=()=>{
+        Keyboard.dismiss()
+    }
     render() {
 
         let headerText = `Xác thực số điện thoại của bạn?`
-        let buttonText =  'Xác nhận';
+        let buttonText = 'Xác nhận';
         let textStyle = this.state.enterCode ? {
             height: 50,
             textAlign: 'center',
@@ -194,56 +191,67 @@ export default class InputPhone extends Component {
         } : {};
 
         return (
+            <TouchableWithoutFeedback onPress={this.hideKeyboard}>
+                <View style={styles.container}>
 
-            <View style={styles.container}>
+                    <Text style={styles.header}>{headerText}</Text>
 
-                <Text style={styles.header}>{headerText}</Text>
+                    <Form ref={ref => this.form = ref} style={styles.form}>
 
-                <Form ref={ref => this.form = ref} style={styles.form}>
+                        <View style={{ flexDirection: 'row' }}>
 
-                    <View style={{ flexDirection: 'row' }}>
+                            {this._renderCountryPicker()}
+                            {this._renderCallingCode()}
 
-                        {this._renderCountryPicker()}
-                        {this._renderCallingCode()}
-
-                        <TextInput
-                            ref={'textInput'}
-                            name={'phoneNumber'}
-                            type={'TextInput'}
-                            underlineColorAndroid={'transparent'}
-                            autoCapitalize={'none'}
-                            autoCorrect={false}
-                            // onChangeText={this._onChangeText}
-                            placeholder={'Số điện thoại'}
-                            keyboardType={Platform.OS === 'ios' ? 'number-pad' : 'numeric'}
-                            style={[styles.textInput, textStyle]}
-                            returnKeyType='go'
-                            autoFocus
-                            // placeholderTextColor={brandColor}
-                            selectionColor={brandColor}
-                            maxLength={10}
-                            onSubmitEditing={this._getCode} />
-
-
-                    </View>
-
-                    <TouchableOpacity style={styles.button} onPress={this._getCode}>
-                        <Text style={styles.buttonText}>{buttonText}</Text>
-                    </TouchableOpacity>
-
-                    {this._renderFooter()}
-
-                </Form>
+                            <TextInput
+                                ref={'textInput'}
+                                name={'phoneNumber'}
+                                type={'TextInput'}
+                                underlineColorAndroid={'transparent'}
+                                autoCapitalize={'none'}
+                                autoCorrect={false}
+                                // onChangeText={this._onChangeText}
+                                placeholder={'Số điện thoại'}
+                                keyboardType={Platform.OS === 'ios' ? 'number-pad' : 'numeric'}
+                                style={[styles.textInput, textStyle]}
+                                returnKeyType='go'
+                                autoFocus
+                                // placeholderTextColor={brandColor}
+                                selectionColor={brandColor}
+                                maxLength={10}
+                                onSubmitEditing={this._getCode} />
 
 
+                        </View>
 
-            </View>
+                        <TouchableOpacity style={styles.button} onPress={this._getCode}>
+                            <Text style={styles.buttonText}>{buttonText}</Text>
+                        </TouchableOpacity>
 
+                        {this._renderFooter()}
+                        <View>
+                            <Text style={[styles.disclaimerText, { fontSize: 15 }]}>{'Hoặc nếu bạn đã có tài khoản có thể đăng nhập \n'}<Text
+                                onPress={this.onLogin}
+                                style={styles.txtThis}>Tại đây</Text></Text>
+                        </View>
+                    </Form>
+
+
+
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    txtThis: {
+        fontFamily: R.fonts.Bold,
+        textDecorationLine: 'underline',
+        textDecorationColor: R.colors.defaultColor,
+        fontWeight: 'bold',
+        color:R.colors.textColor,
+    },
     countryPicker: {
         alignItems: 'center',
         justifyContent: 'center'
@@ -255,11 +263,11 @@ const styles = StyleSheet.create({
     header: {
         textAlign: 'center',
         marginTop: 60,
-        paddingBottom:40,
+        paddingBottom: 40,
         fontSize: 22,
         margin: 20,
         color: '#4A4A4A',
-        fontFamily:R.fonts.Regular
+        fontFamily: R.fonts.Regular
     },
     form: {
         margin: 20
@@ -294,8 +302,8 @@ const styles = StyleSheet.create({
         marginTop: 30,
         fontSize: 12,
         color: 'grey',
-        textAlign:'center',
-        fontFamily:R.fonts.LightItalic
+        textAlign: 'center',
+        fontFamily: R.fonts.LightItalic
     },
     callingCodeView: {
         alignItems: 'center',
