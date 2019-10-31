@@ -66,7 +66,7 @@ class AccountScreen extends Component {
                                     borderRadius: 40,
                                 }} />
                                 <Text style={{
-                                    fontFamily: R.fonts.Black,
+                                    fontFamily: R.fonts.Bold,
                                     paddingTop: 10
                                 }}>{userApp.fullName}</Text>
                             </View>

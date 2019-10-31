@@ -13,7 +13,7 @@ class RootView extends Component {
     let components = [Text, TextInput]
     const customProps = {
       style: {
-        fontFamily: R.fonts.Light,
+        fontFamily: R.fonts.Regular,
         color: R.colors.black
       }
     }

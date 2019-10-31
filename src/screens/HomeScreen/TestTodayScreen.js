@@ -5,7 +5,7 @@ import Container from 'library/Container';
 import ScaleText from 'components/TextScale';
 import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
-import utils, { height } from 'configs/utils';
+import utils, { height, width } from 'configs/utils';
 import ActionSheet from 'react-native-actionsheet'
 import PushNotification from 'components/PushNotification';
 import { connect } from 'react-redux';
@@ -41,18 +41,21 @@ class TestTodayScreen extends Component {
 
             ],
             listChecked: [],
-            currentIndex: 0
+            listInput: [],
+            currentIndex: 0,
+            listFinal: [],
+            selected: false
         };
         this.list = []
+        this.data = []
     }
     componentDidMount() {
         this.getData()
     }
     getData = async () => {
         try {
-            let res = await apis.fetch(apis.PATH.QUESTION)
+            let res = await apis.fetch(apis.PATH.QUESTION, { type: 2 })
             if (res && res.code == 200) {
-                res.data.unshift({ _id: 0 })
                 this.setState({ data: res.data })
             }
         } catch (error) {
@@ -60,47 +63,38 @@ class TestTodayScreen extends Component {
         }
 
     }
-    backQuestion = async () => {
-        const { data, currentIndex, listChecked } = this.state
+    backQuestion = (item) => async () => {
+        const { data, currentIndex, listChecked, selected } = this.state
         if (data && currentIndex > 0 && currentIndex <= data.length - 1) {
             this.swiper && this.swiper.scrollTo(currentIndex - 1)
         }
-        if (typeof listChecked == 'object' && listChecked.name) {
-            let res = await apis.put(apis.PATH.CHECK_QUESTION, { data: listChecked }, true)
-            if (res && res.code == 200) {
-                this.setState({ listChecked: {} })
-            }
-        } else if (Array.isArray(listChecked) && listChecked.length > 0) {
-            let obj = {}
-            let point = listChecked.reduce((total, current) => {
-                return total.point + current.point
-            }, 0)
-            obj.point = point
-            obj.name = listChecked[0].name
-            obj.anwser_id = listChecked[0].question_id
-            let res = await apis.put(apis.PATH.CHECK_QUESTION, { data: obj }, true)
-            if (res && res.code == 200) {
-                this.setState({ listChecked: {} })
-            }
-        }
+
+        this.checkList(item)
     }
 
     onPressCkeck = (item) => (e) => {
-        let listChecked;
+        let listChecked = [];
         let data = [...this.state.data]
         data.forEach(elm => {
             if (elm._id == item._id) {
                 if (item.type == 3) {
                     listChecked = elm.anwser.filter(element => element.checked == true)
+
                 } else {
-                    let obj = e
-                    obj.anwser_id = e._id
-                    listChecked = obj
+                    let index = this.list.findIndex(element => e._id == element._id)
+                    if (index == -1) {
+                        this.list.push(e)
+                        listChecked = this.list
+                    } else {
+                        this.list.splice(index, 1, e)
+                        listChecked = this.list
+                    }
+
                 }
 
             }
         })
-        this.setState({ listChecked: listChecked }, () => {
+        this.setState({ listChecked: listChecked, selected: true }, () => {
 
         })
 
@@ -108,14 +102,40 @@ class TestTodayScreen extends Component {
         //     data: list
         // })
     }
-    onSend = async () => {
+    checkList = (item) => {
+        const { listChecked, selected } = this.state
+        this.list = []
+
+        if (Array.isArray(listChecked) && listChecked.length > 0 && selected) {
+            let data = listChecked.filter(e => e.checked == true)
+            let total = data.reduce((total, current) => {
+
+                return total + Number(current.total)
+            }, 0)
+            console.log('total: ', total);
+            let obj = {}
+            obj.point = total
+            obj._id = item._id
+            let index = this.data.findIndex(e => e._id == item._id)
+            if (index == -1) {
+                this.data.push(obj)
+            } else {
+                this.data.splice(index, 1, obj)
+
+            }
+            console.log('this.data: ', this.data);
+            this.setState({ selected: false })
+        }
+    }
+    onSend = (item) => async () => {
+
         try {
-            // let data = [...this.state.listChecked]
-            // let type = '2'
-            // NavigationServices.navigate(screenName.TestResultScreen, {
-            //     type: type
-            // })
-            let res = await apis.post(apis.PATH.CONFIRM_ANWSER)
+            this.checkList(item)
+            let point = this.data.reduce((total, current) => {
+                return total + parseInt(current.point)
+            }, 0)
+
+            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point })
             if (res && res.code == 200) {
                 utils.alertSuccess('Gửi câu hỏi thành công')
                 NavigationServices.navigate(screenName.TestResultScreen, {
@@ -126,46 +146,56 @@ class TestTodayScreen extends Component {
             }
         } catch (error) {
 
+
         }
 
     }
     onChangeText = (item) => (value) => {
+        let point = Number(value)
+        item.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
+        let objPoint = item.anwser.find(e => point >= e.from_point && point <= e.to_point || point < item.anwser[0].from_point || point > item.anwser[item.anwser.length - 1].to_point)
         let data = [...this.state.data]
-        let list = {}
+        let list = []
         data.forEach(e => {
             if (e._id == item._id) {
-                let obj = {
-                    anwser_id: e.anwser && e.anwser.length > 0 ? e.anwser[0]._id : '',
-                    name: value
+                if (objPoint && objPoint._id) {
+                    let obj = {
+                        anwser_id: item._id,
+                        name: value,
+                        point: objPoint.total_point,
+                        glycemic: point,
+                        _id: item._id,
+                        checked: true
+                    }
+                    list.push(obj)
                 }
-                list = obj
-
-
             }
         })
 
-        console.log('list: ', list);
-        this.setState({ listChecked: list })
+        this.setState({ listChecked: list, selected: true }, () => {
+            console.log('selected: ', this.state.selected);
+            console.log('listChecked: ', this.state.listChecked);
+
+        })
     }
     _renderItem = ({ item, index }) => {
-        const { currentIndex } = this.state
         switch (index) {
             case 0:
-                return <FormQuestion1
-                    key={`${item._id}`}
-                    onPress={this.nextQuestion}
-                    onPressBack={this.backQuestion}
-                    index={index}
-                    length={this.state.data.length} />
+                // return <FormQuestion1
+                //     key={`${item._id}`}
+                //     onPress={this.nextQuestion(item)}
+                //     onPressBack={this.backQuestion(item)}
+                //     index={index}
+                //     length={this.state.data.length} />
             default:
                 return <FormQuestion2
                     key={`${item._id}`}
-                    onPress={this.nextQuestion}
-                    onPressBack={this.backQuestion}
-                    onChangeText1={this.onChangeText(item)}
+                    onPress={this.nextQuestion(item)}
+                    onPressBack={this.backQuestion(item)}
+                    onChangeText={this.onChangeText(item)}
                     index={index}
                     item={item}
-                    onSend={this.onSend}
+                    onSend={this.onSend(item)}
                     onPressCheck={this.onPressCkeck(item)}
                     length={this.state.data.length}
                 />
@@ -173,33 +203,15 @@ class TestTodayScreen extends Component {
 
     }
     _keyExtractor = (item, index) => `${item._id || index}`
-    nextQuestion = async () => {
+    nextQuestion = (item) => async () => {
 
-        const { data, currentIndex, listChecked } = this.state
-        console.log('listChecked: ', listChecked);
+        const { data, currentIndex, listChecked, selected } = this.state
+
         if (data && data.length - 1 > currentIndex) {
             this.swiper && this.swiper.scrollTo(this.state.currentIndex + 1)
         }
 
-        if (typeof listChecked == 'object' && listChecked.name) {
-            let res = await apis.put(apis.PATH.CHECK_QUESTION, { data: listChecked }, true)
-            if (res && res.code == 200) {
-                this.setState({ listChecked: {} })
-            }
-        } else if (Array.isArray(listChecked) && listChecked.length > 0) {
-            let obj = {}
-            let point = listChecked.reduce((total, current) => {
-                return total.point + current.point
-            }, 0)
-            obj.point = point
-            obj.name = listChecked[0].name
-            obj.anwser_id = listChecked[0].question_id
-            let res = await apis.put(apis.PATH.CHECK_QUESTION, { data: obj }, true)
-            if (res && res.code == 200) {
-                this.setState({ listChecked: {} })
-            }
-        }
-
+        this.checkList(item)
     }
     onIndexChanged = (currentIndex) => {
 
@@ -220,10 +232,10 @@ class TestTodayScreen extends Component {
                     justifyContent: 'center',
                     height: height / 3 - 30
                 }}>
-                    <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
+                    <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText fontFamily="boldItalic" size={20} style={{
                         color: R.colors.defaultColor
                     }}>{userApp.name}</ScaleText></ScaleText>
-                    <ScaleText size={16} style={styles.TxtQuestion} >Trả lời ngay các câu hỏi sau đây để đánh giá tình trạng sức khỏe của bạn</ScaleText>
+                    <ScaleText fontFamily="thinItalic" size={16} style={styles.TxtQuestion} >Trả lời ngay các câu hỏi sau đây để đánh giá tình trạng sức khỏe của bạn</ScaleText>
 
                 </View>
 
@@ -237,6 +249,7 @@ class TestTodayScreen extends Component {
                         scrollEnabled={false}
                         showsPagination={false}
                         height={height / 3}
+                        // horizontal={false}
                         ref={ref => this.swiper = ref}
                         style={styles.containerHeaderTitle}
                         showsButtons={false}>
@@ -289,11 +302,12 @@ const styles = StyleSheet.create({
     },
 
     txtHello: {
-        fontFamily: R.fonts.Black,
+        fontFamily: R.fonts.Bold,
         paddingBottom: 5
     },
     containerHeaderTitle: {
         backgroundColor: R.colors.defaultColor,
+        width:null,
         // height: height / 2,
 
     },

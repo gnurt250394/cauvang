@@ -80,7 +80,7 @@ class NotificationScreen extends Component {
   listEmpty = () => <Text style={{
     paddingTop: 30,
     textAlign: 'center',
-    fontFamily: R.fonts.Black,
+    fontFamily: R.fonts.Bold,
     fontSize: 19
   }}>Không có dữ liệu</Text>
   render() {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     color: R.colors.gray
   },
   txtTitle: {
-    fontFamily: R.fonts.Black,
+    fontFamily: R.fonts.Bold,
     fontSize: 15,
     paddingBottom: 7,
   },

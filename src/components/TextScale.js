@@ -21,6 +21,15 @@ class ScaleText extends React.Component {
             case 'italic': return R.fonts.Italic
             case 'light': return R.fonts.Light
             case 'lightItalic': return R.fonts.LightItalic
+            case 'blackItalic': return R.fonts.BlackItalic
+            case 'heavy': return R.fonts.Heavy
+            case 'heavyItalic': return R.fonts.HeavyItalic
+            case 'medium': return R.fonts.Medium
+            case 'mediumItalic': return R.fonts.MediumItalic
+            case 'semiBold': return R.fonts.Semibold
+            case 'semiBoldItalic': return R.fonts.SemiboldItalic
+            case 'thin': return R.fonts.Thin
+            case 'thinItalic': return R.fonts.ThinItalic
             default: return R.fonts.Regular
         }
     }

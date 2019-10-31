@@ -17,11 +17,11 @@ class FormQuestion2 extends Component {
         this.data = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'X', 'Y', 'Z']
     }
     onChangeText = (value) => {
-        console.log('value: 111', value);
         this.setState({ value })
-        this.props.onChangeText1 && this.props.onChangeText1(value)
+
     }
     onPressCheck = (data, e) => () => {
+        let list = []
         data.forEach(item => {
             if (item._id == e._id) {
                 item.checked = true
@@ -30,10 +30,14 @@ class FormQuestion2 extends Component {
             }
         })
         this.props.onPressCheck && this.props.onPressCheck(e)
+
     }
     onCheckBox = (e) => () => {
         e.checked = !e.checked
         this.props.onPressCheck && this.props.onPressCheck(e)
+    }
+    onBlur = () => {
+        this.props.onChangeText && this.props.onChangeText(this.state.value)
     }
     renderItemAnwser = (item) => {
         switch (item.type) {
@@ -45,6 +49,8 @@ class FormQuestion2 extends Component {
                             borderRadius: 5,
                             paddingLeft: 10,
                         }}
+                        keyboardType="numeric"
+                        onBlur={this.onBlur}
                         onChangeText={this.onChangeText}
                     />
                 )
@@ -57,9 +63,21 @@ class FormQuestion2 extends Component {
                                 <TouchableOpacity
                                     onPress={this.onPressCheck(item.anwser, e)}
                                     key={i} style={styles.buttonChecked}>
-                                    <View style={styles.containerChecked}>
+                                    <View style={{
+                                        backgroundColor: R.colors.white,
+                                        borderRadius: 11,
+                                        width: 22,
+                                        height: 22,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
                                         {
-                                            e.checked ? <Image source={R.images.icons.ic_checked} style={styles.iconChecked} /> : null
+                                            e.checked ? <View style={{
+                                                backgroundColor: R.colors.blue,
+                                                height: 16,
+                                                width: 16,
+                                                borderRadius: 8,
+                                            }} /> : null
                                         }
                                     </View>
                                     <Text style={styles.TxtAnwser}>{this.data[i]}. {e.name}</Text>
@@ -97,7 +115,7 @@ class FormQuestion2 extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.txtDate}>{item.name}</Text>
+                    <Text style={styles.txtDate}>{index + 1}. {item.name}</Text>
                     <View >
                         {this.renderItemAnwser(item)
                         }
