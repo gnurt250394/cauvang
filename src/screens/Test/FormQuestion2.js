@@ -9,9 +9,7 @@ class FormQuestion2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked1: false,
-            checked2: false,
-            checked3: false,
+            checked: false,
             value: ''
         };
         this.data = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'X', 'Y', 'Z']
@@ -29,16 +27,18 @@ class FormQuestion2 extends Component {
                 item.checked = false
             }
         })
+        this.setState({ checked: !this.state.checked })
         this.props.onPressCheck && this.props.onPressCheck(e)
 
     }
     onCheckBox = (e) => () => {
-        console.log('e: ', e);
+
         e.checked = !e.checked
+        this.setState({ checked: !this.state.checked })
         this.props.onPressCheck && this.props.onPressCheck(e)
     }
-    onBlur = () => {
-        this.props.onChangeText && this.props.onChangeText(this.state.value)
+    onBlur = (item) => () => {
+        this.props.onChangeText && this.props.onChangeText(this.state.value, item)
     }
     renderItemAnwser = (item) => {
         switch (item.type) {
@@ -51,7 +51,7 @@ class FormQuestion2 extends Component {
                             paddingLeft: 10,
                         }}
                         keyboardType="numeric"
-                        onBlur={this.onBlur}
+                        onBlur={this.onBlur(item)}
                         onChangeText={this.onChangeText}
                     />
                 )
@@ -94,7 +94,8 @@ class FormQuestion2 extends Component {
                             return (
                                 <TouchableOpacity
                                     onPress={this.onCheckBox(e)}
-                                    key={i} style={styles.buttonChecked}>
+                                    key={i}
+                                    style={styles.buttonChecked}>
                                     <View style={styles.containerChecked}>
                                         {
                                             e.checked ? <Image source={R.images.icons.ic_checked} style={styles.iconChecked} /> : null
@@ -112,7 +113,7 @@ class FormQuestion2 extends Component {
     }
     renderItem = ({ item, index }) => {
         return (
-            <View style={{ flex: 1,paddingTop:20 }}>
+            <View style={{ flex: 1, paddingTop: 20 }}>
                 <Text style={styles.txtDate}>{index + 1}. {item.name}</Text>
                 <View >
                     {this.renderItemAnwser(item)
@@ -132,7 +133,7 @@ class FormQuestion2 extends Component {
                 <FlatList
                     data={item.itemsQuestion}
                     renderItem={this.renderItem}
-                    extraData={item.itemsQuestion}
+                    extraData={this.state.checked}
                     keyExtractor={this.keyExtractor}
                 />
 

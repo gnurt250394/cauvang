@@ -55,11 +55,7 @@ class TestTodayScreen extends Component {
     getData = async () => {
         try {
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 2 })
-            if (res && res.code == 200 ) {
-                let data = res.data
-                data.forEach(e=>{
-
-                })
+            if (res && res.code == 200) {
                 this.setState({ data: res.data })
             }
         } catch (error) {
@@ -80,12 +76,11 @@ class TestTodayScreen extends Component {
         let listChecked = [];
         let data = [...this.state.data]
         data.forEach(element => {
-            console.log('elm: ', element);
             if (element._id == item._id) {
-                element.itemsQuestion.forEach(elm=>{
+                element.itemsQuestion.forEach(elm => {
                     if (item.type == 3) {
                         listChecked = elm.anwser.filter(element => element.checked == true)
-    
+
                     } else {
                         let index = this.list.findIndex(element => e._id == element._id)
                         if (index == -1) {
@@ -95,14 +90,14 @@ class TestTodayScreen extends Component {
                             this.list.splice(index, 1, e)
                             listChecked = this.list
                         }
-    
+
                     }
                 })
-                
+
 
             }
         })
-        this.setState({ listChecked: listChecked, selected: true }, () => {
+        this.setState({ listChecked: listChecked, data: data, selected: true }, () => {
 
         })
 
@@ -118,6 +113,7 @@ class TestTodayScreen extends Component {
             let data = listChecked.filter(e => e.checked == true)
             let total = data.reduce((total, current) => {
 
+
                 return total + Number(current.total)
             }, 0)
             console.log('total: ', total);
@@ -129,7 +125,6 @@ class TestTodayScreen extends Component {
                 this.data.push(obj)
             } else {
                 this.data.splice(index, 1, obj)
-
             }
             console.log('this.data: ', this.data);
             this.setState({ selected: false })
@@ -142,8 +137,9 @@ class TestTodayScreen extends Component {
             let point = this.data.reduce((total, current) => {
                 return total + parseInt(current.point)
             }, 0)
-
+            console.log('point: ', point);
             let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point })
+
             if (res && res.code == 200) {
                 utils.alertSuccess('Gửi câu hỏi thành công')
                 NavigationServices.navigate(screenName.TestResultScreen, {
@@ -158,31 +154,34 @@ class TestTodayScreen extends Component {
         }
 
     }
-    onChangeText = (item) => (value) => {
+    onChangeText = (item) => (value, itemAnwser) => {
+        console.log('item: ', item);
         let point = Number(value)
-        item.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
-        let objPoint = item.anwser.find(e => point >= e.from_point && point <= e.to_point || point < item.anwser[0].from_point || point > item.anwser[item.anwser.length - 1].to_point)
-        let data = [...this.state.data]
+        itemAnwser.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
+        let objPoint = itemAnwser.anwser.find(e => point >= e.from_point && point <= e.to_point || point < itemAnwser.anwser[0].from_point || point > itemAnwser.anwser[itemAnwser.anwser.length - 1].to_point)
+        console.log('objPoint: ', objPoint);
+
         let list = []
-        data.forEach(e => {
-            if (e._id == item._id) {
+        item.itemsQuestion.forEach(e => {
+            if (e._id == itemAnwser._id) {
                 if (objPoint && objPoint._id) {
                     let obj = {
-                        anwser_id: item._id,
+                        anwser_id: itemAnwser._id,
                         name: value,
                         point: objPoint.total_point,
                         glycemic: point,
-                        _id: item._id,
+                        _id: itemAnwser._id,
                         checked: true
                     }
                     list.push(obj)
+                    
                 }
             }
         })
-
+        console.log('list: ', list);
         this.setState({ listChecked: list, selected: true }, () => {
-            console.log('selected: ', this.state.selected);
-            console.log('listChecked: ', this.state.listChecked);
+
+
 
         })
     }
