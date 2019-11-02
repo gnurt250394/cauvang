@@ -123,6 +123,13 @@ function post(url, params, isLoading) {
     })
 }
 function postForm(url, params) {
+  let form = new FormData()
+  if (typeof params == 'object') {
+    Object.keys(params).map(key => {
+      form.append(key, params[key])
+    })
+  }
+
   let headers = {
     "Content-Type": "multipart/form-data",
   }
@@ -199,7 +206,7 @@ export default {
     CITY: 'list-city',
     LIST_DOCTOR: 'list-doctor',
     CHECK_QUESTION: 'check-questions',
-    CONFIRM_ANWSER:'confirm-anwser'
+    CONFIRM_ANWSER: 'confirm-anwser'
   },
   fetch,
   put,
