@@ -25,6 +25,7 @@ import HospitalScreen from 'screens/AccountScreen/HospitalScreen';
 import CityScreen from 'screens/AccountScreen/CityScreen';
 import DistrictScreen from 'screens/AccountScreen/DistrictScreen';
 import CommunesScreen from 'screens/AccountScreen/CommunesScreen';
+import ChangePassScreen from 'screens/AccountScreen/ChangePassScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -65,7 +66,8 @@ const homeStack = createStackNavigator({
     [screenName.CityScreen]: { screen: CityScreen },
     [screenName.DistrictScreen]: { screen: DistrictScreen },
     [screenName.CommunesScreen]: { screen: CommunesScreen },
-
+    [screenName.ChangePassScreen]: { screen: ChangePassScreen },
+    
 }, {
     initialRouteName: screenName.HomeScreen,
     headerMode: 'none',

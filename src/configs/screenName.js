@@ -32,5 +32,6 @@ export default {
     MyDrugScreen:'Đơn thuốc của bạn',
     CityScreen:'Tỉnh / Thành phố',
     DistrictScreen:'Quận / Huyện',
-    CommunesScreen:'Xã / Phường'
+    CommunesScreen:'Xã / Phường',
+    ChangePassScreen:'Đổi mật khẩu'
 }

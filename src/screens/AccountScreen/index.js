@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { logout } from 'middlewares/actions/login/actionLogin'
 import R from 'res/R'
 import LinearGradient from 'react-native-linear-gradient';
+import LoginRequire from './LoginRequire'
 
 class AccountScreen extends Component {
     state = {
@@ -25,7 +26,7 @@ class AccountScreen extends Component {
                 image: R.images.icons.profile.ic_pass,
                 name: 'Đổi mật khẩu',
                 onPress: () => {
-
+                    NavigationServices.navigate(screenName.ChangePassScreen)
                 }
             },
             {
@@ -44,6 +45,9 @@ class AccountScreen extends Component {
     render() {
         const { userApp } = this.props
         const source = userApp.image ? { uri: userApp.image } : R.images.icons.ic_user
+        if(!utils.database.token){
+            return<LoginRequire/>
+        }
         return (
             <ScrollView>
                 <View style={{

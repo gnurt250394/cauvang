@@ -12,88 +12,9 @@ class FollowHealthScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                // {
-                //     id: 1,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 2,
-                //     time: '10',
-                //     overRating: 5
-                // },
-                // {
-                //     id: 3,
-                //     time: '10',
-                //     overRating: 1
-                // },
-                // {
-                //     id: 4,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 1,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 2,
-                //     time: '10',
-                //     overRating: 5
-                // },
-                // {
-                //     id: 3,
-                //     time: '10',
-                //     overRating: 1
-                // },
-                // {
-                //     id: 4,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 1,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 2,
-                //     time: '10',
-                //     overRating: 5
-                // },
-                // {
-                //     id: 3,
-                //     time: '10',
-                //     overRating: 1
-                // },
-                // {
-                //     id: 4,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 1,
-                //     time: '10',
-                //     overRating: 10
-                // },
-                // {
-                //     id: 2,
-                //     time: '10',
-                //     overRating: 5
-                // },
-                // {
-                //     id: 3,
-                //     time: '10',
-                //     overRating: 1
-                // },
-                // {
-                //     id: 4,
-                //     time: '10',
-                //     overRating: 10
-                // },
-            ]
+            data: [],
+            dataChart: [],
+            listTime: []
         };
     }
     componentDidMount = () => {
@@ -103,7 +24,7 @@ class FollowHealthScreen extends Component {
     getData = async () => {
         let res = await apis.fetch(apis.PATH.LIST_FOLLOW)
         if (res && res.code == 200) {
-            this.setState({ data: res.data })
+            this.setState({ data: res.data, dataChart: res.listPoint, listTime: res.listTime })
         }
     }
     getRating = (item) => {
@@ -125,13 +46,15 @@ class FollowHealthScreen extends Component {
             <View key={index}>
                 <Text style={{
                     paddingHorizontal: 10
-                }}>{this.formatDate(item)}</Text>
+                }}>{item.create_at}</Text>
                 <View style={[styles.viewDots, { backgroundColor: this.getRating(item) }]} />
 
             </View>
         )
     }
-    renderLineChart = (data) => {
+    renderLineChart = (data, listTime) => {
+        console.log('listTime: ', listTime);
+        console.log('data: ', data);
         const contentInset = { top: 20, bottom: 20 }
         return (
             <View style={{ height: height / 4, flexDirection: 'row', paddingLeft: 5 }}>
@@ -149,8 +72,8 @@ class FollowHealthScreen extends Component {
                     <XAxis
                         style={{ marginHorizontal: -10 }}
                         data={data}
-                        formatLabel={(value, index) => index}
-                        contentInset={{ left: 20, right: 0 }}
+                        formatLabel={(value, index) => listTime && listTime.length > 0 ? listTime[index] : index}
+                        contentInset={{ left: 20, right: 20 }}
                         svg={{ fontSize: 10, fill: 'black' }}
                     />
                     <LineChart
@@ -171,8 +94,7 @@ class FollowHealthScreen extends Component {
         NavigationServices.navigate(screenName.NoteDoctorScreen)
     }
     render() {
-        const { data } = this.state
-        const dataChart = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
+        const { data, dataChart, listTime } = this.state
         return (
             <Container scrollView={true}>
                 <View>
@@ -189,9 +111,9 @@ class FollowHealthScreen extends Component {
                     </View>
 
                     <Text style={styles.txtTitle} >Chỉ số đường huyết</Text>
-                    {this.renderLineChart(dataChart)}
-                    <Text style={styles.txtTitle}>Chỉ số xyz</Text>
-                    {this.renderLineChart(dataChart)}
+                    {this.renderLineChart(dataChart, listTime)}
+                    {/* <Text style={styles.txtTitle}>Chỉ số xyz</Text>
+                    {this.renderLineChart(dataChart)} */}
                     <TouchableOpacity
                         onPress={this.onNoteDoctor}
                         style={styles.buttonNoteDoctor}>

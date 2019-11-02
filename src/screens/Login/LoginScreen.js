@@ -51,7 +51,9 @@ class LoginScreen extends Component {
   }
   onForgotPass = () => {
     console.log(1111)
-    NavigationServices.navigate(screenName.ForgotPasswordScreen)
+    NavigationServices.navigate(screenName.InputPhoneScreen, {
+      type: utils.database.forgotPass
+    })
   }
   render() {
     return (

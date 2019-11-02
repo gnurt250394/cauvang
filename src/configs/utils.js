@@ -7,7 +7,8 @@ import screenName from './screenName';
 import firebase from 'react-native-firebase';
 const database = {
   token: '',
-  tokenFCM: ''
+  tokenFCM: '',
+  forgotPass:'forgotPass'
 }
 const KEY = {
   TOKEN: 'TOKEN'

@@ -206,7 +206,10 @@ export default {
     CITY: 'list-city',
     LIST_DOCTOR: 'list-doctor',
     CHECK_QUESTION: 'check-questions',
-    CONFIRM_ANWSER: 'confirm-anwser'
+    CONFIRM_ANWSER: 'confirm-anwser',
+    CHANGE_PASS:'change_password',
+    FORGOT_PASS:'fogot_password',
+    DRUG:'list-drug'
   },
   fetch,
   put,

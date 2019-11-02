@@ -65,11 +65,11 @@ class HomeNotAuthScreen extends Component {
             <View style={styles.flex}>
                 {/**view 1 */}
                 <View style={styles.containerView1}>
-                    <ScaleText size={20} style={styles.txtHello}>Xin chào,</ScaleText>
-                    <ScaleText size={15} style={styles.txtHelper}>Bắt đầu theo dõi sức khỏe của bạn ngay với APP</ScaleText>
+                    <ScaleText fontFamily="bold" size={20} style={styles.txtHello}>Xin chào</ScaleText>
+                    <ScaleText fontFamily="mediumItalic" size={15} style={styles.txtHelper}>Bắt đầu theo dõi sức khỏe của bạn ngay với</ScaleText>
                     <View style={styles.containerHeaderTitle}>
                         <Image source={R.images.icons.home.ic_flamingo} style={styles.imageApp} />
-                        <ScaleText size={17} style={styles.txtAppName}>Hồng hạc</ScaleText>
+                        <ScaleText fontFamily="heavy" size={18} style={styles.txtAppName}>Hồng hạc</ScaleText>
                     </View>
 
                 </View>

@@ -40,7 +40,7 @@ class SplashScreen extends Component {
 
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate(screenName.AuthenStack)
+        this.props.navigation.navigate(screenName.HomeStack)
       }, 1000)
     }
     this.animation()

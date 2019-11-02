@@ -49,6 +49,7 @@ export default class InputPhone extends Component {
             },
             timer: 90,
             confirmResult: null,
+            type: this.props.navigation.getParam('type', '')
         };
     }
     countDownTimer = () => {
@@ -83,20 +84,29 @@ export default class InputPhone extends Component {
 
             });
 
-            if (res && res.code == 200) {
-                // this.setState({
-                //     enterCode: true,
-                // });
-                // this.sendOtpWithFireBase()
-                // this.autoConfirmOtp()
-                // this.form.refs.textInput.setNativeProps({ text: '' });
-                NavigationServices.navigate(screenName.OtpScreen, {
-                    phone: this.form.getValues().phoneNumber,
-                    callingCode: '+' + this.state.country.callingCode
-                })
+            if (this.state.type) {
+                if (res && res.code != 200) {
+                    NavigationServices.navigate(screenName.OtpScreen, {
+                        phone: this.form.getValues().phoneNumber,
+                        callingCode: '+' + this.state.country.callingCode,
+                        type: this.state.type
+                    })
+                } else {
+                    utils.alertDanger('Số điện thoại không tồn tại trong hệ thống')
+                }
             } else {
-                utils.alertDanger(res.message)
+                if (res && res.code == 200) {
+                    NavigationServices.navigate(screenName.OtpScreen, {
+                        phone: this.form.getValues().phoneNumber,
+                        callingCode: '+' + this.state.country.callingCode,
+                        type: this.state.type
+                    })
+                } else {
+                    utils.alertDanger(res.message)
+                }
             }
+
+
         } catch (err) {
             // <https://github.com/niftylettuce/react-native-loading-spinner-overlay/issues/30#issuecomment-276845098>
             setTimeout(() => {
@@ -176,7 +186,7 @@ export default class InputPhone extends Component {
     onLogin = () => {
         NavigationServices.navigate(screenName.LoginScreen)
     }
-    hideKeyboard=()=>{
+    hideKeyboard = () => {
         Keyboard.dismiss()
     }
     render() {
@@ -250,7 +260,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         textDecorationColor: R.colors.defaultColor,
         fontWeight: 'bold',
-        color:R.colors.textColor,
+        color: R.colors.textColor,
     },
     countryPicker: {
         alignItems: 'center',
