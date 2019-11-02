@@ -87,14 +87,11 @@ class OtpScreen extends Component {
   // xác thực mã otp từ client gửi lên firebase
   confirmCode = (code) => () => {
     const { confirmResult, phone } = this.state;
-    showLoading()
     if (code.length == 0) {
       utils.alertWarn('Mã xác thực không được để trống')
       return
     }
-    NavigationServices.navigate(screenName.RegisterScreen, {
-      phone
-    })
+    showLoading()
     if (confirmResult) {
       confirmResult.confirm(code)
         .then((user) => {
@@ -169,7 +166,6 @@ class OtpScreen extends Component {
             onCodeFilled={code => {
               this.setState({ otp_code: code })
               this.confirmCode(code)
-              console.log(`Code is ${code}, you are good to go!`)
             }}
           />
         </View>
@@ -218,6 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 50,
     backgroundColor: brandColor,
+    marginHorizontal:10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
@@ -230,6 +227,7 @@ const styles = StyleSheet.create({
   },
   wrongNumberText: {
     margin: 10,
+    paddingTop:10,
     fontSize: 14,
     textAlign: 'center',
     textDecorationLine:'underline'

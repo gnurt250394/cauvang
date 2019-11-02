@@ -37,14 +37,14 @@ class LoginScreen extends Component {
       utils.alertDanger(res.message)
     }
   }
-componentDidMount = () => {
-  firebase.messaging().getToken()
-  .then((token) => {
-      console.log('Device FCM Token: ', token);
-      utils.database.tokenFCM = token;
-      firebase.messaging().subscribeToTopic("honghac_test");
-  });
-};
+  componentDidMount = () => {
+    firebase.messaging().getToken()
+      .then((token) => {
+        console.log('Device FCM Token: ', token);
+        utils.database.tokenFCM = token;
+        firebase.messaging().subscribeToTopic("honghac_test");
+      });
+  };
 
   onRegister = () => {
     NavigationServices.navigate(screenName.InputPhoneScreen)
@@ -56,20 +56,31 @@ componentDidMount = () => {
   render() {
     return (
       <Container scrollView={true} isLoading={this.state.isLoading}>
-        <InputAuthen label="Số điện thoại" placeholder="Số điện thoại" ref={ref => this.inputEmail = ref} keyboardType="numeric" maxLength={10} />
-        <InputAuthen label="Mật khẩu" placeholder="Mật khẩu" ref={ref => this.inputPass = ref} secureTextEntry={true} />
-        <ButtonBase
-          onPress={this.onLogin}
-          styleButton={styles.buttonLogin}
-          value="Đăng nhập" />
-        <ButtonBase
-          onPress={this.onRegister}
-          styleButton={{
-            backgroundColor: R.colors.green,
-          }}
-          styleText={{ color: R.colors.black }}
-          value="Đăng ký" />
-        <Text onPress={this.onForgotPass} style={styles.txtForgotPass}>Quên mật khẩu?</Text>
+        <View style={styles.container}>
+          <InputAuthen
+            label="Số điện thoại"
+            placeholder="Vd: 0987654321"
+            ref={ref => this.inputEmail = ref}
+            keyboardType="numeric"
+            maxLength={10} />
+          <InputAuthen
+            label="Mật khẩu"
+            placeholder="********"
+            ref={ref => this.inputPass = ref}
+            secureTextEntry={true} />
+          <ButtonBase
+            onPress={this.onLogin}
+            styleButton={styles.buttonLogin}
+            value="ĐĂNG NHẬP " />
+          <ButtonBase
+            onPress={this.onRegister}
+            styleButton={{
+              backgroundColor: R.colors.blue,
+            }}
+            styleText={{ color: R.colors.white }}
+            value="ĐĂNG KÝ " />
+          <Text onPress={this.onForgotPass} style={styles.txtForgotPass}>Quên mật khẩu?</Text>
+        </View>
       </Container>
     );
   }
@@ -79,6 +90,10 @@ export default connect()(LoginScreen);
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 10
+  },
   txtForgotPass: {
     textDecorationLine: 'underline',
     textAlign: 'center',
@@ -87,6 +102,6 @@ const styles = StyleSheet.create({
   },
   buttonLogin: {
     backgroundColor: R.colors.secondColor,
-    marginTop: 10,
+    marginTop: 20,
   },
 })
