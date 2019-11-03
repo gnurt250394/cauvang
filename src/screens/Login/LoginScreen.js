@@ -22,6 +22,7 @@ class LoginScreen extends Component {
     this.state = {
       isLoading: false
     };
+    this.nextScreen = this.props.navigation.getParam('nextScreen')
   }
   onLogin = async () => {
     let email = this.inputEmail.getValue()
@@ -32,7 +33,11 @@ class LoginScreen extends Component {
       utils.database.token = res.token
       this.props.dispatch(login(res.data, res.count))
       utils.alertSuccess('Đăng nhập thành công')
-      NavigationServices.navigate(screenName.HomeScreen)
+      if (this.nextScreen) {
+        NavigationServices.navigate(this.nextScreen)
+      } else {
+        NavigationServices.navigate(screenName.HomeScreen)
+      }
     } else {
       utils.alertDanger(res.message)
     }
@@ -51,7 +56,9 @@ class LoginScreen extends Component {
   }
   onForgotPass = () => {
     console.log(1111)
-    NavigationServices.navigate(screenName.ForgotPasswordScreen)
+    NavigationServices.navigate(screenName.InputPhoneScreen, {
+      type: utils.database.forgotPass
+    })
   }
   render() {
     return (

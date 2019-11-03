@@ -41,6 +41,7 @@ class OtpScreen extends Component {
       confirmResult: null,
       phone: this.props.navigation.getParam('phone', ""),
       callingCode: this.props.navigation.getParam('callingCode', ""),
+      type: this.props.navigation.getParam('type', '')
     };
   }
 
@@ -53,7 +54,7 @@ class OtpScreen extends Component {
     return (
       <View>
         <Text style={styles.wrongNumberText} onPress={this._tryAgain}>
-        Nhấn vào đây nếu bạn nhập sai số điện thoại hoặc bạn cần một mã mới?
+          Nhấn vào đây nếu bạn nhập sai số điện thoại hoặc bạn cần một mã mới?
       </Text>
       </View>
     );
@@ -99,9 +100,16 @@ class OtpScreen extends Component {
           hideLoading()
           if (user) {
 
-            NavigationServices.navigate(screenName.RegisterScreen, {
-              phone
-            })
+            if (this.state.type == utils.database.forgotPass) {
+              NavigationServices.navigate(screenName.ChangePassScreen, {
+                phone
+              })
+            } else {
+              NavigationServices.navigate(screenName.RegisterScreen, {
+                phone
+              })
+
+            }
           }
         })
         .catch(error => {
@@ -120,9 +128,16 @@ class OtpScreen extends Component {
 
       if (user) {
         // thành công đi nhảy vào api đăng ký tài khoản mật khẩu
-        NavigationServices.navigate(screenName.RegisterScreen, {
-          phone: this.state.phone
-        })
+        if (this.state.type == utils.database.forgotPass) {
+          NavigationServices.navigate(screenName.ChangePassScreen, {
+            phone:this.state.phone
+          })
+        } else {
+          NavigationServices.navigate(screenName.RegisterScreen, {
+            phone:this.state.phone
+          })
+
+        }
 
       }
     });
@@ -214,7 +229,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 50,
     backgroundColor: brandColor,
-    marginHorizontal:10,
+    marginHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
@@ -227,10 +242,10 @@ const styles = StyleSheet.create({
   },
   wrongNumberText: {
     margin: 10,
-    paddingTop:10,
+    paddingTop: 10,
     fontSize: 14,
     textAlign: 'center',
-    textDecorationLine:'underline'
+    textDecorationLine: 'underline'
   },
   disclaimerText: {
     marginTop: 30,

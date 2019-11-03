@@ -24,6 +24,7 @@ export default {
             ic_prescription: require('res/images/icons/drug/ic_prescription.png'),
             ic_cart: require('res/images/icons/drug/ic_cart.png'),
             ic_search: require('res/images/icons/drug/ic_search.png'),
+            ic_drugs: require('res/images/icons/drug/ic_drugs.png'),
         },
         home: {
             add: require('res/images/icons/home/add.png'),

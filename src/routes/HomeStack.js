@@ -25,6 +25,10 @@ import HospitalScreen from 'screens/AccountScreen/HospitalScreen';
 import CityScreen from 'screens/AccountScreen/CityScreen';
 import DistrictScreen from 'screens/AccountScreen/DistrictScreen';
 import CommunesScreen from 'screens/AccountScreen/CommunesScreen';
+import ChangePassScreen from 'screens/AccountScreen/ChangePassScreen';
+import DetailDrugScreen from 'screens/drug/DetailDrugScreen';
+import TabDoctor from './TabDoctor';
+import AdvisoryScreen from 'screens/community/AdvisoryScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -55,7 +59,6 @@ const homeStack = createStackNavigator({
     [screenName.BookingDrugScreen]: { screen: BookingDrugScreen },
     [screenName.ConfirmBookingScreen]: { screen: ConfirmBookingScreen },
     [screenName.MessageScreen]: { screen: MessageScreen },
-    [screenName.ListDoctorScreen]: { screen: ListDoctorScreen },
     [screenName.VideoCallScreen]: { screen: CallVideoScreen },
     [screenName.ReportScreen]: { screen: ReportScreen },
     [screenName.ProfileScreen]: { screen: ProfileScreen },
@@ -65,7 +68,10 @@ const homeStack = createStackNavigator({
     [screenName.CityScreen]: { screen: CityScreen },
     [screenName.DistrictScreen]: { screen: DistrictScreen },
     [screenName.CommunesScreen]: { screen: CommunesScreen },
-
+    [screenName.ChangePassScreen]: { screen: ChangePassScreen },
+    [screenName.DetailDrugScreen]: { screen: DetailDrugScreen },
+    [screenName.TabDoctor]: { screen: AdvisoryScreen },
+    
 }, {
     initialRouteName: screenName.HomeScreen,
     headerMode: 'none',

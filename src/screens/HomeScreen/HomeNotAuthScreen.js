@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 import R from 'res/R';
 import ScaleText from 'components/TextScale';
+import apis from 'configs/apis';
+import NavigationServices from 'routes/NavigationServices';
+import screenName from 'configs/screenName';
 
 class HomeNotAuthScreen extends Component {
     constructor(props) {
@@ -10,22 +13,38 @@ class HomeNotAuthScreen extends Component {
             listButton: [
                 {
                     id: 1,
-                    onPress: '',
+                    onPress: () => {
+                        NavigationServices.navigate(screenName.LoginScreen, {
+                            nextScreen: screenName.FollowHealthScreen
+                        })
+                    },
                     image: R.images.icons.home.ic_ehealth
                 },
                 {
                     id: 2,
-                    onPress: '',
+                    onPress: () => {
+                        NavigationServices.navigate(screenName.LoginScreen, {
+                            nextScreen: screenName.ScheduleScreen
+                        })
+                    },
                     image: R.images.icons.home.ic_calendar
                 },
                 {
                     id: 3,
-                    onPress: '',
+                    onPress: () => {
+                        NavigationServices.navigate(screenName.LoginScreen, {
+                            nextScreen: screenName.DrugScreen
+                        })
+                    },
                     image: R.images.icons.home.ic_drug
                 },
                 {
                     id: 4,
-                    onPress: '',
+                    onPress: () => {
+                        NavigationServices.navigate(screenName.LoginScreen, {
+                            nextScreen: screenName.ListDoctorScreen
+                        })
+                    },
                     image: R.images.icons.home.ic_doctor
                 },
 
@@ -37,6 +56,15 @@ class HomeNotAuthScreen extends Component {
                 { id: 4, name: 'Hen xuyễn' },
             ]
         };
+    }
+    componentDidMount() {
+        this.getData()
+    }
+    getData = async () => {
+        let res = await apis.fetch(apis.PATH.SICK)
+        if (res && res.code == 200) {
+            this.setState({ data: res.data })
+        }
     }
     _renderItem = ({ item, index }) => (
         <View style={styles.containerText}>
@@ -65,11 +93,11 @@ class HomeNotAuthScreen extends Component {
             <View style={styles.flex}>
                 {/**view 1 */}
                 <View style={styles.containerView1}>
-                    <ScaleText size={20} style={styles.txtHello}>Xin chào,</ScaleText>
-                    <ScaleText size={15} style={styles.txtHelper}>Bắt đầu theo dõi sức khỏe của bạn ngay với APP</ScaleText>
+                    <ScaleText fontFamily="bold" size={20} style={styles.txtHello}>Xin chào</ScaleText>
+                    <ScaleText fontFamily="mediumItalic" size={15} style={styles.txtHelper}>Bắt đầu theo dõi sức khỏe của bạn ngay với</ScaleText>
                     <View style={styles.containerHeaderTitle}>
                         <Image source={R.images.icons.home.ic_flamingo} style={styles.imageApp} />
-                        <ScaleText size={17} style={styles.txtAppName}>Hồng hạc</ScaleText>
+                        <ScaleText fontFamily="heavy" size={18} style={styles.txtAppName}>Hồng hạc</ScaleText>
                     </View>
 
                 </View>
@@ -80,7 +108,9 @@ class HomeNotAuthScreen extends Component {
                     <View style={styles.containerButton}>
                         {listButton.map((e, i) => {
                             return (
-                                <TouchableOpacity key={i}>
+                                <TouchableOpacity
+                                    onPress={e.onPress}
+                                    key={i}>
                                     <Image source={e.image} style={styles.imageButton} />
                                 </TouchableOpacity>
                             )
@@ -93,7 +123,7 @@ class HomeNotAuthScreen extends Component {
                     <View style={styles.containerList}>
 
                         <FlatList
-                            data={data}
+                            data={data.slice(0, 4)}
                             renderItem={this._renderItem}
                             keyExtractor={this._keyExtractor}
                             ListHeaderComponent={this.headerComponent}
@@ -127,7 +157,7 @@ const styles = StyleSheet.create({
     },
     containerText: {
         backgroundColor: R.colors.secondColor,
-        paddingVertical: 5,
+        paddingVertical: 10,
         paddingHorizontal: 10,
         paddingLeft: 10
     },

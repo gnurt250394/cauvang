@@ -2,7 +2,7 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator, createPointerEventsContainer } from 'react-navigation-stack'
 import screenName from 'configs/screenName'
 import LoginScreen from 'screens/Login/LoginScreen'
-import { fromLeft, zoomIn, zoomOut ,fadeIn,fadeOut,flipX,flipY,fromBottom,fromRight,fromTop,} from 'react-navigation-transitions';
+import { fromLeft, zoomIn, zoomOut, fadeIn, fadeOut, flipX, flipY, fromBottom, fromRight, fromTop, } from 'react-navigation-transitions';
 import RegisterScreen from 'screens/Register/RegisterScreen'
 import ForgotPassScreen from 'screens/ForgotPassWord/ForgotPassScreen';
 import ListHospitalScreen from 'screens/Register/ListHospitalScreen';
@@ -10,6 +10,7 @@ import InputPhone from 'screens/Register/InputPhone';
 import OtpScreen from 'screens/Register/OtpScreen';
 import TestScreen from 'screens/Test/TestScreen';
 import TestResultScreen from 'screens/Test/TestResultScreen';
+import ChangePassScreen from 'screens/AccountScreen/ChangePassScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -34,10 +35,11 @@ const authenStack = createStackNavigator({
     [screenName.OtpScreen]: { screen: OtpScreen },
     [screenName.TestScreen]: { screen: TestScreen },
     [screenName.TestResultScreen]: { screen: TestResultScreen },
+    [screenName.ChangePassScreen]: { screen: ChangePassScreen },
 }, {
     initialRouteName: screenName.LoginScreen,
     headerMode: 'none',
-    transitionConfig:(transitionProps)=>handleCustomTransition(transitionProps)
+    transitionConfig: (transitionProps) => handleCustomTransition(transitionProps)
 })
 
 export default authenStack

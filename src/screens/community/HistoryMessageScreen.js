@@ -9,7 +9,7 @@ import { getlistMessage } from 'configs/apis/getListMessage';
 import status from 'configs/constants';
 import apis, { BASE_URI } from 'configs/apis';
 
-class ListDoctorScreen extends Component {
+class HistoryMessageScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ class ListDoctorScreen extends Component {
         this.getData()
     };
     getData = async () => {
-        let res = await apis.fetch(apis.PATH.LIST_DOCTOR)
+        let res = await apis.fetch(apis.PATH.CHATS)
         if (res && res.code == status.SUCCESS) {
             this.setState({ data: res.data })
         }
@@ -70,4 +70,4 @@ class ListDoctorScreen extends Component {
     }
 }
 
-export default ListDoctorScreen;
+export default HistoryMessageScreen;
