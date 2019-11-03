@@ -19,14 +19,11 @@ class ItemDoctor extends Component {
                 onPress={onPress}
                 style={styles.containerItem}
             >
-                <Image source={item._id.image ? ({ uri: item._id.image.indexOf('http') == 0 ? item._id.image : BASE_URI + item._id.image }) : R.images.default.logo} style={styles.imageAvatar} />
+                <Image source={item.image ? ({ uri: item.image.indexOf('http') == 0 ? item.image : BASE_URI + item.image }) : R.images.default.logo} style={styles.imageAvatar} />
 
                 <View style={styles.containerLabel}>
-                    <View style={styles.containerName}>
-                        <Text style={styles.txtName}>{item._id.name}</Text>
-                        <Text>{this.formatTime(item.create_at)}</Text>
-                    </View>
-                    <Text>{item.message}</Text>
+                        <Text style={styles.txtName}>{item.fullName}</Text>
+                        <Text style={styles.txtName}>{item.message}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -57,6 +54,6 @@ const styles = StyleSheet.create({
     containerItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 5
+        padding: 10,
     },
 })

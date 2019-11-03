@@ -15,40 +15,38 @@ const prototype = {
     valueRight: PropTypes.string,
     iconRight: PropTypes.number,
     title: PropTypes.string,
-    style:PropTypes.object
+    style: PropTypes.object,
+    time: PropTypes.string,
 }
-class HeaderDefault extends Component {
+class HeaderMessage extends Component {
     render() {
-        const { onPressLeft, onPressRight, navigation, valueRight, iconRight, valueLeft, iconLeft, title, style } = this.props
+        const { onPressLeft, onPressRight, navigation, valueRight, iconRight, valueLeft, iconLeft, title, style, time } = this.props
         return (
             <View style={[styles.containerHeader, style]}>
-                {navigation.isFirstRouteInParent() ?
-                    <View />
-                    :
-                    <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
-                }
-                <ScaleText fontFamily="bold" size={20} style={styles.txtNameHeader}>{title || navigation.state.routeName}</ScaleText>
-                {onPressRight ?
-                    <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
-                    :
-                    <View />
-                }
+                <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
+                <View style={{
+                    alignItems: 'center'
+                }}>
+                    <ScaleText fontFamily="bold" size={20} style={styles.txtNameHeader}>{title}</ScaleText>
+                    <ScaleText fontFamily="lightItalic" size={12} style={styles.txtNameHeader}>{time}</ScaleText>
+                </View>
+                <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
 
             </View>
         )
     }
 }
-HeaderDefault.defaultProps = {
+HeaderMessage.defaultProps = {
     onPressLeft: () => NavigationServices.pop(),
 }
-HeaderDefault.prototype.props = prototype
-export default withNavigation(HeaderDefault)
+HeaderMessage.prototype.props = prototype
+export default HeaderMessage
 
 
 const styles = StyleSheet.create({
     containerHeader: {
-        // backgroundColor: R.colors.defaultColor,
-        height: 55,
+        backgroundColor: R.colors.defaultColor,
+        minHeight: 55,
         alignItems: 'center',
         flexDirection: 'row',
         elevation: 5,

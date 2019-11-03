@@ -8,22 +8,21 @@ import screenName from 'configs/screenName';
 import apis from 'configs/apis';
 import { login } from 'middlewares/actions/login/actionLogin';
 import { uploadImage } from 'configs/apis/UploadImage';
-import ChooseImage from 'configs/ChooseImage';
 
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
-        this.user = this.props.userApp || {}
+        let user = this.props.userApp || {}
+
         this.state = {
-            gender: this.gender,
+            gender: user.gender,
             isShow: false,
-            hospital: {},
-            images: this.image,
-            city: {},
-            district: {},
-            communes: {},
-            fullName: this.fullName,
-        
+            hospital: user.hospital || {},
+            images: user.image,
+            city: user.citys || {},
+            district: user.district || {},
+            communes: user.commune || {},
+            fullName: user.fullName,
         };
     }
     selectGender = () => {
@@ -39,7 +38,8 @@ class ProfileScreen extends Component {
     }
     renderGender = () => {
         const { gender } = this.state
-        
+        console.log('gender: ', gender);
+        console.log('gender: ', gender);
         if (gender == '1') {
             return "Nam"
         } else if (gender == '0') {
@@ -49,16 +49,10 @@ class ProfileScreen extends Component {
         }
     }
     selectAvatar = async () => {
-        let uri = await ChooseImage()
-        if (uri) {
-            let res = await uploadImage(uri)
-            if (res && res.code == 200) {
-                this.user.image = res.image
-                this.props.dispatch(login(this.user))
-                this.setState({ images: res.image })
-            }
+        let res = await uploadImage(this.state.images)
+        if (res && res.code == 200) {
+            this.setState({ images: res.image })
         }
-
     }
     selectHospital = (hospital) => {
         this.setState({ hospital })
@@ -89,7 +83,12 @@ class ProfileScreen extends Component {
         }
         let res = await apis.put(apis.PATH.USER, params)
         if (res && res.code == 200) {
-            this.props.dispatch(login(res.data, res.count))
+            let obj = res.data
+            obj.hospital = hospital
+            obj.citys = city
+            obj.district = district
+            obj.commune = communes
+            this.props.dispatch(login(obj, res.count))
             NavigationServices.pop()
         }
     }
@@ -97,24 +96,24 @@ class ProfileScreen extends Component {
         this.setState({ fullName })
     }
     render() {
-        const { isShow, gender, hospital, images, city, district, communes } = this.state
+        const { isShow, gender, hospital, images, city, district, communes, fullName } = this.state
         const { userApp } = this.props
         const image = userApp && userApp.image ? { uri: userApp.image } : R.images.icons.ic_user
         const source = images ? { uri: images } : image
-        
         return (
-            <Container>
+            <Container scrollView={true}>
                 <View style={styles.containerAvatar}>
                     <TouchableOpacity
                         onPress={this.selectAvatar}
                     >
                         <Image source={source} style={styles.imgAvatar} />
                     </TouchableOpacity>
-                    <Text style={styles.txtName}>{userApp.fullName}</Text>
+                    <Text style={styles.txtName}>{userApp.name}</Text>
                 </View>
                 <View style={styles.container}>
                     <TextInput
                         placeholder="Họ và tên"
+                        value={fullName}
                         onChangeText={this.onChangeText}
                         style={styles.input}
                     />
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     txtName: {
-        fontFamily: R.fonts.Bold,
+        fontFamily: R.fonts.Black,
         paddingTop: 10
     },
     containerAvatar: {

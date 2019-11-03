@@ -33,5 +33,8 @@ export default {
     CityScreen:'Tỉnh / Thành phố',
     DistrictScreen:'Quận / Huyện',
     CommunesScreen:'Xã / Phường',
-    ChangePassScreen:'Đổi mật khẩu'
+    ChangePassScreen:'Đổi mật khẩu',
+    DetailDrugScreen:'Chi tiết đơn thuốc',
+    TabDoctor:'TabDoctor',
+    HistoryMessage:'HistoryMessage'
 }

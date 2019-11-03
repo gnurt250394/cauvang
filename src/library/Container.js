@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     containerComponent: {
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        backgroundColor: '#FFF',
+        backgroundColor: '#fff',
     },
     container: {
         flex: 1,

@@ -7,6 +7,9 @@ import screenName from 'configs/screenName';
 import { getlistMessage } from 'configs/apis/getListMessage';
 import io from 'socket.io-client'
 import apis, { BASE_SOCKET } from 'configs/apis';
+import HeaderDefault from 'components/HeaderDefault';
+import HeaderMessage from './HeaderMessage';
+import ItemMessage from './ItemMessage';
 class MessageScreen extends Component {
   constructor(props) {
     super(props);
@@ -32,8 +35,6 @@ class MessageScreen extends Component {
   };
   getData = async () => {
     const { item, page } = this.state
-    this.socket.emit('send_message', item)
-    this.socket.emit('message', item)
     let res = await getlistMessage(item.id, page)
   }
   videoCall = () => {
@@ -45,9 +46,7 @@ class MessageScreen extends Component {
   }
   _renderItem = ({ item, index }) => {
     return (
-      <View>
-
-      </View>
+      <ItemMessage item={item} />
     )
   }
   onChangeText = (message) => this.setState({ message })
@@ -56,19 +55,25 @@ class MessageScreen extends Component {
   onSend = async () => {
     const { message, item } = this.state
     const reciver_id = item._id
+    item.message = message
     this.socket.emit('send_message', item)
-    this.socket.emit('message', item)
-    // let res = await apis.post(apis.PATH.CHATS, { message, reciver_id })
+    let res = await apis.post(apis.PATH.CHATS, { message, reciver_id },true)
 
   }
   render() {
     const { item, data } = this.state
     return (
-      <Container
-        title={item.name}
-        iconRight={R.images.icons.ic_facetime}
-        onPressRight={this.videoCall}
-      >
+
+      <View style={{
+        backgroundColor: R.colors.white,
+        flex: 1
+      }}>
+        <HeaderMessage
+          title={item.name}
+          iconRight={R.images.icons.ic_facetime}
+          onPressRight={this.videoCall}
+
+        />
         <FlatList
           data={data}
           renderItem={this._renderItem}
@@ -86,7 +91,7 @@ class MessageScreen extends Component {
             <Text>Gửi</Text>
           </TouchableOpacity>
         </View>
-      </Container>
+      </View>
     );
   }
 }

@@ -45,8 +45,8 @@ class AccountScreen extends Component {
     render() {
         const { userApp } = this.props
         const source = userApp.image ? { uri: userApp.image } : R.images.icons.ic_user
-        if(!utils.database.token){
-            return<LoginRequire/>
+        if (!utils.database.token) {
+            return <LoginRequire />
         }
         return (
             <ScrollView>
@@ -113,7 +113,7 @@ class AccountScreen extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    userApp: state.loginReducer.userApp
+    userApp: state.loginReducer.userApp || {}
 });
 
 

@@ -24,5 +24,6 @@ export default {
     pink3:'#f788a7',
     pink4:'#fab7ca',
     gray:'#808080',
-    blue:'#3161AD'
+    blue:'#3161AD',
+    greenStransparent:'rgba(0, 185, 108,0.4)'
 }

@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/vi'
 import firebase from 'react-native-firebase';
+import utils from 'configs/utils';
+import LoginRequire from 'screens/AccountScreen/LoginRequire';
 class NotificationScreen extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +25,11 @@ class NotificationScreen extends Component {
   }
   componentWillUnmount() {
     try {
-        this.notificationListener();
+      this.notificationListener();
     } catch (error) {
 
     }
-}
+  }
 
   getData = async () => {
     let res = await apis.fetch(apis.PATH.NOTIFICATION)
@@ -51,7 +53,7 @@ class NotificationScreen extends Component {
     return moment(item.create_at).fromNow()
   }
   watchNoti = (item, index) => async () => {
-    let res = await apis.post(apis.PATH.UPDATE_NOTIFICATION, { id: item._id },true)
+    let res = await apis.post(apis.PATH.UPDATE_NOTIFICATION, { id: item._id }, true)
     if (res && res.code == 200) {
       let data = [...this.state.data]
       data[index].watched = 1
@@ -85,6 +87,9 @@ class NotificationScreen extends Component {
   }}>Không có dữ liệu</Text>
   render() {
     const { data } = this.state
+    if (!utils.database.token) {
+      return <LoginRequire />
+    }
     return (
       <View style={{
         flex: 1,

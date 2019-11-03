@@ -42,13 +42,13 @@ export default createBottomTabNavigator(
             navigationOptions: {
                 title: 'Thông báo',
                 tabBarIcon: ({ tintColor }) => <IconTab tintColor={tintColor} />,
-                tabBarOnPress: ({ navigation, defaultHandler }) => {
-                    if (!utils.database.token) {
-                        utils.alertWarn("Vui lòng đăng nhập")
-                        return
-                    }
-                    navigation.navigate(screenName.NotificationScreen)
-                }
+                // tabBarOnPress: ({ navigation, defaultHandler }) => {
+                //     if (!utils.database.token) {
+                //         utils.alertWarn("Vui lòng đăng nhập")
+                //         return
+                //     }
+                //     navigation.navigate(screenName.NotificationScreen)
+                // }
             }
         },
     },
