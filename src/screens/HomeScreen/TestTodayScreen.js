@@ -54,9 +54,40 @@ class TestTodayScreen extends Component {
     }
     getData = async () => {
         try {
-            let res = await apis.fetch(apis.PATH.QUESTION, { type: 2 })
+            let disease_id = (this.props.navigation.getParam('item', {}) || {})._id || ''
+            let res = await apis.fetch(apis.PATH.QUESTION, { type: 2, disease_id })
             if (res && res.code == 200) {
-                this.setState({ data: res.data })
+                let data = [...res.data]
+
+                let list = []
+                data.forEach((e, i) => {
+                    if (i == 0) {
+                        let obj = {
+                            itemsQuestion: data.splice(0, 1),
+                            _id: e._id,
+                            position: e.position
+                        }
+                        list.push(obj)
+                        return
+                    }
+                    if (i % 5 == 0) {
+                        let obj = {
+                            itemsQuestion: data.splice(0, 5),
+                            _id: e._id,
+                            position: e.position
+                        }
+                        list.push(obj)
+                    } else {
+                        let obj = {
+                            itemsQuestion: data.splice(0, 5),
+                            _id: e._id,
+                            position: e.position
+
+                        }
+                        list.push(obj)
+                    }
+                })
+                this.setState({ data: list })
             }
         } catch (error) {
 
@@ -116,7 +147,7 @@ class TestTodayScreen extends Component {
 
                 return total + Number(current.total)
             }, 0)
-            console.log('total: ', total);
+
             let obj = {}
             obj.point = total
             obj._id = item._id
@@ -126,7 +157,7 @@ class TestTodayScreen extends Component {
             } else {
                 this.data.splice(index, 1, obj)
             }
-            console.log('this.data: ', this.data);
+
             this.setState({ selected: false })
         }
     }
@@ -137,7 +168,7 @@ class TestTodayScreen extends Component {
             let point = this.data.reduce((total, current) => {
                 return total + parseInt(current.point)
             }, 0)
-            console.log('point: ', point);
+
             let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point })
 
             if (res && res.code == 200) {
@@ -155,11 +186,11 @@ class TestTodayScreen extends Component {
 
     }
     onChangeText = (item) => (value, itemAnwser) => {
-        console.log('item: ', item);
+
         let point = Number(value)
         itemAnwser.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
         let objPoint = itemAnwser.anwser.find(e => point >= e.from_point && point <= e.to_point || point < itemAnwser.anwser[0].from_point || point > itemAnwser.anwser[itemAnwser.anwser.length - 1].to_point)
-        console.log('objPoint: ', objPoint);
+
 
         let list = []
         item.itemsQuestion.forEach(e => {
@@ -174,11 +205,11 @@ class TestTodayScreen extends Component {
                         checked: true
                     }
                     list.push(obj)
-                    
+
                 }
             }
         })
-        console.log('list: ', list);
+
         this.setState({ listChecked: list, selected: true }, () => {
 
 

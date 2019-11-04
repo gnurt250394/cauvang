@@ -83,13 +83,14 @@ export default class InputPhone extends Component {
                 phone: phoneNumber,
 
             });
-
+            console.log('this.props.navigation.getParam(, {}): ', this.props.navigation.getParam('item', {}));
             if (this.state.type) {
                 if (res && res.code != 200) {
                     NavigationServices.navigate(screenName.OtpScreen, {
                         phone: this.form.getValues().phoneNumber,
                         callingCode: '+' + this.state.country.callingCode,
-                        type: this.state.type
+                        type: this.state.type,
+                        item: this.props.navigation.getParam('item', {})
                     })
                 } else {
                     utils.alertDanger('Số điện thoại không tồn tại trong hệ thống')
@@ -99,7 +100,8 @@ export default class InputPhone extends Component {
                     NavigationServices.navigate(screenName.OtpScreen, {
                         phone: this.form.getValues().phoneNumber,
                         callingCode: '+' + this.state.country.callingCode,
-                        type: this.state.type
+                        type: this.state.type,
+                        item: this.props.navigation.getParam('item', {})
                     })
                 } else {
                     utils.alertDanger(res.message)
@@ -214,7 +216,7 @@ export default class InputPhone extends Component {
                             {this._renderCallingCode()}
 
                             <TextInput
-                                ref={'textInput'}
+                                ref={ref => this.textInput = ref}
                                 name={'phoneNumber'}
                                 type={'TextInput'}
                                 underlineColorAndroid={'transparent'}

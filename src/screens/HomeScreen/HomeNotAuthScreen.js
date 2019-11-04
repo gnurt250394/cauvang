@@ -49,12 +49,7 @@ class HomeNotAuthScreen extends Component {
                 },
 
             ],
-            data: [
-                { id: 1, name: 'Tiểu đường' },
-                { id: 2, name: 'Cao huyết áp' },
-                { id: 3, name: 'Tim mạch' },
-                { id: 4, name: 'Hen xuyễn' },
-            ]
+            data: []
         };
     }
     componentDidMount() {
@@ -66,10 +61,18 @@ class HomeNotAuthScreen extends Component {
             this.setState({ data: res.data })
         }
     }
+    onLogin = (item) => () => {
+        NavigationServices.navigate(screenName.LoginScreen, {
+            nextScreen: screenName.TestTodayScreen,
+            item
+        })
+    }
     _renderItem = ({ item, index }) => (
-        <View style={styles.containerText}>
+        <TouchableOpacity
+            onPress={this.onLogin(item)}
+            style={styles.containerText}>
             <ScaleText>{item.name}</ScaleText>
-        </View>
+        </TouchableOpacity>
     )
     _keyExtractor = (item, index) => `${item.id || index}`
     headerComponent = () => (
@@ -78,13 +81,21 @@ class HomeNotAuthScreen extends Component {
             <Image source={R.images.icons.home.ic_dropdown} style={[styles.imageDropdown, { tintColor: R.colors.white }]} />
         </TouchableOpacity>
     )
+    showMoreItem = () => {
+        NavigationServices.navigate(screenName.GetAllSickScreen, {
+            data: this.state.data
+        })
+    }
     footerComponent = () => (
-        <View style={[styles.containerText, {
-            alignItems: 'center',
-
-        }]}>
+        <TouchableOpacity
+            onPress={this.showMoreItem}
+            style={[styles.containerText, {
+                alignItems: 'center',
+                borderTopColor: R.colors.gray,
+                borderTopWidth: 1
+            }]}>
             <Image source={R.images.icons.home.ic_dropdown} style={styles.imageDropdown} />
-        </View>
+        </TouchableOpacity>
 
     )
     render() {

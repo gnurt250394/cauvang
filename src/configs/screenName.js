@@ -36,5 +36,6 @@ export default {
     ChangePassScreen:'Đổi mật khẩu',
     DetailDrugScreen:'Chi tiết đơn thuốc',
     TabDoctor:'TabDoctor',
-    HistoryMessage:'HistoryMessage'
+    HistoryMessage:'HistoryMessage',
+    GetAllSickScreen:'Chọn bệnh muốn hỗ trợ'
 }

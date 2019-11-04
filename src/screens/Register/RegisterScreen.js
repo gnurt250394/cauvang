@@ -45,7 +45,9 @@ class RegisterScreen extends Component {
         if (res && res.code == status.SUCCESS) {
             utils.database.token = res.token
             utils.alertSuccess('Đăng ký thành công')
-            NavigationServices.navigate(screenName.TestScreen)
+            NavigationServices.navigate(screenName.TestScreen, {
+                item: this.props.navigation.getParam('item', {})
+            })
             this.props.dispatch(login(res.data))
             utils.setItem(utils.KEY.TOKEN, res.token)
         } else {
