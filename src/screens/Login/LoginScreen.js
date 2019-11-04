@@ -20,7 +20,8 @@ class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      item: this.props.navigation.getParam('item', {})
     };
     this.nextScreen = this.props.navigation.getParam('nextScreen')
   }
@@ -34,7 +35,9 @@ class LoginScreen extends Component {
       this.props.dispatch(login(res.data, res.count))
       utils.alertSuccess('Đăng nhập thành công')
       if (this.nextScreen) {
-        NavigationServices.navigate(this.nextScreen)
+        NavigationServices.navigate(this.nextScreen, {
+          item: this.state.item
+        })
       } else {
         NavigationServices.navigate(screenName.HomeScreen)
       }
@@ -52,7 +55,11 @@ class LoginScreen extends Component {
   };
 
   onRegister = () => {
-    NavigationServices.navigate(screenName.InputPhoneScreen)
+    let item = this.props.navigation.getParam('item', {})
+    console.log('item: ', item);
+    NavigationServices.navigate(screenName.InputPhoneScreen, {
+      item
+    })
   }
   onForgotPass = () => {
     console.log(1111)

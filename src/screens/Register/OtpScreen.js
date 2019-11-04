@@ -106,7 +106,8 @@ class OtpScreen extends Component {
               })
             } else {
               NavigationServices.navigate(screenName.RegisterScreen, {
-                phone
+                phone,
+                item: this.props.navigation.getParam('item', {})
               })
 
             }
@@ -123,6 +124,7 @@ class OtpScreen extends Component {
   };
 
   autoConfirmOtp = () => {
+    console.log('this.props.navigation.getParam(, {}): ', this.props.navigation.getParam('item', {}));
     this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       console.log('user: ', user);
 
@@ -130,11 +132,13 @@ class OtpScreen extends Component {
         // thành công đi nhảy vào api đăng ký tài khoản mật khẩu
         if (this.state.type == utils.database.forgotPass) {
           NavigationServices.navigate(screenName.ChangePassScreen, {
-            phone:this.state.phone
+            phone: this.state.phone
           })
         } else {
           NavigationServices.navigate(screenName.RegisterScreen, {
-            phone:this.state.phone
+            phone: this.state.phone,
+            item: this.props.navigation.getParam('item', {})
+            
           })
 
         }

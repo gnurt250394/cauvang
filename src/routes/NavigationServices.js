@@ -27,6 +27,12 @@ function replace(routeName, params, action) {
         action
     }))
 }
+function setParams(key, params) {
+    _navigator.dispatch(NavigationActions.setParams({
+        key,
+        params
+    }))
+}
 function toggleDrawer() {
     _navigator.dispatch(DrawerActions.toggleDrawer())
 }
@@ -36,5 +42,6 @@ export default {
     pop,
     reset,
     replace,
-    toggleDrawer
+    toggleDrawer,
+    setParams
 }

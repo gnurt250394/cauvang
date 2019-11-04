@@ -29,6 +29,7 @@ import ChangePassScreen from 'screens/AccountScreen/ChangePassScreen';
 import DetailDrugScreen from 'screens/drug/DetailDrugScreen';
 import TabDoctor from './TabDoctor';
 import AdvisoryScreen from 'screens/community/AdvisoryScreen';
+import GetAllSickScreen from 'screens/HomeScreen/GetAllSickScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -71,6 +72,7 @@ const homeStack = createStackNavigator({
     [screenName.ChangePassScreen]: { screen: ChangePassScreen },
     [screenName.DetailDrugScreen]: { screen: DetailDrugScreen },
     [screenName.TabDoctor]: { screen: AdvisoryScreen },
+    [screenName.GetAllSickScreen]: { screen: GetAllSickScreen },
     
 }, {
     initialRouteName: screenName.HomeScreen,

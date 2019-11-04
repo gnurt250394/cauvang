@@ -54,10 +54,11 @@ class TestTodayScreen extends Component {
     }
     getData = async () => {
         try {
-            let res = await apis.fetch(apis.PATH.QUESTION, { type: 2 })
+            let disease_id = (this.props.navigation.getParam('item', {}) || {})._id || ''
+            let res = await apis.fetch(apis.PATH.QUESTION, { type: 2, disease_id })
             if (res && res.code == 200) {
                 let data = [...res.data]
-                
+
                 let list = []
                 data.forEach((e, i) => {
                     if (i == 0) {
@@ -146,7 +147,7 @@ class TestTodayScreen extends Component {
 
                 return total + Number(current.total)
             }, 0)
-            
+
             let obj = {}
             obj.point = total
             obj._id = item._id
@@ -156,7 +157,7 @@ class TestTodayScreen extends Component {
             } else {
                 this.data.splice(index, 1, obj)
             }
-            
+
             this.setState({ selected: false })
         }
     }
@@ -167,7 +168,7 @@ class TestTodayScreen extends Component {
             let point = this.data.reduce((total, current) => {
                 return total + parseInt(current.point)
             }, 0)
-            
+
             let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point })
 
             if (res && res.code == 200) {
@@ -185,11 +186,11 @@ class TestTodayScreen extends Component {
 
     }
     onChangeText = (item) => (value, itemAnwser) => {
-        
+
         let point = Number(value)
         itemAnwser.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
         let objPoint = itemAnwser.anwser.find(e => point >= e.from_point && point <= e.to_point || point < itemAnwser.anwser[0].from_point || point > itemAnwser.anwser[itemAnwser.anwser.length - 1].to_point)
-        
+
 
         let list = []
         item.itemsQuestion.forEach(e => {
@@ -208,7 +209,7 @@ class TestTodayScreen extends Component {
                 }
             }
         })
-        
+
         this.setState({ listChecked: list, selected: true }, () => {
 
 
