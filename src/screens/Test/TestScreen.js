@@ -56,6 +56,27 @@ class TestScreen extends Component {
         try {
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 2 })
             if (res && res.code == 200) {
+                let data = [...res.data]
+                
+                let list = []
+                data.forEach((e,i)=>{
+                    if (i % 5 == 0) {
+                        let obj = {
+                            itemsQuestion: data.splice(0, 5),
+                            _id: e._id,
+                            position: e.position
+                        }
+                        list.push(obj)
+                    } else {
+                        let obj = {
+                            itemsQuestion: data.splice(0, 5),
+                            _id: e._id,
+                            position: e.position
+
+                        }
+                        list.push(obj)
+                    }
+                })
                 this.setState({ data: res.data })
             }
         } catch (error) {
@@ -181,12 +202,12 @@ class TestScreen extends Component {
     _renderItem = ({ item, index }) => {
         switch (index) {
             case 0:
-                // return <FormQuestion1
-                //     key={`${item._id}`}
-                //     onPress={this.nextQuestion(item)}
-                //     onPressBack={this.backQuestion(item)}
-                //     index={index}
-                //     length={this.state.data.length} />
+                return <FormQuestion1
+                    key={`${item._id}`}
+                    onPress={this.nextQuestion(item)}
+                    onPressBack={this.backQuestion(item)}
+                    index={index}
+                    length={this.state.data.length} />
             default:
                 return <FormQuestion2
                     key={`${item._id}`}

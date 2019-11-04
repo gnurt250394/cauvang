@@ -91,17 +91,17 @@ class HomeLoginScreen extends Component {
                         color: R.colors.defaultColor
                     }}>{userApp.name}</ScaleText></ScaleText>
                     <View style={styles.containerHeaderTitle}>
-                        <ScaleText  fontFamily="lightItalic" size={16} style={styles.TxtQuestion} >Hôm nay chỉ số đường huyết của bạn là bao nhiêu?</ScaleText>
+                        <ScaleText  fontFamily="lightItalic" size={16} style={styles.TxtQuestion} >Trả lời ngay các câu hỏi để khảo sát tình hình sức khỏe của bạn</ScaleText>
                         <View style={styles.containerInput}>
-                            <TextInput
+                            {/* <TextInput
                                 placeholder="Nhập câu trả lời"
                                 keyboardType="numeric"
                                 onChangeText={this.onChangeText}
-                                style={styles.input} />
+                                style={styles.input} /> */}
                             <TouchableOpacity
                                 onPress={this.onSend}
                                 style={styles.buttonSend}>
-                                <ScaleText fontFamily="bold" style={styles.txtSend}>Gửi</ScaleText>
+                                <ScaleText fontFamily="bold" style={styles.txtSend}>Bắt đầu khảo sát</ScaleText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -156,11 +156,13 @@ const styles = StyleSheet.create({
         paddingVertical: 13
     },
     txtSend: {
-        color: R.colors.white
+        color: R.colors.black
     },
     buttonSend: {
         paddingHorizontal: 10,
-        paddingVertical: 10
+        paddingVertical: 10,
+        backgroundColor:R.colors.white,
+        borderRadius:5
     },
     input: {
         backgroundColor: R.colors.white,

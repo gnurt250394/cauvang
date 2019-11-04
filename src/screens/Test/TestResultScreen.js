@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import R from 'res/R';
 import Container from 'library/Container';
 import NavigationServices from 'routes/NavigationServices';
@@ -29,9 +29,17 @@ class TestResultScreen extends Component {
             default: return R.images.icons.follow_health.ic_success
         }
     }
-    goHome=()=>{
+    goHome = () => {
         NavigationServices.navigate(screenName.HomeScreen)
     }
+    renderItem = ({ item, index }) => {
+        return (
+            <View>
+
+            </View>
+        )
+    }
+    keyExtractor = (item, index) => `${item._id || index}`
     render() {
         return (
             <View style={styles.containerAlert}>
@@ -52,6 +60,13 @@ class TestResultScreen extends Component {
                             : null
 
                     }
+                </View>
+                <View>
+                    <FlatList
+                        data={data}
+                        renderItem={this.renderItem}
+                        keyExtractor={this.keyExtractor}
+                    />
                 </View>
                 <View style={{
                     flex: 2,

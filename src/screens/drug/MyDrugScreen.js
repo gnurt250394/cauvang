@@ -11,18 +11,6 @@ class MyDrugScreen extends Component {
     super(props);
     this.state = {
       data: [
-        {
-          _id: 1,
-          name: 'Đơn thuốc bệnh viện E'
-        },
-        {
-          _id: 2,
-          name: 'Đơn thuốc bệnh viện E'
-        },
-        {
-          _id: 3,
-          name: 'Đơn thuốc bệnh viện E'
-        },
       ]
     };
   }
