@@ -44,7 +44,8 @@ class TestScreen extends Component {
             listInput: [],
             currentIndex: 0,
             listFinal: [],
-            selected: false
+            selected: false,
+            item: this.props.navigation.getParam('item', {})
         };
         this.list = []
         this.data = []
@@ -54,15 +55,23 @@ class TestScreen extends Component {
     }
     getData = async () => {
         try {
-            let disease_id = (this.props.navigation.getParam('item', {}) || {})._id || ''
+            let disease_id = (this.state.item || {})._id || ''
             console.log('disease_id: ', disease_id);
-            console.log('this.props: ', this.props);
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 1, disease_id })
             if (res && res.code == 200) {
                 let data = [...res.data]
-
+                console.log('data: ', data);
                 let list = []
                 data.forEach((e, i) => {
+                    if (i == 0) {
+                        let obj = {
+                            itemsQuestion: data.splice(0, 1),
+                            _id: e._id,
+                            position: e.position
+                        }
+                        list.push(obj)
+                        return
+                    }
                     if (i % 5 == 0) {
                         let obj = {
                             itemsQuestion: data.splice(0, 5),
@@ -78,9 +87,12 @@ class TestScreen extends Component {
 
                         }
                         list.push(obj)
+
                     }
                 })
-                this.setState({ data: res.data })
+                list.unshift({_id:0,itemsQuestion:[]})
+                console.log('list: ', list);
+                this.setState({ data: [...list] })
             }
         } catch (error) {
 
@@ -158,8 +170,8 @@ class TestScreen extends Component {
             let point = this.data.reduce((total, current) => {
                 return total + parseInt(current.point)
             }, 0)
-
-            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point })
+            let disease_id = (this.state.item || {})._id || ''
+            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point, disease_id })
             if (res && res.code == 200) {
                 utils.alertSuccess('Gửi câu hỏi thành công')
                 NavigationServices.navigate(screenName.TestResultScreen, {
@@ -205,12 +217,12 @@ class TestScreen extends Component {
     _renderItem = ({ item, index }) => {
         switch (index) {
             case 0:
-                return <FormQuestion1
-                    key={`${item._id}`}
-                    onPress={this.nextQuestion(item)}
-                    onPressBack={this.backQuestion(item)}
-                    index={index}
-                    length={this.state.data.length} />
+            return <FormQuestion1
+                key={`${item._id}`}
+                onPress={this.nextQuestion(item)}
+                onPressBack={this.backQuestion(item)}
+                index={index}
+                length={this.state.data.length} />
             default:
                 return <FormQuestion2
                     key={`${item._id}`}
@@ -271,7 +283,11 @@ class TestScreen extends Component {
                         onIndexChanged={this.onIndexChanged}
                         scrollEnabled={false}
                         showsPagination={false}
-                        height={height / 3}
+
+                        scrollViewStyle={{
+                            maxHeight: height / 2
+                        }}
+                        // height={height / 3}
                         ref={ref => this.swiper = ref}
                         style={styles.containerHeaderTitle}
                         showsButtons={false}>
@@ -330,7 +346,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     containerHeaderTitle: {
-        backgroundColor: R.colors.defaultColor,
+        // backgroundColor: R.colors.defaultColor,
         // height: height / 2,
 
     },

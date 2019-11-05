@@ -35,7 +35,7 @@ class FormQuestion1 extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={{ flex: 1 }}>
+                <View style={{ }}>
                     <Text style={styles.txtDate}>Ngày tháng năm sinh</Text>
                     <DatePicker
                         style={{ width:'40%' }}
@@ -100,8 +100,8 @@ class FormQuestion1 extends Component {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor:R.colors.defaultColor
     },
     txtDate: {
         paddingBottom: 6,
