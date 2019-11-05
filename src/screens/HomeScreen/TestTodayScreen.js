@@ -44,7 +44,9 @@ class TestTodayScreen extends Component {
             listInput: [],
             currentIndex: 0,
             listFinal: [],
-            selected: false
+            selected: false,
+            value: this.props.navigation.getParam('value', ''),
+            disease_id: ''
         };
         this.list = []
         this.data = []
@@ -56,20 +58,14 @@ class TestTodayScreen extends Component {
         try {
             let disease_id = (this.props.navigation.getParam('item', {}) || {})._id || ''
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 2, disease_id })
+           
             if (res && res.code == 200) {
                 let data = [...res.data]
 
                 let list = []
                 data.forEach((e, i) => {
-                    if (i == 0) {
-                        let obj = {
-                            itemsQuestion: data.splice(0, 1),
-                            _id: e._id,
-                            position: e.position
-                        }
-                        list.push(obj)
-                        return
-                    }
+                    console.log('i: ', i);
+
                     if (i % 5 == 0) {
                         let obj = {
                             itemsQuestion: data.splice(0, 5),
@@ -80,14 +76,18 @@ class TestTodayScreen extends Component {
                     } else {
                         let obj = {
                             itemsQuestion: data.splice(0, 5),
+
                             _id: e._id,
                             position: e.position
 
                         }
+                        console.log('data.splice(0, 5): ', data.splice(0, 5));
                         list.push(obj)
+
                     }
                 })
-                this.setState({ data: list })
+                console.log('list: ', list);
+                this.setState({ data: list, disease_id: res.disease_id })
             }
         } catch (error) {
 
@@ -102,7 +102,25 @@ class TestTodayScreen extends Component {
 
         this.checkList(item)
     }
+    renderText = () => {
+        const { value } = this.state
+        let message = ''
+        if (value < 4) {
+            message = 'Chỉ số đường huyết của bạn hơi cao'
+        } else if (value >= 4 && value < 6) {
+            message = 'Chỉ số đường huyết của bạn hơi cao'
 
+        } else if (value >= 6 && value < 7) {
+            message = 'Chỉ số đường huyết của bạn hơi cao'
+
+        } else if (value >= 7 && value < 9) {
+            message = 'Chỉ số đường huyết của bạn hơi cao'
+
+        } else {
+            message = 'Chỉ số đường huyết của bạn cao vượt mức cho phép'
+
+        }
+    }
     onPressCkeck = (item) => (e) => {
         let listChecked = [];
         let data = [...this.state.data]
@@ -169,12 +187,15 @@ class TestTodayScreen extends Component {
                 return total + parseInt(current.point)
             }, 0)
 
-            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point })
+            let { disease_id } = this.state
+            console.log('disease_id: ', disease_id);
+            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point, disease_id, glycemic: this.state.value })
 
             if (res && res.code == 200) {
                 utils.alertSuccess('Gửi câu hỏi thành công')
                 NavigationServices.navigate(screenName.TestResultScreen, {
-                    type: res.data.type
+                    type: res.data.type,
+                    status: 1
                 })
             } else {
                 utils.alertDanger(res.message)
@@ -286,7 +307,10 @@ class TestTodayScreen extends Component {
                         onIndexChanged={this.onIndexChanged}
                         scrollEnabled={false}
                         showsPagination={false}
-                        height={height / 3}
+                        scrollViewStyle={{
+                            maxHeight: height / 2
+                        }}
+                        // height={height / 3}
                         // horizontal={false}
                         ref={ref => this.swiper = ref}
                         style={styles.containerHeaderTitle}
@@ -344,10 +368,9 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     containerHeaderTitle: {
-        backgroundColor: R.colors.defaultColor,
-        width: null,
+        // backgroundColor: R.colors.defaultColor,
+        // width: null,
         // height: height / 2,
-
     },
     flex: {
         flex: 1

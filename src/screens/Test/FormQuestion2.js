@@ -5,6 +5,7 @@ import DatePicker from 'react-native-datepicker'
 import R from 'res/R';
 import { width } from 'configs/utils';
 import { CheckBox } from 'native-base'
+import FormQuestion1 from './FormQuestion1';
 class FormQuestion2 extends Component {
     constructor(props) {
         super(props);
@@ -112,6 +113,7 @@ class FormQuestion2 extends Component {
         }
     }
     renderItem = ({ item, index }) => {
+       
         return (
             <View style={{ flex: 1, paddingTop: 20 }}>
                 <Text style={styles.txtDate}>{index + 1}. {item.name}</Text>
@@ -211,7 +213,8 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 10,
-        flex: 1,
+        backgroundColor: R.colors.defaultColor,
+
     },
     txtDate: {
         paddingBottom: 10,
