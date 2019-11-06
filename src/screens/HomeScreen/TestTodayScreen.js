@@ -46,7 +46,8 @@ class TestTodayScreen extends Component {
             listFinal: [],
             selected: false,
             value: this.props.navigation.getParam('value', ''),
-            disease_id: ''
+            disease_id: (this.props.navigation.getParam('item', {}) || {})._id || '',
+            height: 0
         };
         this.list = []
         this.data = []
@@ -56,9 +57,9 @@ class TestTodayScreen extends Component {
     }
     getData = async () => {
         try {
-            let disease_id = (this.props.navigation.getParam('item', {}) || {})._id || ''
+            let { disease_id } = this.state
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 2, disease_id })
-           
+
             if (res && res.code == 200) {
                 let data = [...res.data]
 
@@ -66,25 +67,34 @@ class TestTodayScreen extends Component {
                 data.forEach((e, i) => {
                     console.log('i: ', i);
 
-                    if (i % 5 == 0) {
-                        let obj = {
-                            itemsQuestion: data.splice(0, 5),
-                            _id: e._id,
-                            position: e.position
-                        }
-                        list.push(obj)
-                    } else {
-                        let obj = {
-                            itemsQuestion: data.splice(0, 5),
-
-                            _id: e._id,
-                            position: e.position
-
-                        }
-                        console.log('data.splice(0, 5): ', data.splice(0, 5));
-                        list.push(obj)
-
+                    // if (i == 0) {
+                    //     let obj = {
+                    //         itemsQuestion: data.splice(0, 1),
+                    //         _id: e._id,
+                    //         position: e.position
+                    //     }
+                    //     list.push(obj)
+                    //     return
+                    // }
+                    // if (i % 3 == 0) {
+                    let obj = {
+                        itemsQuestion: data.splice(0, 3),
+                        _id: e._id,
+                        position: e.position
                     }
+                    list.push(obj)
+                    // } else {
+                    //     let obj = {
+                    //         itemsQuestion: data.splice(0, 3),
+
+                    //         _id: e._id,
+                    //         position: e.position
+
+                    //     }
+                    //     console.log('data.splice(0, 5): ', data.splice(0, 5));
+                    //     list.push(obj)
+
+                    // }
                 })
                 console.log('list: ', list);
                 this.setState({ data: list, disease_id: res.disease_id })
@@ -147,7 +157,7 @@ class TestTodayScreen extends Component {
             }
         })
         this.setState({ listChecked: listChecked, data: data, selected: true }, () => {
-
+            console.log(this.state.listChecked, 'listChecked')
         })
 
         // this.setState({
@@ -161,11 +171,9 @@ class TestTodayScreen extends Component {
         if (Array.isArray(listChecked) && listChecked.length > 0 && selected) {
             let data = listChecked.filter(e => e.checked == true)
             let total = data.reduce((total, current) => {
-
-
                 return total + Number(current.total)
             }, 0)
-
+            console.log('total: ', total);
             let obj = {}
             obj.point = total
             obj._id = item._id
@@ -174,8 +182,9 @@ class TestTodayScreen extends Component {
                 this.data.push(obj)
             } else {
                 this.data.splice(index, 1, obj)
-            }
 
+            }
+            console.log('this.data: ', this.data);
             this.setState({ selected: false })
         }
     }
@@ -207,10 +216,13 @@ class TestTodayScreen extends Component {
 
     }
     onChangeText = (item) => (value, itemAnwser) => {
+        console.log('item: ', item);
 
         let point = Number(value)
+
         itemAnwser.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
         let objPoint = itemAnwser.anwser.find(e => point >= e.from_point && point <= e.to_point || point < itemAnwser.anwser[0].from_point || point > itemAnwser.anwser[itemAnwser.anwser.length - 1].to_point)
+        console.log('objPoint: ', objPoint);
 
 
         let list = []
@@ -220,18 +232,19 @@ class TestTodayScreen extends Component {
                     let obj = {
                         anwser_id: itemAnwser._id,
                         name: value,
-                        point: objPoint.total_point,
+                        point: objPoint.total,
                         glycemic: point,
                         _id: itemAnwser._id,
                         checked: true
                     }
                     list.push(obj)
 
+
                 }
             }
         })
-
-        this.setState({ listChecked: list, selected: true }, () => {
+        console.log('list: ', list);
+        this.setState({ listChecked: list, selected: true, value: point }, () => {
 
 
 
@@ -253,6 +266,10 @@ class TestTodayScreen extends Component {
                     onPressBack={this.backQuestion(item)}
                     onChangeText={this.onChangeText(item)}
                     index={index}
+                    onLayout={(e) => {
+                        console.log('e: ', e.nativeEvent.layout);
+                        this.setState({ height: e.nativeEvent.layout.height })
+                    }}
                     item={item}
                     onSend={this.onSend(item)}
                     onPressCheck={this.onPressCkeck(item)}
@@ -289,7 +306,7 @@ class TestTodayScreen extends Component {
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    height: height / 3 - 30
+                    height: height / 4 - 30
                 }}>
                     <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText fontFamily="boldItalic" size={20} style={{
                         color: R.colors.defaultColor
@@ -305,12 +322,11 @@ class TestTodayScreen extends Component {
                     <Swiper
                         loop={false}
                         onIndexChanged={this.onIndexChanged}
-                        scrollEnabled={false}
+                        scrollEnabled={true}
                         showsPagination={false}
-                        scrollViewStyle={{
-                            maxHeight: height / 2
-                        }}
-                        // height={height / 3}
+                        // scrollViewStyle={{
+                        //     maxHeight: this.state.height
+                        // }}
                         // horizontal={false}
                         ref={ref => this.swiper = ref}
                         style={styles.containerHeaderTitle}

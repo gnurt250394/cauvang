@@ -26,8 +26,7 @@ class NoteDoctorScreen extends Component {
     }
     _keyExtractor = (item, index) => `${item.id || index}`
     _renderItem = ({ item, index }) => {
-        console.log('item: ', item);
-        if (item.type == 1 && this.state.type == '3' || this.state.type == '2') {
+        if (item.type == '1' &&( this.state.type == '3' || this.state.type == '2')) {
             return (
                 <View style={{ paddingTop: 10 }}>
                     <Text style={{

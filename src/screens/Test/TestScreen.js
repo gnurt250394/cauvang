@@ -63,34 +63,34 @@ class TestScreen extends Component {
                 console.log('data: ', data);
                 let list = []
                 data.forEach((e, i) => {
-                    if (i == 0) {
-                        let obj = {
-                            itemsQuestion: data.splice(0, 1),
-                            _id: e._id,
-                            position: e.position
-                        }
-                        list.push(obj)
-                        return
+                    // if (i == 0) {
+                    //     let obj = {
+                    //         itemsQuestion: data.splice(0, 1),
+                    //         _id: e._id,
+                    //         position: e.position
+                    //     }
+                    //     list.push(obj)
+                    //     return
+                    // }
+                    // if (i % 5 == 0) {
+                    let obj = {
+                        itemsQuestion: data.splice(0, 3),
+                        _id: e._id,
+                        position: e.position
                     }
-                    if (i % 5 == 0) {
-                        let obj = {
-                            itemsQuestion: data.splice(0, 5),
-                            _id: e._id,
-                            position: e.position
-                        }
-                        list.push(obj)
-                    } else {
-                        let obj = {
-                            itemsQuestion: data.splice(0, 5),
-                            _id: e._id,
-                            position: e.position
+                    list.push(obj)
+                    // } else {
+                    //     let obj = {
+                    //         itemsQuestion: data.splice(0, 5),
+                    //         _id: e._id,
+                    //         position: e.position
 
-                        }
-                        list.push(obj)
+                    //     }
+                    //     list.push(obj)
 
-                    }
+                    // }
                 })
-                list.unshift({_id:0,itemsQuestion:[]})
+                list.unshift({ _id: 0, itemsQuestion: [] })
                 console.log('list: ', list);
                 this.setState({ data: [...list] })
             }
@@ -186,21 +186,20 @@ class TestScreen extends Component {
         }
 
     }
-    onChangeText = (item) => (value) => {
+    onChangeText = (item) => (value, itemAnwser) => {
         let point = Number(value)
-        item.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total_point)
-        let objPoint = item.anwser.find(e => point >= e.from_point && point <= e.to_point || point < item.anwser[0].from_point || point > item.anwser[item.anwser.length - 1].to_point)
-        let data = [...this.state.data]
+        itemAnwser.anwser.sort((a, b) => b.from_point - a.from_point || b.to_point - a.total)
+        let objPoint = itemAnwser.anwser.find(e => point >= e.from_point && point <= e.to_point || point < itemAnwser.anwser[0].from_point || point > itemAnwser.anwser[itemAnwser.anwser.length - 1].to_point)
         let list = []
-        data.forEach(e => {
-            if (e._id == item._id) {
+        item.itemsQuestion.forEach(e => {
+            if (e._id == itemAnwser._id) {
                 if (objPoint && objPoint._id) {
                     let obj = {
-                        anwser_id: item._id,
+                        anwser_id: itemAnwser._id,
                         name: value,
-                        point: objPoint.total_point,
+                        point: objPoint.total,
                         glycemic: point,
-                        _id: item._id,
+                        _id: itemAnwser._id,
                         checked: true
                     }
                     list.push(obj)
@@ -217,12 +216,12 @@ class TestScreen extends Component {
     _renderItem = ({ item, index }) => {
         switch (index) {
             case 0:
-            return <FormQuestion1
-                key={`${item._id}`}
-                onPress={this.nextQuestion(item)}
-                onPressBack={this.backQuestion(item)}
-                index={index}
-                length={this.state.data.length} />
+                return <FormQuestion1
+                    key={`${item._id}`}
+                    onPress={this.nextQuestion(item)}
+                    onPressBack={this.backQuestion(item)}
+                    index={index}
+                    length={this.state.data.length} />
             default:
                 return <FormQuestion2
                     key={`${item._id}`}
@@ -250,14 +249,14 @@ class TestScreen extends Component {
         this.checkList(item)
     }
     onIndexChanged = (currentIndex) => {
-
+        console.log('currentIndex: ', currentIndex);
         this.setState({ currentIndex })
     }
     onReport = () => {
         NavigationServices.navigate(screenName.ReportScreen)
     }
     render() {
-        const { listButton, data } = this.state
+        const { listButton, data, currentIndex } = this.state
         const { userApp } = this.props
         return (
             <ScrollView >
@@ -281,13 +280,8 @@ class TestScreen extends Component {
                     <Swiper
                         loop={false}
                         onIndexChanged={this.onIndexChanged}
-                        scrollEnabled={false}
+                        // scrollEnabled={false}
                         showsPagination={false}
-
-                        scrollViewStyle={{
-                            maxHeight: height / 2
-                        }}
-                        // height={height / 3}
                         ref={ref => this.swiper = ref}
                         style={styles.containerHeaderTitle}
                         showsButtons={false}>
