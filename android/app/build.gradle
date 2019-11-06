@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.honghactest"
+        applicationId "com.baseappreactnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         missingDimensionStrategy 'react-native-camera', 'general'
