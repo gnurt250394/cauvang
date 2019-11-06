@@ -55,6 +55,19 @@ class TestTodayScreen extends Component {
     componentDidMount() {
         this.getData()
     }
+    groupObj = (myArray) => {
+        var group_to_values = myArray.reduce(function (obj, item) {
+            let a ={}
+            obj[item.position] = obj[item.position] || [];
+            obj[item.position].push(item);
+            return obj;
+        }, {});
+
+        var groups = Object.keys(group_to_values).map(function (key) {
+            return { _id: key, itemsQuestion: group_to_values[key] };
+        });
+        return groups
+    }
     getData = async () => {
         try {
             let { disease_id } = this.state
@@ -63,39 +76,7 @@ class TestTodayScreen extends Component {
             if (res && res.code == 200) {
                 let data = [...res.data]
 
-                let list = []
-                data.forEach((e, i) => {
-                    console.log('i: ', i);
-
-                    // if (i == 0) {
-                    //     let obj = {
-                    //         itemsQuestion: data.splice(0, 1),
-                    //         _id: e._id,
-                    //         position: e.position
-                    //     }
-                    //     list.push(obj)
-                    //     return
-                    // }
-                    // if (i % 3 == 0) {
-                    let obj = {
-                        itemsQuestion: data.splice(0, 3),
-                        _id: e._id,
-                        position: e.position
-                    }
-                    list.push(obj)
-                    // } else {
-                    //     let obj = {
-                    //         itemsQuestion: data.splice(0, 3),
-
-                    //         _id: e._id,
-                    //         position: e.position
-
-                    //     }
-                    //     console.log('data.splice(0, 5): ', data.splice(0, 5));
-                    //     list.push(obj)
-
-                    // }
-                })
+                let list = this.groupObj(data)
                 console.log('list: ', list);
                 this.setState({ data: list, disease_id: res.disease_id })
             }
@@ -266,10 +247,10 @@ class TestTodayScreen extends Component {
                     onPressBack={this.backQuestion(item)}
                     onChangeText={this.onChangeText(item)}
                     index={index}
-                    onLayout={(e) => {
-                        console.log('e: ', e.nativeEvent.layout);
-                        this.setState({ height: e.nativeEvent.layout.height })
-                    }}
+                    // onLayout={(e) => {
+                    //     console.log('e: ', e.nativeEvent.layout);
+                    //     this.setState({ height: e.nativeEvent.layout.height })
+                    // }}
                     item={item}
                     onSend={this.onSend(item)}
                     onPressCheck={this.onPressCkeck(item)}
