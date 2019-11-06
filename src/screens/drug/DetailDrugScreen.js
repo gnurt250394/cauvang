@@ -39,7 +39,7 @@ class DetailDrugScreen extends Component {
                                 detailsDrug.drugs.map((e, i) => {
                                     return (
                                         <Text style={{
-                                            color: R.colors.black,
+                                            color: R.colors.textColor,
                                             fontFamily: R.fonts.Semibold,
                                             paddingLeft: 15,
                                             paddingBottom: 10,
@@ -47,7 +47,7 @@ class DetailDrugScreen extends Component {
                                             height:6,
                                             width:6,
                                             borderRadius:3,
-                                            backgroundColor:R.colors.black
+                                            backgroundColor:R.colors.textColor
                                         }} /> {e.name}</Text>
                                     )
                                 })
