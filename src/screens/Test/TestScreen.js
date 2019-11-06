@@ -63,32 +63,14 @@ class TestScreen extends Component {
                 console.log('data: ', data);
                 let list = []
                 data.forEach((e, i) => {
-                    // if (i == 0) {
-                    //     let obj = {
-                    //         itemsQuestion: data.splice(0, 1),
-                    //         _id: e._id,
-                    //         position: e.position
-                    //     }
-                    //     list.push(obj)
-                    //     return
-                    // }
-                    // if (i % 5 == 0) {
+                   
                     let obj = {
                         itemsQuestion: data.splice(0, 3),
                         _id: e._id,
                         position: e.position
                     }
                     list.push(obj)
-                    // } else {
-                    //     let obj = {
-                    //         itemsQuestion: data.splice(0, 5),
-                    //         _id: e._id,
-                    //         position: e.position
-
-                    //     }
-                    //     list.push(obj)
-
-                    // }
+                   
                 })
                 list.unshift({ _id: 0, itemsQuestion: [] })
                 console.log('list: ', list);
