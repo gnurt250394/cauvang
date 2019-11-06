@@ -113,7 +113,7 @@ class FormQuestion2 extends Component {
         }
     }
     renderItem = ({ item, index }) => {
-       
+
         return (
             <View style={{ flex: 1, paddingTop: 20 }}>
                 <Text style={styles.txtDate}>{index + 1}. {item.name}</Text>
@@ -131,7 +131,9 @@ class FormQuestion2 extends Component {
         const { BMI } = this.state
         const { index, length, item } = this.props
         return (
-            <View style={styles.container}>
+            <View
+                onLayout={this.props.onLayout}
+                style={styles.container}>
                 <FlatList
                     data={item.itemsQuestion}
                     renderItem={this.renderItem}

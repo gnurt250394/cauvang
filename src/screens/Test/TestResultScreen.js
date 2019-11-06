@@ -121,6 +121,9 @@ class TestResultScreen extends Component {
             </View>
         )
     }
+    goToNote=()=>{
+        NavigationServices.navigate(screenName.NoteDoctorScreen)
+    }
     _keyExtractor = (item, index) => `${item._id || index}`
     render() {
         const { data, dataChart, listTime } = this.state
@@ -135,9 +138,12 @@ class TestResultScreen extends Component {
                     <Text style={styles.txtAlert}>{this.renderType()} </Text>
                     {
                         this.state.type == '2' ?
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={this.goToNote}
+                            >
                                 <Text style={{
                                     fontFamily: R.fonts.Bold,
+                                    textDecorationLine:'underline'
                                 }}>Lời dặn của bác sĩ</Text>
                             </TouchableOpacity>
                             : null
