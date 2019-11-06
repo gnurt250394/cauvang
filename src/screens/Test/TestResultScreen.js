@@ -137,16 +137,19 @@ class TestResultScreen extends Component {
                     <Image source={this.renderImage()} style={styles.imageAlert} />
                     <Text style={styles.txtAlert}>{this.renderType()} </Text>
                     {
-                        this.state.type == '2' ?
+                        // this.state.type == '2' ?
                             <TouchableOpacity
                                 onPress={this.goToNote}
+                                style={{
+                                    paddingTop:10
+                                }}
                             >
                                 <Text style={{
                                     fontFamily: R.fonts.Bold,
                                     textDecorationLine:'underline'
                                 }}>Lời dặn của bác sĩ</Text>
                             </TouchableOpacity>
-                            : null
+                            // : null
 
                     }
                 </View>
