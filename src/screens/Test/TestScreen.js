@@ -45,13 +45,27 @@ class TestScreen extends Component {
             currentIndex: 0,
             listFinal: [],
             selected: false,
-            item: this.props.navigation.getParam('item', {})
+            item: this.props.navigation.getParam('item', {}),
+            value:''
         };
         this.list = []
         this.data = []
     }
     componentDidMount() {
         this.getData()
+    }
+    groupObj = (myArray) => {
+        var group_to_values = myArray.reduce(function (obj, item) {
+            let a = {}
+            obj[item.position] = obj[item.position] || [];
+            obj[item.position].push(item);
+            return obj;
+        }, {});
+
+        var groups = Object.keys(group_to_values).map(function (key) {
+            return { _id: key, itemsQuestion: group_to_values[key] };
+        });
+        return groups
     }
     getData = async () => {
         try {
@@ -60,18 +74,7 @@ class TestScreen extends Component {
             let res = await apis.fetch(apis.PATH.QUESTION, { type: 1, disease_id })
             if (res && res.code == 200) {
                 let data = [...res.data]
-                console.log('data: ', data);
-                let list = []
-                data.forEach((e, i) => {
-                   
-                    let obj = {
-                        itemsQuestion: data.splice(0, 3),
-                        _id: e._id,
-                        position: e.position
-                    }
-                    list.push(obj)
-                   
-                })
+                let list = this.groupObj(data)
                 list.unshift({ _id: 0, itemsQuestion: [] })
                 console.log('list: ', list);
                 this.setState({ data: [...list] })
@@ -153,7 +156,7 @@ class TestScreen extends Component {
                 return total + parseInt(current.point)
             }, 0)
             let disease_id = (this.state.item || {})._id || ''
-            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point, disease_id })
+            let res = await apis.post(apis.PATH.CONFIRM_ANWSER, { point, disease_id, glycemic: this.state.value })
             if (res && res.code == 200) {
                 utils.alertSuccess('Gửi câu hỏi thành công')
                 NavigationServices.navigate(screenName.TestResultScreen, {
@@ -189,7 +192,7 @@ class TestScreen extends Component {
             }
         })
 
-        this.setState({ listChecked: list, selected: true }, () => {
+        this.setState({ listChecked: list, selected: true, value: point }, () => {
             console.log('selected: ', this.state.selected);
             console.log('listChecked: ', this.state.listChecked);
 
@@ -248,10 +251,10 @@ class TestScreen extends Component {
                     justifyContent: 'center',
                     height: height / 3 - 30
                 }}>
-                    <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText size={20} style={{
+                    <ScaleText size={20} style={styles.txtHello}>Xin chào, <ScaleText fontFamily="boldItalic" size={20} style={{
                         color: R.colors.defaultColor
                     }}>{userApp.name}</ScaleText></ScaleText>
-                    <ScaleText size={16} style={styles.TxtQuestion} >Trả lời ngay các câu hỏi sau đây để đánh giá tình trạng sức khỏe của bạn</ScaleText>
+                    <ScaleText fontFamily="lightItalic" size={16} style={styles.TxtQuestion} >Trả lời ngay các câu hỏi sau đây để đánh giá tình trạng sức khỏe của bạn</ScaleText>
 
                 </View>
 
