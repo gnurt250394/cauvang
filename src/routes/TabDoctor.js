@@ -13,7 +13,7 @@ export default createAppContainer(createMaterialTopTabNavigator(
         [screenName.ListDoctorScreen]: {
             screen: ListDoctorScreen,
             navigationOptions: {
-                title: 'Danh sách bác sĩ',
+                title: 'Đã gửi',
 
 
             }
@@ -21,7 +21,7 @@ export default createAppContainer(createMaterialTopTabNavigator(
         [screenName.HistoryMessage]: {
             screen: HistoryMessageScreen,
             navigationOptions: {
-                title: 'Lịch sử',
+                title: 'Đã nhận',
                 // tabBarOnPress: ({ navigation, defaultHandler }) => {
                 //     if (!utils.database.token) {
                 //         utils.alertWarn("Vui lòng đăng nhập")
@@ -48,7 +48,6 @@ export default createAppContainer(createMaterialTopTabNavigator(
             indicatorStyle:{
                 backgroundColor:R.colors.secondColor,
                 height:'100%',
-                borderRadius:20,
                 zIndex: 10000,
             },
             style:{

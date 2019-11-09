@@ -1,4 +1,4 @@
-package com.baseappreactnative;
+package com.cauvang;
 
 import android.app.Application;
 import android.content.Context;

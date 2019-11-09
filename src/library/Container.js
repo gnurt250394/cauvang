@@ -29,12 +29,12 @@ class Container extends Component {
             isReady: true,
         };
     }
-  
+
     render() {
         const { onPressLeft, onPressRight, valueRight, iconRight, valueLeft, iconLeft, scrollView, isLoading, title } = this.props
         const ContainerComponent = scrollView ? ScrollView : View
         return (
-            <LinearGradient colors={[R.colors.defaultColor, R.colors.pink1, R.colors.pink2, R.colors.pink1, R.colors.defaultColor]} style={styles.container}>
+            <View style={styles.container}>
                 <HeaderDefault
                     onPressLeft={onPressLeft}
                     onPressRight={onPressRight}
@@ -45,14 +45,9 @@ class Container extends Component {
                     title={title}
                 />
                 <StatusBar animated={true} backgroundColor={R.colors.defaultColor} barStyle="light-content" />
-                <ContainerComponent
-                    showsVerticalScrollIndicator={false}
-                    style={ContainerComponent == ScrollView ? styles.containerComponent : [{ flex: 1 }, styles.containerComponent]}
-                    keyboardShouldPersistTaps="handled">
 
                     {this.props.children}
-                </ContainerComponent>
-            </LinearGradient >
+            </View>
         );
     }
 }
@@ -62,15 +57,10 @@ export default Container;
 
 const styles = StyleSheet.create({
     containerComponent: {
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
         backgroundColor: '#fff',
     },
     container: {
         flex: 1,
-        paddingTop: 10,
-        paddingRight: 10,
-        paddingLeft: 10,
     },
     lottie: {
         width: 100,

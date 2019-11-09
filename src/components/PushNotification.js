@@ -89,7 +89,7 @@ class PushNotification extends React.Component {
             .setNotificationId(utils.guid())
             .setBody('hong hac')
             .setTitle('hong hac')
-            .android.setChannelId("honghac-channel")
+            .android.setChannelId("SHIBA-channel")
             .android.setSmallIcon("ic_launcher")
             .setSound("default")
 
@@ -99,7 +99,7 @@ class PushNotification extends React.Component {
 
     componentDidMount() {
         // Build a channel
-        const channel = new firebase.notifications.Android.Channel('honghac-channel', 'honghac-channel', firebase.notifications.Android.Importance.Max).setDescription('Hồng hạc Notification channel');
+        const channel = new firebase.notifications.Android.Channel('SHIBA-channel', 'SHIBA-channel', firebase.notifications.Android.Importance.Max).setDescription('Hồng hạc Notification channel');
         // Create the channel
         firebase.notifications().android.createChannel(channel);
         // showBroadcast = this.showBroadcast();
@@ -123,7 +123,7 @@ class PushNotification extends React.Component {
                 utils.database.tokenFCM = token;
                 apis.post(apis.PATH.ADD_TOKEN_FCM, { token }, true).then(res => { })
                     .catch(err => { })
-                firebase.messaging().subscribeToTopic("honghac_test");
+                firebase.messaging().subscribeToTopic("SHIBA_test");
             });
 
 
@@ -146,7 +146,7 @@ class PushNotification extends React.Component {
                 .setSubtitle(notification.subtitle)
                 .setBody(notification.body)
                 .setData(notification.data)
-                .android.setChannelId('honghac-channel') // e.g. the id you chose above
+                .android.setChannelId('SHIBA-channel') // e.g. the id you chose above
                 .android.setSmallIcon('ic_launcher') // create this icon in Android Studio
                 .android.setColor('#000000') // you can set a color here
                 .android.setPriority(firebase.notifications.Android.Priority.High);
@@ -173,7 +173,7 @@ class PushNotification extends React.Component {
 
     }
     onNotificationOpened(notificationOpen) {
-        // RNCallKeepManager.displayIncommingCall(0)
+        RNCallKeepManager.displayIncommingCall(0)
         console.log('onNotificationOpened: ', notificationOpen);
         try {
             firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);

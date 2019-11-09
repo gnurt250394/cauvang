@@ -8,11 +8,13 @@ import firebase from 'react-native-firebase';
 const database = {
   token: '',
   tokenFCM: '',
+  user:{},
   forgotPass: 'forgotPass'
 }
 const KEY = {
   TOKEN: 'TOKEN',
-  KEY_HAS_UPDATE_NEW_VERSION: 'KEY_HAS_UPDATE_NEW_VERSION'
+  KEY_HAS_UPDATE_NEW_VERSION: 'KEY_HAS_UPDATE_NEW_VERSION',
+  DATA:'DATA'
 }
 export function guid() {
   function s4() {
@@ -47,7 +49,7 @@ function alertWarn(description) {
   showMessage({
     type: 'warning',
     icon: 'warning',
-    message: 'Hồng Hạc',
+    message: 'SOS',
     description,
   })
 }
@@ -55,7 +57,7 @@ function alertSuccess(description) {
   showMessage({
     type: 'success',
     icon: 'success',
-    message: 'Hồng Hạc',
+    message: 'SOS',
     description,
   })
 }
@@ -63,7 +65,7 @@ function alertNone(description) {
   showMessage({
     type: 'none',
     icon: 'none',
-    message: 'Hồng Hạc',
+    message: 'SOS',
     description,
   })
 }
@@ -71,7 +73,7 @@ function alertInfo(description) {
   showMessage({
     type: 'info',
     icon: 'info',
-    message: 'Hồng Hạc',
+    message: 'SOS',
     description,
   })
 }
@@ -79,7 +81,7 @@ function alertDanger(description) {
   showMessage({
     type: 'danger',
     icon: 'danger',
-    message: 'Hồng Hạc',
+    message: 'SOS',
     description,
   })
 }

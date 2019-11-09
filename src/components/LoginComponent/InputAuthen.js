@@ -11,18 +11,7 @@ class InputAuthen extends Component {
     onChangeText = (value) => {
         this.setState({ value })
     }
-    onBlur = () => {
-        const { value } = this.state
-        const { placeholder } = this.props
-        if (!value) {
-            showMessage({
-                icon: 'danger',
-                type: 'danger',
-                message: 'Lỗi!',
-                description: `${placeholder} không được để trống`
-            })
-        }
-    }
+
     getValue = () => {
         return this.state.value
     }
@@ -42,7 +31,6 @@ class InputAuthen extends Component {
                     value={value}
                     onChangeText={this.onChangeText}
                     style={[styles.input, style]}
-                    onBlur={this.onBlur}
                 />
             </View>
 

@@ -3,7 +3,7 @@ export default {
     HomeStack:'HomeStack',     // stack home
     DrawerStack:'DrawerStack',
     LoginScreen:'Đăng nhập', 
-    HomeScreen:'Trang chủ',
+    HomeScreen:'Cảnh báo sự cố khẩn cấp',
     RegisterScreen:'Đăng ký',
     ForgotPasswordScreen:'Quên mật khẩu',
     SplashScreen:'SplashScreen',
@@ -37,5 +37,9 @@ export default {
     DetailDrugScreen:'Chi tiết đơn thuốc',
     TabDoctor:'TabDoctor',
     HistoryMessage:'HistoryMessage',
-    GetAllSickScreen:'Chọn bệnh muốn hỗ trợ'
+    GetAllSickScreen:'Chọn bệnh muốn hỗ trợ',
+    AlertDanger:'Cảnh báo sự cố',
+    CustomCallKeep:'CustomCallKeep',
+    ListAlert:'Lịch sử cảnh báo sự cố',
+    DetailAlert:'Chi tiết cảnh báo sự cố'
 }
