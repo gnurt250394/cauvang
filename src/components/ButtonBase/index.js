@@ -40,6 +40,6 @@ const styles = StyleSheet.create({
     txt: {
         fontFamily:R.fonts.BlackItalic,
         fontSize:16,
-        color:R.colors.textColor
+        color:R.colors.black
     }
 })

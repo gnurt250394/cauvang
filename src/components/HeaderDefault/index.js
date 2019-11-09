@@ -23,7 +23,9 @@ class HeaderDefault extends Component {
         return (
             <View style={[styles.containerHeader, style]}>
                 {navigation.isFirstRouteInParent() ?
-                    <View />
+                    <View style={{
+                        width:'10%'
+                    }} />
                     :
                     <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
                 }
@@ -31,7 +33,9 @@ class HeaderDefault extends Component {
                 {onPressRight ?
                     <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
                     :
-                    <View />
+                    <View  style={{
+                        width:'10%'
+                    }}/>
                 }
 
             </View>
@@ -47,7 +51,7 @@ export default withNavigation(HeaderDefault)
 
 const styles = StyleSheet.create({
     containerHeader: {
-        // backgroundColor: R.colors.defaultColor,
+        backgroundColor: R.colors.defaultColor,
         height: 55,
         alignItems: 'center',
         flexDirection: 'row',
@@ -60,6 +64,7 @@ const styles = StyleSheet.create({
         fontFamily: R.fonts.Bold,
         flex: 1,
         color: R.colors.white,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        textAlign:'center'
     },
 })

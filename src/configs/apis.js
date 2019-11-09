@@ -4,9 +4,9 @@ import { showLoading, hideLoading } from 'library/Loading/LoadingComponent'
 // const BASE_URL = 'http://192.168.0.105:8000/api/'
 // export const BASE_URI = 'http://192.168.0.105:8000/'
 // export const BASE_SOCKET = 'http://192.168.0.105:3001'
-const BASE_URL = 'http://10.0.40.13:8000/api/'
-export const BASE_URI = 'http://10.0.40.13:8000/'
-export const BASE_SOCKET = 'http://10.0.40.13:3001'
+const BASE_URL = 'http://10.0.50.110:8085/isofhcare/'
+export const BASE_URI = 'http://10.0.50.110:8085/'
+export const BASE_SOCKET = 'http://10.0.50.110:8085:3001'
 const SERVER_TIMEOUT = 10000
 let constants = Axios.create({
   baseURL: BASE_URL,
@@ -45,13 +45,12 @@ function logResponse(res) {
   console.log('res: ', res)
   console.groupEnd && console.groupEnd()
 }
-function fetch(url, params, loading) {
+async function fetch(url, params, loading) {
   let headers = {
     'Content-Type': 'application/json'
   }
-  if (utils.database.token) {
-    headers.Authorization = `Bearer ${utils.database.token}`
-  }
+  let token = await utils.getItem(utils.KEY.TOKEN)
+  constants.defaults.headers.common['X-Auth-Token'] = token;
   !loading ? showLoading() : null
   return constants
     .get(url, {
@@ -70,13 +69,12 @@ function fetch(url, params, loading) {
       return error
     })
 }
-function put(url, params, isLoading) {
+async function put(url, params, isLoading) {
   let headers = {
     'Content-Type': 'application/json'
   }
-  if (utils.database.token) {
-    headers.Authorization = `Bearer ${utils.database.token}`
-  }
+  let token = await utils.getItem(utils.KEY.TOKEN)
+  constants.defaults.headers.common['X-Auth-Token'] = token;
   !isLoading ? showLoading() : null
   return constants
     .put(url, params, {
@@ -95,13 +93,12 @@ function put(url, params, isLoading) {
       return error
     })
 }
-function post(url, params, isLoading) {
+async function post(url, params, isLoading) {
   let headers = {
     'Content-Type': 'application/json'
   }
-  if (utils.database.token) {
-    headers.Authorization = `Bearer ${utils.database.token}`
-  }
+  let token = await utils.getItem(utils.KEY.TOKEN)
+  constants.defaults.headers.common['X-Auth-Token'] = token;
   !isLoading ? showLoading() : null
 
   return constants
@@ -122,7 +119,7 @@ function post(url, params, isLoading) {
 
     })
 }
-function postForm(url, params) {
+async function postForm(url, params) {
   let form = new FormData()
   if (typeof params == 'object') {
     Object.keys(params).map(key => {
@@ -133,9 +130,8 @@ function postForm(url, params) {
   let headers = {
     "Content-Type": "multipart/form-data",
   }
-  if (utils.database.token) {
-    headers.Authorization = `Bearer ${utils.database.token}`
-  }
+  let token = await utils.getItem(utils.KEY.TOKEN)
+  constants.defaults.headers.common['X-Auth-Token'] = token;
   showLoading()
   return constants
     .post(url, params, {
@@ -156,13 +152,12 @@ function postForm(url, params) {
 
     })
 }
-function removeRequest(url) {
+async function removeRequest(url) {
   let headers = {
     'Content-Type': 'application/json'
   }
-  if (utils.database.token) {
-    headers.Authorization = `Bearer ${utils.database.token}`
-  }
+  let token = await utils.getItem(utils.KEY.TOKEN)
+  constants.defaults.headers.common['X-Auth-Token'] = token;
   showLoading()
   return constants
     .delete(url, {
@@ -184,11 +179,14 @@ function removeRequest(url) {
 }
 export default {
   PATH: {
-    LOGIN: 'login',
+    LOGIN: 'adverser-event/authentication',
     REGISTER: 'register',
     UPLOAD_IMAGE: 'update_avatar',
     CHATS: 'chats',
-    USER: 'user',
+    USER: 'adverser-event/v1/users',
+    DETAIL_USER: 'adverser-event/v1/user',
+    GET_LIST_SPECIALS: 'adverser-event/v1/departments',
+    HISTORY_ALERT:'adverser-event/v1/emergencies',
     VIDEO_CALL: 'event-video-call',
     LIST_HOSPITAL: 'list-hospital',
     CHECK_PHONE: 'check-phone',
@@ -199,7 +197,7 @@ export default {
     ADD_FOLLOW: 'add-follows',
     LIST_FOLLOW: 'list-follows',
     QUESTION: 'questions',
-    REPORT: 'report',
+    REPORT: 'adverser-event/v1/emergency',
     ADD_TOKEN_FCM: 'add-token',
     COMMUNES: 'list-communes',
     DISTRICT: 'list-districts',
@@ -207,15 +205,15 @@ export default {
     LIST_DOCTOR: 'list-doctor',
     CHECK_QUESTION: 'check-questions',
     CONFIRM_ANWSER: 'confirm-anwser',
-    CHANGE_PASS:'change_password',
-    FORGOT_PASS:'fogot_password',
-    DRUG:'list-drug',
-    DETAIL_DRUG:'details-drug',
-    SICK:'list-sicks',
-    PRESCRIPTION:'list-prescription',
-    DETAIL_PRESCRIPTION:'details-prescription',
-    LIST_NOTE:'list-noteDoctor',
-    CHECK_TYPE:'check-type'
+    CHANGE_PASS: 'change_password',
+    FORGOT_PASS: 'fogot_password',
+    DRUG: 'list-drug',
+    DETAIL_DRUG: 'details-drug',
+    SICK: 'list-sicks',
+    PRESCRIPTION: 'list-prescription',
+    DETAIL_PRESCRIPTION: 'details-prescription',
+    LIST_NOTE: 'list-noteDoctor',
+    CHECK_TYPE: 'check-type'
   },
   fetch,
   put,

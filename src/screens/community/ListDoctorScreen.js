@@ -28,7 +28,7 @@ class ListDoctorScreen extends Component {
         this.getData()
     };
     getData = async () => {
-        let res = await apis.fetch(apis.PATH.LIST_DOCTOR)
+        let res = await apis.fetch(apis.PATH.HISTORY_ALERT)
         if (res && res.code == status.SUCCESS) {
             this.setState({ data: res.data })
         }
@@ -47,7 +47,7 @@ class ListDoctorScreen extends Component {
                 alignItems: 'center',
                 padding: 5
             }}>
-                <Image source={item.image ? (item.image.indexOf('http') == 0 ? item.image : BASE_URI + item.image) : R.images.default.logo} style={{
+                <Image source={R.images.icons.ic_sos1} style={{
                     height: 70,
                     width: 70,
                     borderRadius: 35

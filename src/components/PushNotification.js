@@ -173,7 +173,7 @@ class PushNotification extends React.Component {
 
     }
     onNotificationOpened(notificationOpen) {
-        // RNCallKeepManager.displayIncommingCall(0)
+        RNCallKeepManager.displayIncommingCall(0)
         console.log('onNotificationOpened: ', notificationOpen);
         try {
             firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);

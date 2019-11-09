@@ -36,6 +36,10 @@ import InputPhone from 'screens/Register/InputPhone';
 import OtpScreen from 'screens/Register/OtpScreen';
 import TestScreen from 'screens/Test/TestScreen';
 import TestResultScreen from 'screens/Test/TestResultScreen';
+import AlertDangerScreen from 'screens/AlertDanger/AlertDangerScreen';
+import CustomCallKeepScreen from 'screens/AlertDanger/CustomCallKeepScreen';
+import ListAlertScreen from 'screens/AlertDanger/ListAlertScreen';
+import DetailAlertScreen from 'screens/AlertDanger/DetailAlertScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -57,7 +61,7 @@ const handleCustomTransition = ({ scenes }) => {
     return fromRight();
 }
 const homeStack = createStackNavigator({
-    [screenName.HomeScreen]: { screen: BottomTabStack },
+    [screenName.HomeScreen]: { screen: HomeScreen },
     [screenName.ScheduleScreen]: { screen: ScheduleScreen },
     [screenName.FollowHealthScreen]: { screen: FollowHealthScreen },
     [screenName.DetailScheduleScreen]: { screen: DetailScheduleScreen },
@@ -79,6 +83,10 @@ const homeStack = createStackNavigator({
     [screenName.DetailDrugScreen]: { screen: DetailDrugScreen },
     [screenName.TabDoctor]: { screen: AdvisoryScreen },
     [screenName.GetAllSickScreen]: { screen: GetAllSickScreen },
+    [screenName.AlertDanger]: { screen: AlertDangerScreen },
+    [screenName.CustomCallKeep]: { screen: CustomCallKeepScreen },
+    [screenName.ListAlert]: { screen: ListAlertScreen },
+    [screenName.DetailAlert]: { screen: DetailAlertScreen },
     //authen
     // [screenName.LoginScreen]: { screen: LoginScreen },
     // [screenName.RegisterScreen]: { screen: RegisterScreen },

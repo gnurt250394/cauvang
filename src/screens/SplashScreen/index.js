@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { login, logout } from 'middlewares/actions/login/actionLogin';
 import apis from 'configs/apis';
 import R from 'res/R';
+import jwtDecode from 'jwt-decode';
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,7 @@ class SplashScreen extends Component {
   componentDidMount = async () => {
     utils.getItem(utils.KEY.KEY_HAS_UPDATE_NEW_VERSION).then(key => {
       utils.setItem(utils.KEY.KEY_HAS_UPDATE_NEW_VERSION, 0)
-      if(key ==1){
+      if (key == 1) {
         utils.alertSuccess('Ứng dụng của bạn đã được cập nhật')
       }
     })
@@ -26,27 +27,19 @@ class SplashScreen extends Component {
       utils.database.tokenFCM = res
     })
     let token = await utils.getItem(utils.KEY.TOKEN)
+    console.log('token: ', token);
     if (token) {
+      var decoded = jwtDecode(token);
       utils.database.token = token
-      let res = await apis.fetch(apis.PATH.USER, {}, true)
-      console.log('res: aaaa', res);
-      if (res && res.code == 200) {
-        this.props.dispatch(login(res.data, res.count))
-        setTimeout(() => {
-          this.props.navigation.navigate(screenName.HomeStack)
-        }, 1000)
-      } else {
-        this.props.dispatch(logout())
+      utils.database.user = decoded
 
-        setTimeout(() => {
-          utils.logout()
-          this.props.navigation.navigate(screenName.AuthenStack)
-        }, 1000)
-      }
+      setTimeout(() => {
+        this.props.navigation.navigate(screenName.HomeScreen)
+      }, 1000)
 
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate(screenName.HomeStack)
+        this.props.navigation.navigate(screenName.AuthenStack)
       }, 1000)
     }
     this.animation()
@@ -61,17 +54,12 @@ class SplashScreen extends Component {
     })
   }
   render() {
-    const scale = this.anim.interpolate({
-      inputRange: [0, 0.2, 0.5, 0.8, 1],
-      outputRange: [0, 0.2, 0.5, 0.8, 1]
-    })
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+      <View style={styles.container}>
 
-        <Animated.Image source={R.images.default.flamigos} style={{
+        <Image source={R.images.icons.giphy} style={{
           height: width / 2,
           width: width / 2,
-          transform: [{ scale }]
         }} />
       </View>
     );
@@ -82,3 +70,12 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(SplashScreen);
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})

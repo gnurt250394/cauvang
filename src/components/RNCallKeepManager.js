@@ -58,7 +58,7 @@ class RNCallKeepManager {
         this.doctorId = doctorId
         this.UUID = uuid.v4()
         console.log('display incomming call', { UUID: this.UUID })
-        RNCallKeep.displayIncomingCall(this.UUID, 'unknown', 'Hong hac')
+        RNCallKeep.displayIncomingCall(this.UUID, 'unknown', 'SHIBA')
     }
 
     endCall = () => {
