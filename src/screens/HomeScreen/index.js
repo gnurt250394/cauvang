@@ -166,11 +166,11 @@ class HomeScreen extends Component {
                 }
             })
             this.setState({ data })
-            utils.alertSuccess('Cảnh báo sự cố thành công')
+            utils.alertSuccess('Gửi cảnh báo sự cố thành công')
             RNCallKeepManager.displayIncommingCall(0)
             // NavigationServices.navigate(screenName.CustomCallKeep)
         } else {
-            utils.alertDanger('Cảnh báo sự cố thất bại')
+            utils.alertDanger('Gửi cảnh báo sự cố thất bại')
         }
     }
     onRefress = () => {
@@ -182,7 +182,7 @@ class HomeScreen extends Component {
     }
     keyExtractor = (item, index) => `${item.id || index}`
     goHistory=()=>{
-        NavigationServices.navigate(screenName.ListAlert)
+        NavigationServices.navigate(screenName.DetailAlert)
     }
     render() {
         const { data, dataButton, profile } = this.state
