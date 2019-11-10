@@ -41,5 +41,6 @@ export default {
     AlertDanger:'Cảnh báo sự cố',
     CustomCallKeep:'CustomCallKeep',
     ListAlert:'Lịch sử cảnh báo sự cố',
-    DetailAlert:'Chi tiết cảnh báo sự cố'
+    DetailAlert:'Chi tiết cảnh báo sự cố',
+    MapScreen:'Bản đồ bệnh viện'
 }

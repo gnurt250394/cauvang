@@ -4,7 +4,7 @@ import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
 export function openVideoCallScreen(doctor_id) {
     console.log('opening video call screen', { doctor_id })
-    NavigationServices.navigate(screenName.VideoCallScreen, {
+    NavigationServices.navigate(screenName.DetailAlert, {
         data: { doctor_id }
     })
 }
@@ -41,9 +41,11 @@ class RNCallKeepManager {
                 alertDescription: 'This application needs to access your phone accounts',
                 cancelButton: 'Cancel',
                 okButton: 'ok',
+                imageName: 'ic_launcher',
             }
         };
         RNCallKeep.setup(options);
+        // RNCallKeep.setAvailable(true);
         RNCallKeep.addEventListener('answerCall', async () => {
             console.log('press answer, call established!', { isAppForeground: this.isAppForeground })
             this.prepareOpenVideoCall()
@@ -58,7 +60,7 @@ class RNCallKeepManager {
         this.doctorId = doctorId
         this.UUID = uuid.v4()
         console.log('display incomming call', { UUID: this.UUID })
-        RNCallKeep.displayIncomingCall(this.UUID, 'unknown', 'SHIBA')
+        RNCallKeep.displayIncomingCall(this.UUID, '00000000', 'SHIBA')
     }
 
     endCall = () => {

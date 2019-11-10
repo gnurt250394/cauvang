@@ -2,19 +2,37 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Container from 'library/Container';
 import { connect } from 'react-redux';
-import { width, height } from 'configs/utils';
+import utils, { width, height } from 'configs/utils';
 import R from 'res/R';
 import { WebView } from 'react-native-webview';
 import { showLoading, hideLoading } from 'library/Loading/LoadingComponent';
+import NavigationServices from 'routes/NavigationServices';
+import screenName from 'configs/screenName';
 class DetailAlertScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            detail: {}
         };
     }
 
     DetailMap = () => {
-
+        NavigationServices.navigate(screenName.MapScreen)
+    }
+    callSOS = () => {
+        utils.CallPhone('0398798694')
+    }
+    renderIcon = () => {
+        switch (this.state.detail) {
+            case 'NC1':
+                return R.images.icons.ic_callSOS
+            case 'NC2':
+                return R.images.icons.ic_callSOS2
+            case 'NC3':
+                return R.images.icons.ic_callSOS3
+            default:
+                return R.images.icons.ic_callSOS
+        }
     }
     render() {
         const profile = this.props.userApp
@@ -32,7 +50,7 @@ class DetailAlertScreen extends Component {
                                 <Text>{profile.telephone}</Text>
                             </View>
                         </View>
-                        <Image source={R.images.icons.ic_callSOS} style={styles.iconCall} />
+                        <Image source={this.renderIcon()} style={styles.iconCall} />
                         <TouchableOpacity
                             style={styles.buttonMap}
                             onPress={this.DetailMap}
@@ -47,13 +65,19 @@ class DetailAlertScreen extends Component {
                             scrollEnabled={false}
                             onLoadEnd={() => { hideLoading() }}
                         /> */}
-                        <Text>- Nơi cảnh báo: Tòa nhà H</Text>
-                        <Text>- Mức độ sự cố: Nghiêm trọng</Text>
-                        <Text>- Người cảnh báo: BBBB</Text>
-                        <Text>- Số người đã tiếp nhận cảnh báo: 2</Text>
-                        <Text> + BS. Nguyễn văn A</Text>
-                        <Text> + BS> abc</Text>
-                        <TouchableOpacity style={styles.buttonCall}>
+                        <View style={{
+                            padding: 10
+                        }}>
+                            <Text style={styles.txt}>- Nơi cảnh báo: Tòa nhà H</Text>
+                            <Text style={styles.txt}>- Mức độ sự cố: Nghiêm trọng</Text>
+                            <Text style={styles.txt}>- Người cảnh báo: BBBB</Text>
+                            <Text style={styles.txt}>- Số người đã tiếp nhận cảnh báo: 2</Text>
+                            <Text style={[styles.txt,{paddingLeft:10,paddingVertical:5}]}> + BS. Nguyễn văn A</Text>
+                            <Text style={[styles.txt,{paddingLeft:10}]}> + BS> abc</Text>
+                        </View>
+                        <TouchableOpacity
+                            onPress={this.callSOS}
+                            style={styles.buttonCall}>
                             <Image source={R.images.icons.ic_phone} style={styles.icCall} />
                             <Text style={styles.txtCall}>Gọi cho người cảnh báo</Text>
 
@@ -66,6 +90,10 @@ class DetailAlertScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    txt: {
+        color: R.colors.black,
+        fontFamily: R.fonts.Bold
+    },
     icMap: {
         height: height / 3,
         width: width
@@ -92,7 +120,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5,
         alignSelf: 'center',
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: 20
     },
     iconCall: {
         height: width / 2,

@@ -12,6 +12,21 @@ class ItemDoctor extends Component {
     formatTime = (time) => {
         return moment(time).format('HH:mm')
     }
+    renderIcon = (item) => {
+        switch (item.level) {
+            case 'NC1':
+                return R.images.icons.ic_callSOS
+            case 'NC2':
+                return R.images.icons.ic_callSOS2
+            case 'NC3':
+                return R.images.icons.ic_callSOS3
+            default: return R.images.icons.ic_callSOS
+        }
+    }
+    formatDate = (item) => {
+        return moment(item.created).format('HH:mm DD/MM/YYYY')
+        
+    }
     render() {
         const { item, onPress } = this.props
         return (
@@ -19,11 +34,11 @@ class ItemDoctor extends Component {
                 onPress={onPress}
                 style={styles.containerItem}
             >
-                <Image source={item.image ? ({ uri: item.image.indexOf('http') == 0 ? item.image : BASE_URI + item.image }) : R.images.default.logo} style={styles.imageAvatar} />
+                <Image source={this.renderIcon(item)} style={styles.imageAvatar} />
 
                 <View style={styles.containerLabel}>
-                        <Text style={styles.txtName}>{item.fullName}</Text>
-                        <Text style={styles.txtName}>{item.message}</Text>
+                    <Text style={[styles.txtName,{paddingBottom: 10,}]}>{item.department.name}</Text>
+                    <Text style={styles.txtName}>{this.formatDate(item)}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -35,7 +50,7 @@ export default ItemDoctor;
 
 const styles = StyleSheet.create({
     containerLabel: {
-        paddingLeft: 10
+        paddingLeft: 20
     },
     txtName: {
         fontFamily: R.fonts.Bold,
@@ -49,11 +64,16 @@ const styles = StyleSheet.create({
     imageAvatar: {
         height: 50,
         width: 50,
-        borderRadius: 25
+        borderRadius: 25,
+        resizeMode:'contain'
     },
     containerItem: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
+        borderColor:R.colors.gray,
+        borderWidth:1,
+        borderRadius:10,
+        margin:10
     },
 })

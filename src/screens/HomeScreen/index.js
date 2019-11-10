@@ -30,6 +30,8 @@ import RNCallKit from 'react-native-callkit';
 import RNCallKeepManager from 'components/RNCallKeepManager'
 import { login } from 'middlewares/actions/login/actionLogin';
 import { connect } from 'react-redux';
+import PushNotification from 'components/PushNotification';
+import DeviceInfo from 'react-native-device-info';
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -84,14 +86,19 @@ class HomeScreen extends Component {
                 //     name: 'Nhi',
                 // },
             ],
-            profile: {}
+            profile: {},
+            ver1: '1.0',
+            ver2: '1'
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
 
         this.getData()
         this.getListSpecials()
+        let ver1 = await DeviceInfo.getVersion()
+        let ver2 = await DeviceInfo.getBuildNumber()
+        this.setState({ ver1, ver2 })
     };
 
     getData = async () => {
@@ -167,7 +174,7 @@ class HomeScreen extends Component {
             })
             this.setState({ data })
             utils.alertSuccess('Gửi cảnh báo sự cố thành công')
-            RNCallKeepManager.displayIncommingCall(0)
+            // RNCallKeepManager.displayIncommingCall(0)
             // NavigationServices.navigate(screenName.CustomCallKeep)
         } else {
             utils.alertDanger('Gửi cảnh báo sự cố thất bại')
@@ -181,8 +188,16 @@ class HomeScreen extends Component {
         this.setState({ data })
     }
     keyExtractor = (item, index) => `${item.id || index}`
-    goHistory=()=>{
-        NavigationServices.navigate(screenName.DetailAlert)
+    goHistory = () => {
+        NavigationServices.navigate(screenName.ListAlert)
+    }
+    checkUpdate = () => {
+        utils.alertSuccess('Ứng dụng đang được cập nhật');
+        utils.checkupDate();
+    }
+    logout = () => {
+        utils.logout()
+        NavigationServices.navigate(screenName.LoginScreen)
     }
     render() {
         const { data, dataButton, profile } = this.state
@@ -190,6 +205,8 @@ class HomeScreen extends Component {
             <Container
                 iconRight={R.images.icons.ic_history}
                 onPressRight={this.goHistory}
+                iconLeft={R.images.icons.profile.ic_logout}
+                onPressLeft={this.logout}
             >
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.buttonSOS}>
@@ -226,7 +243,12 @@ class HomeScreen extends Component {
                             <Image source={R.images.icons.ic_refress} style={styles.ImageRefress} />
                         </TouchableOpacity>
                     </View>
+                    <TouchableOpacity style={[styles.buttonUpfate]} onPress={this.checkUpdate}>
+                        <Text style={[styles.txtUpdate]}>{'Phiên bản ' + this.state.ver1 + '.' + this.state.ver2}</Text>
+
+                    </TouchableOpacity>
                 </View>
+                <PushNotification />
                 <ModalCustom ref={ref => this.ModalCustom = ref} onPress={this.sendSOS} />
             </Container>
         )
@@ -288,7 +310,7 @@ const styles = StyleSheet.create({
         flex: 1,
         borderTopColor: R.colors.gray,
         borderTopWidth: 1,
-        marginTop: 20,
+        marginTop: '20%',
         paddingTop: 10,
     },
     txtname: {
@@ -321,6 +343,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         paddingTop: 20
+    },
+    txtUpdate: {
+        color: '#000',
+        fontFamily: R.fonts.SemiboldItalic
+    },
+    buttonUpfate: {
+        borderBottomWidth: 0,
+        paddingHorizontal: 10,
+        paddingTop: '15%',
+        alignSelf: 'center'
     },
 
 });

@@ -40,6 +40,7 @@ import AlertDangerScreen from 'screens/AlertDanger/AlertDangerScreen';
 import CustomCallKeepScreen from 'screens/AlertDanger/CustomCallKeepScreen';
 import ListAlertScreen from 'screens/AlertDanger/ListAlertScreen';
 import DetailAlertScreen from 'screens/AlertDanger/DetailAlertScreen';
+import MapScreen from 'screens/AlertDanger/MapScreen';
 const handleCustomTransition = ({ scenes }) => {
     const prevScene = scenes[scenes.length - 2];
     const nextScene = scenes[scenes.length - 1];
@@ -87,6 +88,7 @@ const homeStack = createStackNavigator({
     [screenName.CustomCallKeep]: { screen: CustomCallKeepScreen },
     [screenName.ListAlert]: { screen: ListAlertScreen },
     [screenName.DetailAlert]: { screen: DetailAlertScreen },
+    [screenName.MapScreen]: { screen: MapScreen },
     //authen
     // [screenName.LoginScreen]: { screen: LoginScreen },
     // [screenName.RegisterScreen]: { screen: RegisterScreen },
