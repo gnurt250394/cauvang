@@ -22,6 +22,7 @@ class LoginScreen extends Component {
     super(props);
     this.state = {
       isLoading: false,
+      token: '',
       item: this.props.navigation.getParam('item', {})
     };
     this.nextScreen = this.props.navigation.getParam('nextScreen')
@@ -29,7 +30,7 @@ class LoginScreen extends Component {
   onLogin = async () => {
     let email = this.inputEmail.getValue()
     let password = this.inputPass.getValue()
-    let res = await apis.post(apis.PATH.LOGIN, { username: email, password: password })
+    let res = await apis.post(apis.PATH.LOGIN, { username: email, password: password },'',this.state.token)
     console.log('res: ', res);
     if (res && res.token) {
       utils.setItem(utils.KEY.TOKEN, res.token)
@@ -49,6 +50,7 @@ class LoginScreen extends Component {
   componentDidMount = () => {
     firebase.messaging().getToken()
       .then((token) => {
+        this.setState({ token })
         console.log('Device FCM Token: ', token);
         utils.database.tokenFCM = token;
         firebase.messaging().subscribeToTopic("SHIBA_test");

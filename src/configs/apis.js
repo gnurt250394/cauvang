@@ -93,9 +93,12 @@ async function put(url, params, isLoading) {
       return error
     })
 }
-async function post(url, params, isLoading) {
+async function post(url, params, isLoading, DeviceToken) {
   let headers = {
     'Content-Type': 'application/json'
+  }
+  if (DeviceToken) {
+    constants.defaults.headers.common['Device-Token'] = DeviceToken;
   }
   let token = await utils.getItem(utils.KEY.TOKEN)
   constants.defaults.headers.common['X-Auth-Token'] = token;
@@ -186,7 +189,7 @@ export default {
     USER: 'adverser-event/v1/users',
     DETAIL_USER: 'adverser-event/v1/user',
     GET_LIST_SPECIALS: 'adverser-event/v1/departments',
-    HISTORY_ALERT:'adverser-event/v1/emergencies',
+    HISTORY_ALERT: 'adverser-event/v1/emergencies',
     VIDEO_CALL: 'event-video-call',
     LIST_HOSPITAL: 'list-hospital',
     CHECK_PHONE: 'check-phone',
