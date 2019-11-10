@@ -1,4 +1,4 @@
-package com.cauvang;
+package com.cauvangtest;
 
 import android.app.Application;
 import android.content.Context;

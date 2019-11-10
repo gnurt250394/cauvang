@@ -1,4 +1,4 @@
-package com.cauvang;
+package com.cauvangtest;
 
 import io.wazo.callkeep.RNCallKeepModule;
 import com.facebook.react.ReactActivity;
