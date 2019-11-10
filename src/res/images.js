@@ -24,6 +24,8 @@ export default {
         ic_callSOS: require('res/images/icons/ic_callSOS.png'),
         ic_callSOS2: require('res/images/icons/ic_callSOS2.png'),
         ic_callSOS3: require('res/images/icons/ic_callSOS3.png'),
+        ic_map: require('res/images/icons/ic_map.png'),
+        ic_phone: require('res/images/icons/ic_phone.png'),
         profile:{
         ic_logout: require('res/images/icons/profile/ic_logout.png'),
         ic_pass: require('res/images/icons/profile/ic_pass.png'),
