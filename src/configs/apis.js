@@ -23,16 +23,16 @@ function logError(error) {
   if (error.response) {
     const apiName = error.config.apiName || 'UNKNOWN';
 
-    console.log(apiName, error.response);
+    console.log(apiName, error.response, BASE_URL);
     console.groupEnd && console.groupEnd()
   } else if (error.request) {
     const apiName = error.config.headers.X_HEADER_API_LOG || 'UNKNOWN';
 
-    console.log(apiName, error.request);
+    console.log(apiName, error.request, BASE_URL);
     console.groupEnd && console.groupEnd()
   } else {
 
-    console.log('API Error', error.message);
+    console.log('API Error', error.message, BASE_URL);
     console.groupEnd && console.groupEnd()
   }
 }
