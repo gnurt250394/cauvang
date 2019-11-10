@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.cauvangtest"
+        applicationId "com.cauvang"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         missingDimensionStrategy 'react-native-camera', 'general'
