@@ -51,7 +51,7 @@ class LoginScreen extends Component {
       .then((token) => {
         console.log('Device FCM Token: ', token);
         utils.database.tokenFCM = token;
-        firebase.messaging().subscribeToTopic("honghac_test");
+        firebase.messaging().subscribeToTopic("SHIBA_test");
       });
   };
 
