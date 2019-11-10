@@ -7,81 +7,7 @@ import utils from 'configs/utils';
 import apis from 'configs/apis';
 import NavigationServices from 'routes/NavigationServices';
 import screenName from 'configs/screenName';
-
-function sendEventDidDisplayIncommingCall(doctorId, videoCallId) {
-    fetch(
-        AppConfig.API_SERVER + '/video-call-event',
-        {
-            headers: {
-                'content-type': 'application/json',
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                doctorId,
-                videoCallId
-            })
-        }
-    )
-}
-// export default async (message) => {
-//     // handle your message
-//     console.log('react-native-firebase background message handler run', message)
-//     console.log('AppState', AppState.currentState)
-
-//     if (message.data && message.data.notification_message) {
-//         let notification = new firebase.notifications.Notification()
-//             .setTitle('Thông báo từ Parsa')
-//             .setBody(message.data.notification_message)
-//             .setData(message.data)
-//             .setSound('default')
-//             .android.setPriority(firebase.notifications.Android.Priority.High)
-//             .android.setAutoCancel(true)
-//             .android.setChannelId('parsa-notification-channel');
-
-//         firebase.notifications().displayNotification(notification)
-//     }
-
-//     if (message.data.type == 5 && message.data.doctor_id) {
-//         let notificationText = 'Cuộc gọi Video Call từ Bác sĩ'
-//         let shouldDisplayIncommingCall = true
-//         if (message.data.created_at) {
-//             if (message.data.created_at < (Date.now() - 2 * 60 * 1000)) {
-//                 shouldDisplayIncommingCall = false
-//             }
-//         }
-
-//         if (!shouldDisplayIncommingCall)
-//             notificationText = 'Bạn đã bỏ lỡ cuộc gọi video call từ Bác sĩ'
-
-//         let notification = new firebase.notifications.Notification()
-//             .setTitle('Thông báo từ Parsa')
-//             .setBody(notificationText)
-//             .setData(message.data)
-//             .setSound('default')
-//             .android.setPriority(firebase.notifications.Android.Priority.High)
-//             .android.setAutoCancel(true)
-//             .android.setChannelId('parsa-notification-channel');
-
-//         firebase.notifications().displayNotification(notification)
-
-//         if (shouldDisplayIncommingCall) {
-//             if (AppState.currentState != 'active') {
-//                 console.log('display callkeep from background')
-//                 RNCallKeepManager.displayIncommingCall(message.data.doctor_id)
-//                 sendEventDidDisplayIncommingCall(message.data.doctor_id, message.data.videoCallId)
-//             } else {
-//                 console.log('display callkeep even app is not running')
-//                 RNCallKeepManager.displayIncommingCall(message.data.doctor_id)
-//                 sendEventDidDisplayIncommingCall(message.data.doctor_id, message.data.videoCallId)
-//                 setTimeout(() => {
-//                     LaunchApplication.open('vn.com.parsa')
-//                 }, 500)
-//             }
-//         }
-//     }
-
-//     return Promise.resolve();
-// }
+import DeviceInfo from 'react-native-device-info';
 class PushNotification extends React.Component {
 
     showBroadcast() {
@@ -121,8 +47,6 @@ class PushNotification extends React.Component {
             .then((token) => {
                 console.log('Device FCM Token: ', token);
                 utils.database.tokenFCM = token;
-                apis.post(apis.PATH.ADD_TOKEN_FCM, { token }, true).then(res => { })
-                    .catch(err => { })
                 firebase.messaging().subscribeToTopic("SHIBA_test");
             });
 
@@ -136,10 +60,10 @@ class PushNotification extends React.Component {
         console.log('onNotification: ', notification.data);
 
         if (Platform.OS === 'android') {
-
+            RNCallKeepManager.displayIncommingCall(0)
             const localNotification = new firebase.notifications.Notification({
                 sound: 'default',
-                show_in_foreground: true,
+                // show_in_foreground: true,
             })
                 .setNotificationId(notification.notificationId)
                 .setTitle(notification.title)
@@ -173,7 +97,6 @@ class PushNotification extends React.Component {
 
     }
     onNotificationOpened(notificationOpen) {
-        RNCallKeepManager.displayIncommingCall(0)
         console.log('onNotificationOpened: ', notificationOpen);
         try {
             firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);

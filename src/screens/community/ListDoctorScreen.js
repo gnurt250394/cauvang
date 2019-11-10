@@ -14,58 +14,61 @@ class ListDoctorScreen extends Component {
         super(props);
         this.state = {
             data: [],
-            listHistoryDoctor: [
-
-            ]
+            page: 1,
+            size: 20,
         };
     }
-    chatWithDoctor = (item) => () => {
-        NavigationServices.navigate(screenName.MessageScreen, {
+    detailAlert = (item) => () => {
+        NavigationServices.navigate(screenName.DetailAlert, {
             item
         })
     }
     componentDidMount = () => {
         this.getData()
     };
+    loadMore = () => {
+        const { data, page, size } = this.state
+        if (data.length >= page * size) {
+            this.setState(preState => {
+                return { page: preState.page + 1 }
+            }, this.getData)
+        }
+    }
     getData = async () => {
-        let res = await apis.fetch(apis.PATH.HISTORY_ALERT)
-        if (res && res.code == status.SUCCESS) {
-            this.setState({ data: res.data })
+        let res = await apis.fetch(apis.PATH.HISTORY_ALERT + `?page=${this.state.page}&size=${this.state.size}`, {})
+        if (res && res.length > 0) {
+            this.formatData(res)
+        }
+    }
+    formatData = (data) => {
+        if (data.length == 0) {
+
+        } else {
+            if (this.state.page == 1) {
+                this.setState({ data: data })
+            } else {
+                this.setState(preState => {
+                    return { data: [...preState.data, ...data] }
+                })
+            }
         }
     }
     _renderItem = ({ item, index }) => {
-        console.log('item: ', item._id);
         return (
-            <ItemDoctor item={item} onPress={this.chatWithDoctor(item)} />
+            <ItemDoctor item={item} onPress={this.detailAlert(item)} />
         )
     }
     _keyExtractor = (item, index) => `${item.id || index}`
-    _renderItemListHistoryDoctor = ({ item, index }) => {
-        console.log(' item.name.indexOf : ', item.name.indexOf(' '));
-        return (
-            <TouchableOpacity style={{
-                alignItems: 'center',
-                padding: 5
-            }}>
-                <Image source={R.images.icons.ic_sos1} style={{
-                    height: 70,
-                    width: 70,
-                    borderRadius: 35
-                }} />
-                <Text style={{
-                    fontFamily: R.fonts.Regular
-                }}>{item.name.indexOf(' ') == -1 ? item.name : item.name.substring(0, item.name.indexOf(' '))}</Text>
-            </TouchableOpacity>
-        )
-    }
     render() {
         const { data, listHistoryDoctor } = this.state
         return (
-                <FlatList
-                    data={data}
-                    renderItem={this._renderItem}
-                    keyExtractor={this._keyExtractor}
-                />
+            <FlatList
+                data={data}
+                renderItem={this._renderItem}
+                keyExtractor={this._keyExtractor}
+                onEndReached={this.loadMore}
+                onEndReachedThreshold={0.6}
+            />
         );
     }
 }

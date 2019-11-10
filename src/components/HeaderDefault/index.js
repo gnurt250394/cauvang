@@ -15,7 +15,7 @@ const prototype = {
     valueRight: PropTypes.string,
     iconRight: PropTypes.number,
     title: PropTypes.string,
-    style:PropTypes.object
+    style: PropTypes.object
 }
 class HeaderDefault extends Component {
     render() {
@@ -23,9 +23,7 @@ class HeaderDefault extends Component {
         return (
             <View style={[styles.containerHeader, style]}>
                 {navigation.isFirstRouteInParent() ?
-                    <View style={{
-                        width:'10%'
-                    }} />
+                    iconLeft ? <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} /> : <View style={{ width: '10%' }} />
                     :
                     <ButtonBase onPress={onPressLeft} icon={iconLeft ? iconLeft : R.images.icons.ic_back} value={valueLeft} />
                 }
@@ -33,9 +31,9 @@ class HeaderDefault extends Component {
                 {onPressRight ?
                     <ButtonBase value={valueRight} icon={iconRight} onPress={onPressRight} />
                     :
-                    <View  style={{
-                        width:'10%'
-                    }}/>
+                    <View style={{
+                        width: '10%'
+                    }} />
                 }
 
             </View>
@@ -65,6 +63,6 @@ const styles = StyleSheet.create({
         flex: 1,
         color: R.colors.white,
         paddingHorizontal: 15,
-        textAlign:'center'
+        textAlign: 'center'
     },
 })

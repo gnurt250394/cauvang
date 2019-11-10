@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import codePush from "react-native-code-push";
-import { Dimensions, Alert } from 'react-native';
+import { Dimensions, Alert, Platform, Linking } from 'react-native';
 import { showMessage } from 'react-native-flash-message'
 import NavigationServices from 'routes/NavigationServices';
 import screenName from './screenName';
@@ -8,13 +8,13 @@ import firebase from 'react-native-firebase';
 const database = {
   token: '',
   tokenFCM: '',
-  user:{},
+  user: {},
   forgotPass: 'forgotPass'
 }
 const KEY = {
   TOKEN: 'TOKEN',
   KEY_HAS_UPDATE_NEW_VERSION: 'KEY_HAS_UPDATE_NEW_VERSION',
-  DATA:'DATA'
+  DATA: 'DATA'
 }
 export function guid() {
   function s4() {
@@ -49,7 +49,7 @@ function alertWarn(description) {
   showMessage({
     type: 'warning',
     icon: 'warning',
-    message: 'SOS',
+    message: 'SHIBA',
     description,
   })
 }
@@ -57,7 +57,7 @@ function alertSuccess(description) {
   showMessage({
     type: 'success',
     icon: 'success',
-    message: 'SOS',
+    message: 'SHIBA',
     description,
   })
 }
@@ -65,7 +65,7 @@ function alertNone(description) {
   showMessage({
     type: 'none',
     icon: 'none',
-    message: 'SOS',
+    message: 'SHIBA',
     description,
   })
 }
@@ -73,7 +73,7 @@ function alertInfo(description) {
   showMessage({
     type: 'info',
     icon: 'info',
-    message: 'SOS',
+    message: 'SHIBA',
     description,
   })
 }
@@ -81,7 +81,7 @@ function alertDanger(description) {
   showMessage({
     type: 'danger',
     icon: 'danger',
-    message: 'SOS',
+    message: 'SHIBA',
     description,
   })
 }
@@ -213,8 +213,19 @@ function checkupDate(silent) {
     }
   }).catch(e => {
     if (!silent)
-        alertSuccess("Bạn đang sử dụng phiên bản mới nhất");
+      alertSuccess("Bạn đang sử dụng phiên bản mới nhất");
   })
+}
+function CallPhone(phone) {
+  let phoneNumber = '';
+
+  if (Platform.OS === 'android') {
+    phoneNumber = `tel:${phone}`;
+  } else {
+    phoneNumber = `telprompt:${phone}`;
+  }
+
+  Linking.openURL(phoneNumber);
 }
 export default {
   getItem,
@@ -233,5 +244,6 @@ export default {
   regexPassword,
   regexPhone,
   regexName,
-  checkupDate
+  checkupDate,
+  CallPhone
 }

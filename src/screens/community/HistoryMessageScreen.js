@@ -25,7 +25,7 @@ class HistoryMessageScreen extends Component {
         })
     }
     componentDidMount = () => {
-        this.getData()
+        // this.getData()
     };
     getData = async () => {
         let res = await apis.fetch(apis.PATH.CHATS)
